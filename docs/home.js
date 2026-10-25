@@ -16,27 +16,27 @@ function renderProteinTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="scroll-hint"><span>⇄ Swipe horizontally to inspect metrics</span></div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Protein Bio-Efficiency Rankings">
+    <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Protein Powders by Value">
       <table>
         <thead>
           <tr>
             <th>Rank</th>
-            <th>Specimen / Product</th>
-            <th>Source / Subclass</th>
-            <th>Pack Mass</th>
-            <th>Market Price</th>
-            <th>₹ / g Protein</th>
+            <th>Brand &amp; Product</th>
+            <th>Protein Type</th>
+            <th>Pack Size</th>
+            <th>Price</th>
+            <th>Cost / Scoop (24g)</th>
             <th>Protein %</th>
-            <th>Energy (100g)</th>
-            <th>PBES Score</th>
-            <th>Audit Dossier</th>
+            <th>Calories (100g)</th>
+            <th>Value Score</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
           ${top.map((r, i) => `
             <tr>
-              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#0${i + 1}</span></td>
+              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span></td>
               <td>
                 <div class="brand">${esc(r.brand)}</div>
                 <span class="product">${esc(r.product)}</span>
@@ -45,11 +45,14 @@ function renderProteinTable() {
               <td><span class="badge">${esc(r.type)}</span><br><span class="muted">${esc(r.subclass || '')}</span></td>
               <td><span class="value">${r.kg} kg</span></td>
               <td class="value">${money(r.price)}</td>
-              <td class="value cost">${money(r.cost)}</td>
+              <td class="value cost">
+                ${money(r.cost * 24)}
+                <span class="muted">(${money(r.cost)}/g)</span>
+              </td>
               <td class="value">${number(r.protein)}%</td>
-              <td class="value">${r.energy ? number(r.energy) + ' kcal' : '<span class="unknown">~390 kcal</span>'}</td>
+              <td class="value">${r.energy ? number(r.energy) + ' kcal' : '<span class="muted">~390 kcal</span>'}</td>
               <td><span class="score-pill">${r.score.toFixed(1)}</span></td>
-              <td><button data-cat="protein" data-id="${esc(r.id)}">Dossier [↗]</button></td>
+              <td><button data-cat="protein" data-id="${esc(r.id)}">View Details ↗</button></td>
             </tr>
           `).join('')}
         </tbody>
@@ -64,27 +67,27 @@ function renderCreatineTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="scroll-hint"><span>⇄ Swipe horizontally to inspect metrics</span></div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Creatine Bio-Efficiency Rankings">
+    <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Creatine Powders by Value">
       <table>
         <thead>
           <tr>
             <th>Rank</th>
-            <th>Specimen / Product</th>
-            <th>Chemical Form</th>
-            <th>Net Pack Mass</th>
-            <th>Market Price</th>
-            <th>₹ / g Compound</th>
-            <th>Compound %</th>
+            <th>Brand &amp; Product</th>
+            <th>Creatine Form</th>
+            <th>Pack Size</th>
+            <th>Price</th>
+            <th>Cost / 3g Dose</th>
+            <th>Purity %</th>
             <th>Formulation</th>
-            <th>CBES Score</th>
-            <th>Audit Dossier</th>
+            <th>Value Score</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
           ${top.map((r, i) => `
             <tr>
-              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#0${i + 1}</span></td>
+              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span></td>
               <td>
                 <div class="brand">${esc(r.brand)}</div>
                 <span class="product">${esc(r.product)}</span>
@@ -93,11 +96,14 @@ function renderCreatineTable() {
               <td><span class="badge">${esc(r.type)}</span><br><span class="muted">${esc(r.subclass || '')}</span></td>
               <td><span class="value">${r.grams} g</span></td>
               <td class="value">${money(r.price)}</td>
-              <td class="value cost">${money(r.cost)}</td>
+              <td class="value cost">
+                ${money(r.cost * 3)}
+                <span class="muted">(${money(r.cost)}/g)</span>
+              </td>
               <td class="value">${number(r.creatine)}%</td>
               <td class="muted">${esc(r.grade !== 'Not specified' ? r.grade + ' · ' : '')}${esc(r.formulation)}</td>
               <td><span class="score-pill">${r.score.toFixed(1)}</span></td>
-              <td><button data-cat="creatine" data-id="${esc(r.id)}">Dossier [↗]</button></td>
+              <td><button data-cat="creatine" data-id="${esc(r.id)}">View Details ↗</button></td>
             </tr>
           `).join('')}
         </tbody>
@@ -145,7 +151,7 @@ function safeLink(url, label) {
     const u = new URL(url);
     if (u.protocol === 'https:') return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
   } catch {}
-  return 'Source unavailable';
+  return 'Not provided';
 }
 
 function showDossier(cat, id) {
@@ -158,21 +164,26 @@ function showDossier(cat, id) {
   const modal = $('#evidence');
   if (!modal) return;
 
-  $('#evidence-title').textContent = `[SPECIMEN AUDIT] ${r.brand} // ${r.product}`;
+  $('#evidence-title').textContent = `${r.brand} — ${r.product}`;
   $('#evidence-body').innerHTML = `
-    <p><strong>Specimen Classification</strong><br>${esc(r.brand)} · ${esc(r.flavour)} · ${isCreatine ? r.grams + ' g' : r.kg + ' kg'}</p>
-    <p><strong>Archived Official Evidence Links</strong><br>${safeLink(r.url, 'Verified Product / Price Source')}<br>${safeLink(r.nutritionUrl, 'Verified Composition / Nutrition Panel')}</p>
-    <p><strong>${isCreatine ? 'Creatine Compound' : 'Protein'} Evidence &amp; Assay Basis</strong><br>${esc(r.basis || 'Unverified assay claim')}</p>
-    <p><strong>Laboratory Audit Notes</strong><br>${esc(r.notes || 'No anomalies logged.')}</p>
-    <p><strong>Caloric &amp; Energy Telemetry</strong><br>${esc(r.energyBasis || 'Unverified energy basis')}</p>
-    <p>Serving mass: ${number(r.serving)} g. Scoop mass: ${number(r.scoop)} g. (A standard serving may comprise multiple scoops).</p>
-    <p><strong>Empirical Yield Formula:</strong><br>${money(r.price)} ÷ (${isCreatine ? r.grams : r.kg * 1000} g × ${number(concentration, 4)} / 100) = <strong>${money(r.cost)}</strong> per gram of ${isCreatine ? 'labelled active compound' : 'isolated protein'}.</p>
-    <p><strong>Bio-Efficiency Score (${isCreatine ? 'CBES' : 'PBES'}):</strong> <span class="score-pill">${r.score.toFixed(1)}</span></p>
-    ${isCreatine ? `
-      <p>Disclosed active compound / serving: ${number(r.creatineServing)} g.<br>Empirical cost / 3 g active compound: <strong>${money(r.doseCost)}</strong> (analytical reference quantity, not clinical posology).</p>
-      <p class="muted">Active compound mass encompasses hydrate, HCl, or nitrate counter-ion fractions. Chemical species are not normalized to free-creatine equivalents. Price ranking carries no clinical efficacy equivalence.</p>
-    ` : ''}
-    <p class="muted">Laboratory snapshot timestamp: 25 October 2026. Figures exclude promotional voucher codes, logistics tariffs, and checkout adjustments.</p>
+    <p><strong>Product Details</strong><br>${esc(r.brand)} · ${esc(r.flavour)} · Pack: ${isCreatine ? r.grams + ' g' : r.kg + ' kg'}</p>
+    <p><strong>Verified Links</strong><br>
+      ${safeLink(r.url, 'Check Retail Price on Store')}<br>
+      ${safeLink(r.nutritionUrl, 'View Official Nutrition Label')}
+    </p>
+    <p><strong>Serving &amp; Scoop Information:</strong><br>
+      Serving Size: ${number(r.serving)} g · Scoop Size: ${number(r.scoop)} g
+      ${isCreatine ? `<br>Active Creatine per Serving: ${number(r.creatineServing)} g` : ''}
+    </p>
+    <p><strong>Exact Price &amp; Value Breakdown:</strong><br>
+      Pack Price: <strong>${money(r.price)}</strong> for ${isCreatine ? r.grams + ' g' : r.kg + ' kg'}<br>
+      Protein / Creatine Purity: <strong>${number(concentration)}%</strong><br>
+      Cost per Gram: <strong>${money(r.cost)} / g</strong><br>
+      ${isCreatine ? `Standard 3g Daily Dose Cost: <strong>${money(r.cost * 3)}</strong>` : `Standard 24g Protein Scoop Cost: <strong>${money(r.cost * 24)}</strong>`}
+    </p>
+    <p><strong>Overall Value Score:</strong> <span class="score-pill">${r.score.toFixed(1)} / 100</span></p>
+    ${r.notes ? `<p><strong>Label &amp; Ingredient Notes:</strong><br>${esc(r.notes)}</p>` : ''}
+    <p class="muted">Prices and stock reflect public retail listings. No sponsored placements or affiliate bias.</p>
   `;
   modal.showModal();
 }
@@ -183,7 +194,7 @@ async function init() {
       fetch('data/catalog.json'),
       fetch('data/creatine.json')
     ]);
-    if (!pRes.ok || !cRes.ok) throw Error('Data matrices unavailable');
+    if (!pRes.ok || !cRes.ok) throw Error('Data unavailable');
 
     const pData = await pRes.json();
     const cData = await cRes.json();
@@ -222,7 +233,7 @@ async function init() {
       });
     });
 
-    // Delegated click for dossier buttons
+    // Delegated click for details buttons
     document.addEventListener('click', e => {
       const btn = e.target.closest('button[data-cat][data-id]');
       if (btn) {
@@ -234,7 +245,7 @@ async function init() {
     if (closeBtn) closeBtn.onclick = () => $('#evidence').close();
 
   } catch (err) {
-    console.error('Error initializing lab intelligence homepage:', err);
+    console.error('Error loading supplement data:', err);
   }
 }
 
