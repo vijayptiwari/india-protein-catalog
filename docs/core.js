@@ -14,3 +14,76 @@ export function csv(offers,category='protein'){const keys=category==='creatine'?
 export function scoreProtein(r){if(r.cost==null||r.protein==null)return 0;const energy=r.energy||390;const calPurity=Math.min(1,(4*r.protein)/energy);const purityRatio=r.protein/100;const yieldPer100=100/r.cost;return yieldPer100*purityRatio*calPurity;}
 export function scoreCreatine(r){if(r.cost==null||r.creatine==null)return 0;const compoundPurity=r.creatine/100;const yieldPer100=100/r.cost;const calClean=(r.energy&&r.energy>0)?Math.max(0.5,1-(r.energy/400)):1.0;return yieldPer100*compoundPurity*calClean;}
 
+export function groupOffersByProduct(offers, category='protein'){
+  const groups = new Map();
+  for(const r of offers){
+    const key = [r.brand, r.product].join(' — ');
+    if(!groups.has(key)){
+      groups.set(key, {
+        key,
+        brand: r.brand,
+        product: r.product,
+        type: r.type,
+        subclass: r.subclass,
+        grade: r.grade,
+        formulation: r.formulation,
+        protein: r.protein,
+        creatine: r.creatine,
+        energy: r.energy,
+        scoop: r.scoop,
+        serving: r.serving,
+        creatineServing: r.creatineServing,
+        nutritionUrl: r.nutritionUrl,
+        variations: []
+      });
+    }
+    groups.get(key).variations.push(r);
+  }
+  const result = [];
+  for(const g of groups.values()){
+    const vars = g.variations;
+    vars.sort((a,b) => (a.kg || a.grams) - (b.kg || b.grams) || a.flavour.localeCompare(b.flavour));
+    const prices = vars.map(v => v.price);
+    const costs = vars.filter(v => v.cost != null).map(v => v.cost);
+    const weights = [...new Set(vars.map(v => category === 'creatine' ? v.grams + ' g' : v.kg + ' kg'))];
+    const flavours = [...new Set(vars.map(v => v.flavour))];
+    const hasNew = vars.some(v => v.isNew);
+    const trends = vars.filter(v => v.trend && v.trend.pct !== 0).map(v => v.trend.pct);
+    let avgTrend = 0;
+    if(trends.length > 0){
+      avgTrend = Math.round((trends.reduce((a,b) => a + b, 0) / trends.length) * 10) / 10;
+    }
+    result.push({
+      ...g,
+      minPrice: Math.min(...prices),
+      maxPrice: Math.max(...prices),
+      minCost: costs.length ? Math.min(...costs) : null,
+      maxCost: costs.length ? Math.max(...costs) : null,
+      weights,
+      flavours,
+      hasNew,
+      avgTrend,
+      count: vars.length
+    });
+  }
+  return result;
+}
+
+export function formatTrendBadge(trend, isNew){
+  if(isNew){
+    return `<span class="trend-badge trend-new" title="Newly added flavour or pack size">✨ Newly Added</span>`;
+  }
+  if(!trend || trend.pct === 0 || trend.direction === 'stable'){
+    return `<span class="trend-badge trend-stable" title="Price stable over past audit cycles">─ Stable</span>`;
+  }
+  if(trend.direction === 'down' || trend.pct < 0){
+    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')}"` : '';
+    return `<span class="trend-badge trend-down"${prev}>▼ ${Math.abs(trend.pct)}%</span>`;
+  }
+  if(trend.direction === 'up' || trend.pct > 0){
+    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')}"` : '';
+    return `<span class="trend-badge trend-up"${prev}>▲ +${Math.abs(trend.pct)}%</span>`;
+  }
+  return `<span class="trend-badge trend-stable">─ Stable</span>`;
+}
+

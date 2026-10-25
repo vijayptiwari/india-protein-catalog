@@ -120,6 +120,10 @@
 <h2>Available Protein Packs</h2>
 <p id="count" role="status" aria-live="polite">Loading protein database…</p>
 </div>
+<div class="view-mode-toggle" role="group" aria-label="Catalog layout view">
+  <button id="view-grouped" class="view-btn active" type="button" aria-pressed="true">⊞ Grouped by Product</button>
+  <button id="view-flat" class="view-btn" type="button" aria-pressed="false">☰ All Pack Sizes</button>
+</div>
 <label>Sort Products
 <select id="sort">
 <option value="brand">Brand Name A–Z</option>
@@ -133,6 +137,8 @@
 <button id="csv">Export as CSV ↓</button>
 </div>
 
+<div id="grouped-container" class="grouped-container"></div>
+
 <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Protein Powder Price Comparison Table">
 <table>
@@ -142,6 +148,7 @@
 <th>Protein Type</th>
 <th>Pack Size</th>
 <th>Price</th>
+<th>Price Trend</th>
 <th>Cost / g Protein</th>
 <th>Protein %</th>
 <th>Scoop Size</th>

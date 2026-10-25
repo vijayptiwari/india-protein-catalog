@@ -128,6 +128,10 @@
 <h2>Available Creatine Packs</h2>
 <p id="count" role="status" aria-live="polite">Loading creatine database…</p>
 </div>
+<div class="view-mode-toggle" role="group" aria-label="Catalog layout view">
+  <button id="view-grouped" class="view-btn active" type="button" aria-pressed="true">⊞ Grouped by Product</button>
+  <button id="view-flat" class="view-btn" type="button" aria-pressed="false">☰ All Pack Sizes</button>
+</div>
 <label>Sort Products
 <select id="sort">
 <option value="brand">Brand Name A–Z</option>
@@ -145,6 +149,8 @@
 
 <p class="catalog-note">Note: Cost per gram is based on actual grams of active creatine compound. Unflavoured pure monohydrate offers the highest value for money. <a href="data/India_Creatine_Catalog.xlsx" download>Download Excel Workbook (XLSX) ↗</a></p>
 
+<div id="grouped-container" class="grouped-container"></div>
+
 <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Creatine Price Comparison Table">
 <table>
@@ -154,6 +160,7 @@
 <th>Form &amp; Grade</th>
 <th>Pack Size</th>
 <th>Price</th>
+<th>Price Trend</th>
 <th>₹ / g Powder</th>
 <th>₹ / g Creatine</th>
 <th>Purity %</th>

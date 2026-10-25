@@ -1,4 +1,4 @@
-import { scoreProtein, scoreCreatine } from './core.js';
+import { scoreProtein, scoreCreatine, formatTrendBadge } from './core.js';
 import { getBrandInfo } from './brands.js';
 
 const $ = s => document.querySelector(s);
@@ -23,7 +23,7 @@ function renderProteinTable() {
           <tr>
             <th class="col-rank">Rank</th>
             <th class="col-product">Brand &amp; Product</th>
-            <th class="col-price">Price &amp; Size</th>
+            <th class="col-price">Price &amp; Trend</th>
             <th class="col-scoop">Cost / Scoop</th>
             <th class="col-protein">Protein % &amp; Calories</th>
             <th class="col-score">Value Score &amp; Details</th>
@@ -41,10 +41,12 @@ function renderProteinTable() {
                 <div class="product-tags">
                   <span class="badge">${esc(r.type)}</span>
                   <span class="flavour-tag">${esc(r.flavour)}</span>
+                  ${r.isNew ? '<span class="new-pill-sm">✨ New</span>' : ''}
                 </div>
               </td>
               <td class="col-price">
                 <div class="value price-main">${money(r.price)}</div>
+                <div style="margin-top: 3px;">${formatTrendBadge(r.trend, r.isNew)}</div>
                 <div class="muted">${r.kg} kg pack</div>
               </td>
               <td class="col-scoop">
@@ -81,7 +83,7 @@ function renderCreatineTable() {
           <tr>
             <th class="col-rank">Rank</th>
             <th class="col-product">Brand &amp; Product</th>
-            <th class="col-price">Price &amp; Size</th>
+            <th class="col-price">Price &amp; Trend</th>
             <th class="col-scoop">Cost / 3g Dose</th>
             <th class="col-protein">Purity &amp; Form</th>
             <th class="col-score">Value Score &amp; Details</th>
@@ -99,10 +101,12 @@ function renderCreatineTable() {
                 <div class="product-tags">
                   <span class="badge">${esc(r.type)}</span>
                   <span class="flavour-tag">${esc(r.flavour)}${r.packaging ? ' · ' + esc(r.packaging) : ''}</span>
+                  ${r.isNew ? '<span class="new-pill-sm">✨ New</span>' : ''}
                 </div>
               </td>
               <td class="col-price">
                 <div class="value price-main">${money(r.price)}</div>
+                <div style="margin-top: 3px;">${formatTrendBadge(r.trend, r.isNew)}</div>
                 <div class="muted">${r.grams} g pack</div>
               </td>
               <td class="col-scoop">
