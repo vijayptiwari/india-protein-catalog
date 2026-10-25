@@ -229,6 +229,26 @@ export const BRANDS = {
     affiliateParam: '',
     verification: 'Direct brand dispatch.',
     directDispatch: true
+  },
+  'TrueBasics': {
+    name: 'TrueBasics',
+    domain: 'truebasics.com',
+    storeUrl: 'https://www.truebasics.com',
+    couponCode: '',
+    discount: 'Direct Brand Price',
+    affiliateParam: '',
+    verification: 'Clean Label Project certified batches with serial packaging authentication.',
+    directDispatch: true
+  },
+  'The Good Bug': {
+    name: 'The Good Bug',
+    domain: 'thegoodbug.com',
+    storeUrl: 'https://thegoodbug.com',
+    couponCode: '',
+    discount: 'Direct Brand Price',
+    affiliateParam: '',
+    verification: 'Direct warehouse dispatch with sealed liner and verified probiotic strain viability.',
+    directDispatch: true
   }
 };
 
