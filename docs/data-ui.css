@@ -866,41 +866,7 @@ details .hint {
   min-width: 170px;
 }
 
-/* Export Buttons: Unified styling for both CSV buttons */
-.toolbar-export-group,
-.export-actions {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-}
 
-#csv,
-#history-csv,
-.export-btn {
-  background: #ffffff;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-title);
-  padding: 7px 14px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 700;
-  transition: all 0.15s ease;
-  box-shadow: var(--shadow-sm);
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-#csv:hover,
-#history-csv:hover,
-.export-btn:hover {
-  background: var(--accent-blue);
-  border-color: var(--accent-blue);
-  color: #ffffff;
-}
 
 /* --------------------------------------------------------------------------
    5. PRODUCT GROUP CARDS (.product-group-card)
@@ -1741,23 +1707,7 @@ dialog select {
     min-width: 0;
   }
 
-  .toolbar-export-group,
-  .export-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    width: 100%;
-  }
 
-  #csv,
-  #history-csv,
-  .export-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 9px 8px;
-    font-size: 11.5px;
-    text-align: center;
-  }
 
   /* Product Group Card on mobile */
   .group-header {
