@@ -16,43 +16,50 @@ function renderProteinTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Protein Powders by Value">
-      <table>
+    <div class="table-wrap" role="region" aria-label="Top 10 Protein Powders by Value">
+      <table class="rankings-table">
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Brand &amp; Product</th>
-            <th>Protein Type</th>
-            <th>Pack Size</th>
-            <th>Price</th>
-            <th>Cost / Scoop (24g)</th>
-            <th>Protein %</th>
-            <th>Calories (100g)</th>
-            <th>Value Score</th>
-            <th>Details</th>
+            <th class="col-rank">Rank</th>
+            <th class="col-product">Brand &amp; Product</th>
+            <th class="col-price">Price &amp; Size</th>
+            <th class="col-scoop">Cost / Scoop</th>
+            <th class="col-protein">Protein % &amp; Calories</th>
+            <th class="col-score">Value Score &amp; Details</th>
           </tr>
         </thead>
         <tbody>
           ${top.map((r, i) => `
             <tr>
-              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span></td>
-              <td>
+              <td class="col-rank">
+                <span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span>
+              </td>
+              <td class="col-product">
                 <div class="brand">${esc(r.brand)}</div>
-                <span class="product">${esc(r.product)}</span>
-                <span class="muted">${esc(r.flavour)}</span>
+                <div class="product">${esc(r.product)}</div>
+                <div class="product-tags">
+                  <span class="badge">${esc(r.type)}</span>
+                  <span class="flavour-tag">${esc(r.flavour)}</span>
+                </div>
               </td>
-              <td><span class="badge">${esc(r.type)}</span><br><span class="muted">${esc(r.subclass || '')}</span></td>
-              <td><span class="value">${r.kg} kg</span></td>
-              <td class="value">${money(r.price)}</td>
-              <td class="value cost">
-                ${money(r.cost * 24)}
-                <span class="muted">(${money(r.cost)}/g)</span>
+              <td class="col-price">
+                <div class="value price-main">${money(r.price)}</div>
+                <div class="muted">${r.kg} kg pack</div>
               </td>
-              <td class="value">${number(r.protein)}%</td>
-              <td class="value">${r.energy ? number(r.energy) + ' kcal' : '<span class="muted">~390 kcal</span>'}</td>
-              <td><span class="score-pill">${r.score.toFixed(1)}</span></td>
-              <td><button data-cat="protein" data-id="${esc(r.id)}">View Details ↗</button></td>
+              <td class="col-scoop">
+                <div class="value cost">${money(r.cost * 24)}</div>
+                <div class="muted">(${money(r.cost)} / g protein)</div>
+              </td>
+              <td class="col-protein">
+                <div class="value">${number(r.protein)}% protein</div>
+                <div class="muted">${r.energy ? number(r.energy) + ' kcal' : '~390 kcal'}</div>
+              </td>
+              <td class="col-score">
+                <div class="score-action-cell">
+                  <span class="score-pill">${r.score.toFixed(1)}</span>
+                  <button data-cat="protein" data-id="${esc(r.id)}">Details ↗</button>
+                </div>
+              </td>
             </tr>
           `).join('')}
         </tbody>
@@ -67,43 +74,50 @@ function renderCreatineTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="scroll-hint"><span>⇄ Swipe horizontally to compare all specs</span></div>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Creatine Powders by Value">
-      <table>
+    <div class="table-wrap" role="region" aria-label="Top 10 Creatine Powders by Value">
+      <table class="rankings-table">
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Brand &amp; Product</th>
-            <th>Creatine Form</th>
-            <th>Pack Size</th>
-            <th>Price</th>
-            <th>Cost / 3g Dose</th>
-            <th>Purity %</th>
-            <th>Formulation</th>
-            <th>Value Score</th>
-            <th>Details</th>
+            <th class="col-rank">Rank</th>
+            <th class="col-product">Brand &amp; Product</th>
+            <th class="col-price">Price &amp; Size</th>
+            <th class="col-scoop">Cost / 3g Dose</th>
+            <th class="col-protein">Purity &amp; Form</th>
+            <th class="col-score">Value Score &amp; Details</th>
           </tr>
         </thead>
         <tbody>
           ${top.map((r, i) => `
             <tr>
-              <td><span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span></td>
-              <td>
+              <td class="col-rank">
+                <span class="rank-badge ${i < 3 ? 'rank-top' : ''}">#${i + 1}</span>
+              </td>
+              <td class="col-product">
                 <div class="brand">${esc(r.brand)}</div>
-                <span class="product">${esc(r.product)}</span>
-                <span class="muted">${esc(r.flavour)}${r.packaging ? ' · ' + esc(r.packaging) : ''}</span>
+                <div class="product">${esc(r.product)}</div>
+                <div class="product-tags">
+                  <span class="badge">${esc(r.type)}</span>
+                  <span class="flavour-tag">${esc(r.flavour)}${r.packaging ? ' · ' + esc(r.packaging) : ''}</span>
+                </div>
               </td>
-              <td><span class="badge">${esc(r.type)}</span><br><span class="muted">${esc(r.subclass || '')}</span></td>
-              <td><span class="value">${r.grams} g</span></td>
-              <td class="value">${money(r.price)}</td>
-              <td class="value cost">
-                ${money(r.cost * 3)}
-                <span class="muted">(${money(r.cost)}/g)</span>
+              <td class="col-price">
+                <div class="value price-main">${money(r.price)}</div>
+                <div class="muted">${r.grams} g pack</div>
               </td>
-              <td class="value">${number(r.creatine)}%</td>
-              <td class="muted">${esc(r.grade !== 'Not specified' ? r.grade + ' · ' : '')}${esc(r.formulation)}</td>
-              <td><span class="score-pill">${r.score.toFixed(1)}</span></td>
-              <td><button data-cat="creatine" data-id="${esc(r.id)}">View Details ↗</button></td>
+              <td class="col-scoop">
+                <div class="value cost">${money(r.cost * 3)}</div>
+                <div class="muted">(${money(r.cost)} / g compound)</div>
+              </td>
+              <td class="col-protein">
+                <div class="value">${number(r.creatine)}% pure</div>
+                <div class="muted">${esc(r.grade !== 'Not specified' ? r.grade : r.formulation)}</div>
+              </td>
+              <td class="col-score">
+                <div class="score-action-cell">
+                  <span class="score-pill">${r.score.toFixed(1)}</span>
+                  <button data-cat="creatine" data-id="${esc(r.id)}">Details ↗</button>
+                </div>
+              </td>
             </tr>
           `).join('')}
         </tbody>
