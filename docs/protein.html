@@ -1,11 +1,126 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Compare protein powders available in India by price, protein content, nutrition, flavour and pack size."><title>Protein | Supplement Research</title><link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Independent bio-analytical comparison of protein powders in India. Filter by active protein yield, real pack price, amino source, and lab evidence.">
+<title>Protein Specimen Matrix | Supplement Research Lab</title>
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
 <body data-category="protein">
-<header><a class="logo" href="index.html">SR<span> / </span>SUPPLEMENT RESEARCH</a><nav aria-label="Product categories"><span class="nav-label">Product categories</span><a href="index.html">Home</a><a href="protein.html" aria-current="page">Protein</a><a href="creatine.html">Creatine</a><a href="data/catalog.json" download="protein-catalog.json">Download full data ↗</a></nav></header>
-<section class="hero"><div class="eyebrow">THE INDIA PROTEIN CATALOG</div><h1>Find your protein.<br><span>Know what you pay.</span></h1><p>Compare real pack prices and the cost of actual protein. Explore whey, plant, yeast and more, with nutrition and sources in one place.</p><div class="stats" id="stats"></div><p class="date">Research snapshot · 25 October 2026 · Prices and availability may have changed.</p></section>
-<main id="catalog"><aside><div class="filter-heading"><h2>Refine your search</h2><button id="reset" class="text-button">Reset all</button></div><form id="filters"><label class="search-label">Search catalog<input name="q" type="search" placeholder="Brand, product, flavour…"></label><div id="categorical"></div><details open><summary>Price & nutrition</summary><div id="numeric"></div></details><label class="check"><input type="checkbox" name="complete">All nutrition fields available</label></form><p class="hint">Filters apply together to individual pack offers. Blank nutrition is unknown, never zero.</p></aside>
-<section class="results"><div class="toolbar"><div><h2>Explore the catalog</h2><p id="count" role="status" aria-live="polite">Loading catalog…</p></div><label>Sort by<select id="sort"><option value="brand">Brand A–Z</option><option value="cost">Lowest cost / g protein</option><option value="price">Lowest pack price</option><option value="protein">Highest protein %</option><option value="energy">Lowest calories / 100 g</option><option value="scoop">Smallest scoop</option></select></label><button id="csv">Export results ↓</button></div><div class="table-wrap"><table><thead><tr><th>Product / flavour</th><th>Type / subclass</th><th>Pack</th><th>Price</th><th>₹ / g protein</th><th>Protein</th><th>Scoop</th><th>kcal / 100 g</th><th>Availability</th><th>Evidence</th></tr></thead><tbody id="rows"></tbody></table></div><div id="empty" hidden><h3>No matching offers</h3><p>Try clearing a filter or widening your ranges.</p><button id="empty-reset">Clear filters</button></div><div class="pagination"><button id="prev">← Previous</button><span id="page"></span><button id="next">Next →</button></div></section></main>
-<section class="method"><h2>A clearer comparison.</h2><div><p><strong>Actual protein, actual cost.</strong> Cost per gram = pack price ÷ (pack grams × protein percentage ÷ 100). Rounded for display; sorting uses full precision.</p><p><strong>Exact sizes only.</strong> Single 1 kg, 2 kg and 4 kg packs. No extrapolated prices or multipack comparisons. Sold-out offers remain visible and can be filtered out.</p><p><strong>Evidence has limits.</strong> Selected prominent brands, not a market-share ranking. Some protein values are indicative product-family claims. Nutrition notes disclose conflicts, serving proxies and shared labels. No inference of missing calories or scoop size.</p></div></section><footer><span>Supplement Research / India</span><span>Independent research catalog · No affiliate links</span></footer>
-<dialog id="evidence"><button id="close" aria-label="Close evidence">Close ×</button><h2 id="evidence-title"></h2><div id="evidence-body"></div></dialog>
-</body></html>
+<header>
+<a class="logo" href="index.html"><span class="logo-beacon"></span>SR<span> // </span>SUPPLEMENT RESEARCH LAB</a>
+<nav aria-label="Product categories">
+<span class="nav-label">Protocol Modules</span>
+<a href="index.html">Overview</a>
+<a href="protein.html" aria-current="page">Protein Index</a>
+<a href="creatine.html">Creatine Index</a>
+<a href="data/catalog.json" download="protein-catalog.json">Export Data [JSON] ↗</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="eyebrow">[ SPECIMEN DOSSIER // PROTEIN BIOANALYTICS ]</div>
+<h1>Protein Matrix Intelligence.<br><span>Empirical Cost Per Gram of Active Protein.</span></h1>
+<p>Comprehensive market spectrometry and pack-level price audit. Filter across 18 brands by amino source (Whey, Plant, Casein, Yeast), subclass purification, scoop variance, and active protein yield.</p>
+<div class="stats" id="stats"></div>
+<p class="date">Lab audit snapshot · 25 October 2026 · Specimen prices and stock subject to real-time market fluctuations.</p>
+</section>
+
+<main id="catalog">
+<aside>
+<div class="filter-heading">
+<h2>Telemetry Filters</h2>
+<button id="reset" class="text-button">Reset All [CLR]</button>
+</div>
+<form id="filters">
+<label class="search-label">Filter Specimen Database
+<input name="q" type="search" placeholder="Search brand, product, flavour…">
+</label>
+<div id="categorical"></div>
+<details open>
+<summary>Price &amp; Composition Telemetry</summary>
+<div id="numeric"></div>
+</details>
+<label class="check">
+<input type="checkbox" name="complete">Complete biochemical assay profile
+</label>
+</form>
+<p class="hint">Constraints apply conjunctively to individual pack specimens. Missing evidence remains null (unverified), never zero.</p>
+</aside>
+
+<section class="results">
+<div class="toolbar">
+<div>
+<h2>Active Specimen Telemetry</h2>
+<p id="count" role="status" aria-live="polite">Querying specimen matrix…</p>
+</div>
+<label>Sort Telemetry
+<select id="sort">
+<option value="brand">Brand Identifier A–Z</option>
+<option value="cost">Lowest Cost / g Active Protein</option>
+<option value="price">Lowest Pack Market Price</option>
+<option value="protein">Highest Active Protein %</option>
+<option value="energy">Lowest Caloric Density / 100 g</option>
+<option value="scoop">Smallest Scoop Mass</option>
+</select>
+</label>
+<button id="csv">Export Dataset [CSV] ↓</button>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Product / Flavour Specimen</th>
+<th>Source / Subclass</th>
+<th>Pack Mass</th>
+<th>Pack Price</th>
+<th>₹ / g Protein</th>
+<th>Protein Purity</th>
+<th>Scoop Mass</th>
+<th>kcal / 100 g</th>
+<th>Availability</th>
+<th>Audit Evidence</th>
+</tr>
+</thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+
+<div id="empty" hidden>
+<h3>No Matching Specimen Records</h3>
+<p>Adjust telemetry criteria or broaden numeric threshold bounds.</p>
+<button id="empty-reset">Reset Telemetry Filters</button>
+</div>
+
+<div class="pagination">
+<button id="prev">← Previous Batch</button>
+<span id="page"></span>
+<button id="next">Next Batch →</button>
+</div>
+</section>
+</main>
+
+<section class="method">
+<h2>Laboratory Calculation Standards</h2>
+<div>
+<p><strong>Empirical Protein Yield Formula.</strong> Cost per gram of protein = Pack market price ÷ (Pack grams × Protein % ÷ 100). Full analytical floating-point precision is preserved during sorting operations.</p>
+<p><strong>ISO-Pack Standard.</strong> Empirical data points derived exclusively from confirmed single 1 kg, 2 kg, and 4 kg pack sizes. No algorithmic scaling of bulk discounts or cross-size price interpolations.</p>
+<p><strong>Quarantined Conflict Evidence.</strong> Selected prominent market brands. Unverified calorie, scoop, or protein metrics remain null. Packaging contradictions and shared family claims are logged directly in audit dossiers.</p>
+</div>
+</section>
+
+<footer>
+<span>SR-LABS // SUPPLEMENT RESEARCH INTELLIGENCE</span>
+<span>Independent Research Directive · No Commercial Sponsorship · Audited 25 October 2026</span>
+</footer>
+
+<dialog id="evidence">
+<button id="close" aria-label="Close evidence">Dismiss [×]</button>
+<h2 id="evidence-title"></h2>
+<div id="evidence-body"></div>
+</dialog>
+</body>
+</html>

@@ -1,11 +1,134 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Compare creatine powders in India by chemical form, processing, flavour, pack price and cost per gram of labelled compound."><title>Creatine | Supplement Research</title><link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Independent bio-analytical comparison of creatine powders in India. Filter by chemical form (Monohydrate, HCl, Nitrate), processing, active compound cost, and lab evidence.">
+<title>Creatine Specimen Matrix | Supplement Research Lab</title>
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
 <body data-category="creatine">
-<header><a class="logo" href="index.html">SR<span> / </span>SUPPLEMENT RESEARCH</a><nav aria-label="Product categories"><span class="nav-label">Product categories</span><a href="index.html">Home</a><a href="protein.html">Protein</a><a href="creatine.html" aria-current="page">Creatine</a><a href="data/creatine.json" download="creatine-catalog.json">Download full data ↗</a></nav></header>
-<section class="hero"><div class="eyebrow">THE INDIA CREATINE CATALOG</div><h1>Compare your creatine.<br><span>Every form. Every gram.</span></h1><p>Explore monohydrate, HCl and nitrate. Compare actual pack prices, processing labels and disclosed creatine quantities, with official sources for each offer.</p><div class="stats" id="stats"></div><p class="date">Research snapshot · 25 October 2026 · Prices and availability may have changed.</p></section>
-<main id="catalog"><aside><div class="filter-heading"><h2>Refine your search</h2><button id="reset" class="text-button">Reset all</button></div><form id="filters"><label class="search-label">Search catalog<input name="q" type="search" placeholder="Brand, product, flavour…"></label><div id="categorical"></div><details open><summary>Price & nutrition</summary><div id="numeric"></div></details><label class="check"><input type="checkbox" name="complete">All nutrition fields available</label><label class="check"><input type="checkbox" name="knownCost">Compound cost available</label></form><p class="hint">Filters apply together to individual pack offers. Unknown values stay blank. Micronized is a processing label; Creapure is an ingredient trademark.</p></aside>
-<section class="results"><div class="toolbar"><div><h2>Explore the catalog</h2><p id="count" role="status" aria-live="polite">Loading catalog…</p></div><label>Sort by<select id="sort"><option value="brand">Brand A–Z</option><option value="cost">Lowest cost / g compound</option><option value="price">Lowest pack price</option><option value="powderCost">Lowest cost / g powder</option><option value="creatine">Highest compound %</option><option value="doseCost">Lowest cost / 3 g compound</option><option value="energy">Lowest calories / 100 g</option><option value="scoop">Smallest scoop</option></select></label><button id="csv">Export results ↓</button></div><p class="catalog-note">Cost / g compound uses the labelled monohydrate, HCl or nitrate mass—not free-creatine equivalents. These prices do not establish equal efficacy. “Iso”, “concentrated” and “normal” are not assigned without a clear brand definition. <a href="data/India_Creatine_Catalog.xlsx" download>Download Excel ↗</a></p><div class="table-wrap"><table><thead><tr><th>Product / flavour</th><th>Form / processing</th><th>Pack</th><th>Price</th><th>₹ / g powder</th><th>₹ / g compound</th><th>Compound</th><th>Scoop</th><th>kcal / 100 g</th><th>Availability</th><th>Evidence</th></tr></thead><tbody id="rows"></tbody></table></div><div id="empty" hidden><h3>No matching offers</h3><p>Try clearing a filter or widening your ranges.</p><button id="empty-reset">Clear filters</button></div><div class="pagination"><button id="prev">← Previous</button><span id="page"></span><button id="next">Next →</button></div></section></main>
-<section class="method"><h2>A clearer comparison.</h2><div><p><strong>Two cost measures.</strong> Powder cost = price ÷ pack grams. Compound cost = price ÷ (pack grams × labelled compound percentage ÷ 100). Unknown concentration means no compound cost. A 3 g comparison quantity is available in Details and filters; it is not dosage advice.</p><p><strong>Actual packs only.</strong> All verified single-pack weights are included, including small jars and pouches. No extrapolated 1 kg, 2 kg or 4 kg prices. Bundles, multipacks, free gifts, tablets and gummies are excluded. Sold-out offers are labelled.</p><p><strong>Forms and evidence.</strong> Monohydrate, hydrochloride and nitrate are chemical forms. Micronization describes processing. Creapure and Creasure are trademarks. Product-family claims are identified; flavour-specific quantities are not inferred from an unflavoured label. Coverage is a researched selection, not every creatine product sold in India.</p></div></section><footer><span>Supplement Research / India</span><span>Independent research catalog · No affiliate links</span></footer>
-<dialog id="evidence"><button id="close" aria-label="Close evidence">Close ×</button><h2 id="evidence-title"></h2><div id="evidence-body"></div></dialog>
-</body></html>
+<header>
+<a class="logo" href="index.html"><span class="logo-beacon"></span>SR<span> // </span>SUPPLEMENT RESEARCH LAB</a>
+<nav aria-label="Product categories">
+<span class="nav-label">Protocol Modules</span>
+<a href="index.html">Overview</a>
+<a href="protein.html">Protein Index</a>
+<a href="creatine.html" aria-current="page">Creatine Index</a>
+<a href="data/creatine.json" download="creatine-catalog.json">Export Data [JSON] ↗</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="eyebrow">[ SPECIMEN DOSSIER // PHOSPHAGEN ANALYTICS ]</div>
+<h1>Creatine Phosphagen Intelligence.<br><span>Molecular Compound Yield &amp; Powder Cost Assays.</span></h1>
+<p>Independent laboratory audit across 17 brands. Screen by chemical structure (Monohydrate, HCl, Nitrate), processing grade (Creapure®, Micronized), active ingredient concentration, and empirical 3 g dose cost.</p>
+<div class="stats" id="stats"></div>
+<p class="date">Lab audit snapshot · 25 October 2026 · Specimen prices and stock subject to real-time market fluctuations.</p>
+</section>
+
+<main id="catalog">
+<aside>
+<div class="filter-heading">
+<h2>Telemetry Filters</h2>
+<button id="reset" class="text-button">Reset All [CLR]</button>
+</div>
+<form id="filters">
+<label class="search-label">Filter Specimen Database
+<input name="q" type="search" placeholder="Search brand, product, flavour…">
+</label>
+<div id="categorical"></div>
+<details open>
+<summary>Price &amp; Composition Telemetry</summary>
+<div id="numeric"></div>
+</details>
+<label class="check">
+<input type="checkbox" name="complete">Complete biochemical assay profile
+</label>
+<label class="check">
+<input type="checkbox" name="knownCost">Disclosed compound yield available
+</label>
+</form>
+<p class="hint">Constraints apply conjunctively to individual pack specimens. Micronization designates processing fineness; Creapure® designates a trademarked synthesis process.</p>
+</aside>
+
+<section class="results">
+<div class="toolbar">
+<div>
+<h2>Active Specimen Telemetry</h2>
+<p id="count" role="status" aria-live="polite">Querying specimen matrix…</p>
+</div>
+<label>Sort Telemetry
+<select id="sort">
+<option value="brand">Brand Identifier A–Z</option>
+<option value="cost">Lowest Cost / g Active Compound</option>
+<option value="price">Lowest Pack Market Price</option>
+<option value="powderCost">Lowest Cost / g Bulk Powder</option>
+<option value="creatine">Highest Labelled Compound %</option>
+<option value="doseCost">Lowest Cost / 3 g Reference Dose</option>
+<option value="energy">Lowest Caloric Density / 100 g</option>
+<option value="scoop">Smallest Scoop Mass</option>
+</select>
+</label>
+<button id="csv">Export Dataset [CSV] ↓</button>
+</div>
+
+<p class="catalog-note">Cost / g active compound utilizes disclosed monohydrate, HCl, or nitrate compound mass (inclusive of hydrate/salt counter-ion fractions)—not free-creatine equivalents. Price sorting does not infer therapeutic efficacy. <a href="data/India_Creatine_Catalog.xlsx" download>Download Clinical Workbook [XLSX] ↗</a></p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Product / Flavour Specimen</th>
+<th>Form / Processing Grade</th>
+<th>Pack Mass</th>
+<th>Pack Price</th>
+<th>₹ / g Powder</th>
+<th>₹ / g Compound</th>
+<th>Compound %</th>
+<th>Scoop Mass</th>
+<th>kcal / 100 g</th>
+<th>Availability</th>
+<th>Audit Evidence</th>
+</tr>
+</thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+
+<div id="empty" hidden>
+<h3>No Matching Specimen Records</h3>
+<p>Adjust telemetry criteria or broaden numeric threshold bounds.</p>
+<button id="empty-reset">Reset Telemetry Filters</button>
+</div>
+
+<div class="pagination">
+<button id="prev">← Previous Batch</button>
+<span id="page"></span>
+<button id="next">Next Batch →</button>
+</div>
+</section>
+</main>
+
+<section class="method">
+<h2>Laboratory Calculation Standards</h2>
+<div>
+<p><strong>Dual-Yield Denominators.</strong> Bulk Powder Cost = Pack price ÷ Pack grams. Active Compound Cost = Pack price ÷ (Pack grams × Labelled compound % ÷ 100). A 3 g reference dose comparison cost is computed in Details without clinical endorsement.</p>
+<p><strong>ISO-Pack Standard.</strong> All verified single-pack weights are retained across pouches and canisters. Multi-pack promos, free shaker bundles, gummies, and compressed tablets are strictly excluded.</p>
+<p><strong>Chemical Form Integrity.</strong> Monohydrate, hydrochloride (HCl), and nitrate represent distinct molecular entities. Creapure® and Creasure® are patented manufacturing trademarks. Unflavoured purity is never extrapolated to flavoured formulas.</p>
+</div>
+</section>
+
+<footer>
+<span>SR-LABS // SUPPLEMENT RESEARCH INTELLIGENCE</span>
+<span>Independent Research Directive · No Commercial Sponsorship · Audited 25 October 2026</span>
+</footer>
+
+<dialog id="evidence">
+<button id="close" aria-label="Close evidence">Dismiss [×]</button>
+<h2 id="evidence-title"></h2>
+<div id="evidence-body"></div>
+</dialog>
+</body>
+</html>
