@@ -1758,6 +1758,7 @@ dialog select {
   /* Tables on mobile */
   .table-wrap {
     border-radius: 6px;
+    position: relative;
   }
 
   table {
@@ -1767,6 +1768,54 @@ dialog select {
 
   th, td {
     padding: 10px 10px;
+  }
+
+  /* Ensure rankings-table displays as a clean table with headers, overriding styles.css !important display:block */
+  .rankings-table {
+    display: table !important;
+    width: 100% !important;
+    min-width: 680px !important;
+  }
+  .rankings-table thead {
+    display: table-header-group !important;
+  }
+  .rankings-table tbody {
+    display: table-row-group !important;
+  }
+  .rankings-table tr {
+    display: table-row !important;
+    padding: 0 !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    background: transparent !important;
+  }
+  .rankings-table th,
+  .rankings-table td {
+    display: table-cell !important;
+    width: auto !important;
+    padding: 10px 12px !important;
+    text-align: left !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+  }
+  .rankings-table th.col-num,
+  .rankings-table td.col-num {
+    text-align: right !important;
+  }
+
+  /* Sticky first column on mobile for effortless comparison while swiping */
+  .table-wrap table th:first-child,
+  .table-wrap table td:first-child {
+    position: sticky;
+    left: 0;
+    background: #ffffff;
+    z-index: 2;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  }
+  .table-wrap table th:first-child {
+    background: var(--bg-table-head, #f8fafc);
+    z-index: 3;
+  }
+  .table-wrap table tbody tr:hover td:first-child {
+    background: #f8fafc;
   }
 
   /* Pagination on mobile */
