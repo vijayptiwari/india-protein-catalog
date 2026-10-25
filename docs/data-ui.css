@@ -602,11 +602,60 @@ aside input[type="search"] {
 
 #categorical summary,
 .filter-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   padding: 4px 0;
   font-size: 13px;
   font-weight: 700;
   color: var(--text-title);
   cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+#categorical summary::-webkit-details-marker,
+.filter-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.filter-count {
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 1px 7px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-family: var(--font-mono);
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+}
+
+#categorical summary::after,
+.filter-details summary::after {
+  content: '+';
+  color: var(--accent-blue, #2563eb);
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+  width: 14px;
+  text-align: center;
+}
+
+#categorical details[open] summary::after,
+.filter-details[open] summary::after {
+  content: '–';
 }
 
 #categorical select[multiple] {
