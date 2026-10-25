@@ -1,4 +1,4 @@
-import { scoreProtein, scoreCreatine, formatTrendBadge } from './core.js';
+import { scoreProtein, scoreCreatine, formatTrendBadge, priceAuditNotice, priceAuditFlag } from './core.js';
 import { getBrandInfo } from './brands.js';
 
 const $ = s => document.querySelector(s);
@@ -45,7 +45,7 @@ function renderProteinTable() {
                 </div>
               </td>
               <td class="col-price">
-                <div class="value price-main">${money(r.price)}</div>
+                <div class="value price-main">${money(r.price)}${priceAuditFlag(r)}</div>
                 <div style="margin-top: 3px;">${formatTrendBadge(r.trend, r.isNew)}</div>
                 <div class="muted">${r.kg} kg pack</div>
               </td>
@@ -105,7 +105,7 @@ function renderCreatineTable() {
                 </div>
               </td>
               <td class="col-price">
-                <div class="value price-main">${money(r.price)}</div>
+                <div class="value price-main">${money(r.price)}${priceAuditFlag(r)}</div>
                 <div style="margin-top: 3px;">${formatTrendBadge(r.trend, r.isNew)}</div>
                 <div class="muted">${r.grams} g pack</div>
               </td>
@@ -218,7 +218,7 @@ function showDossier(cat, id) {
       ${isCreatine ? `<br>Active Creatine per Serving: ${number(r.creatineServing)} g` : ''}
     </p>
     <p><strong>Exact Price &amp; Value Breakdown:</strong><br>
-      Pack Price: <strong>${money(r.price)}</strong> for ${isCreatine ? r.grams + ' g' : r.kg + ' kg'}<br>
+      Pack Price: <strong>${money(r.price)}${priceAuditFlag(r)}</strong> for ${isCreatine ? r.grams + ' g' : r.kg + ' kg'}<br>
       Protein / Creatine Purity: <strong>${number(concentration)}%</strong><br>
       Cost per Gram: <strong>${money(r.cost)} / g</strong><br>
       ${isCreatine ? `Standard 3g Daily Dose Cost: <strong>${money(r.cost * 3)}</strong>` : `Standard 24g Protein Scoop Cost: <strong>${money(r.cost * 24)}</strong>`}
@@ -243,6 +243,7 @@ async function init() {
 
     proteinOffers = pData.offers;
     creatineOffers = cData.offers;
+    document.querySelector('.hero')?.insertAdjacentHTML('afterend',priceAuditNotice([...proteinOffers,...creatineOffers]));
 
     // Calculate score for each
     for (const r of proteinOffers) {

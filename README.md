@@ -12,6 +12,14 @@ Creatine prices have two denominators: net powder mass, and the labelled creatin
 
 ## Features
 
+### Price history audit
+
+The Q3 2026 audit compares the latest retrievable exact-variant official-store observation dated **1 July–30 September 2026** with the verified selling price on **25 October 2026**. This is a comparison of dated listed-price snapshots, not a quarter average or completed Q4 trend. Every numeric change has a dated source and an exact variant/SKU or product, flavour and weight match. Archived variant IDs with different weight/flavour labels are rejected. Unavailable historical quotes implying changes over 100% require corroboration and are excluded until then; the original quoted value and reason remain in the audit export and observation ledger.
+
+Green means a decrease, red an increase, blue verified unchanged, and grey missing verified history. Unverified current prices carry a separate amber marker. Group summaries disclose partial evidence or mixed directions rather than averaging away missing values. Generated launch dates and historical prices have been removed; the old synthetic generators are disabled.
+
+Download `docs/data/price-audit.csv` for every offer's audit, `price-audit.json` for machine-readable coverage, and `price-observations.json` for dated evidence. These remain separate from nutrition assumptions. `scripts/quarter_price_audit.py --archives --live --fetch-archives --selected` collects sources; `scripts/apply_quarter_audit.py` applies only exact matches and retains unverified catalog prices with explicit flags. Raw responses and the pre-audit data are retained locally under `outputs/quarter_audit_20261025`. Never substitute an MRP discount, a marketplace price, another flavour/weight, or today's live page for historical evidence.
+
 - Search and multi-select filters for brand, product, protein source, subclass, flavour, pack size and stock.
 - Minimum/maximum filters for pack price, cost per gram of actual protein, protein percentage, scoop size and calories per 100 g.
 - Nutrition completeness filter, sorting, pagination, shareable filter URLs, filtered CSV and full JSON download.
