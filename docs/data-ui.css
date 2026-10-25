@@ -459,11 +459,11 @@ footer {
 /* History Chart in Modal */
 .history-chart {
   overflow-x: auto;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   margin: 18px 0;
   background: #f8fafc;
-  padding: 16px;
+  padding: 18px 14px 14px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -474,71 +474,28 @@ footer {
 }
 
 .history-chart text {
-  font: 11.5px var(--font-sans);
+  font: 11px var(--font-sans);
   fill: #64748b;
   font-weight: 500;
 }
 
-/* Observation Cards Grid */
-.observation-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 14px;
-  margin-top: 16px;
-}
-
-.observation-card {
-  padding: 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius-sm);
-  font-size: 12.5px;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 6px;
-}
-
-.observation-card strong {
-  font-size: 13.5px;
-  color: #0f172a;
-}
-
-.observation-card .big-price {
-  font-size: 21px;
+.history-chart text.chart-price-label {
+  font-size: 11.5px;
+  font-weight: 700;
   font-family: var(--font-mono);
-  font-weight: 800;
-  color: #0f172a;
-  margin: 4px 0;
+  fill: #0f172a;
 }
 
-.observation-card.history-down {
-  border-top: 3px solid #059669;
-  background: #f0fdf4;
+.history-chart text.chart-missing-label {
+  font-size: 13px;
+  font-weight: 600;
+  fill: #94a3b8;
 }
 
-.observation-card.history-up {
-  border-top: 3px solid #dc2626;
-  background: #fef2f2;
-}
-
-.observation-card.history-stable {
-  border-top: 3px solid #2563eb;
-  background: #eff6ff;
-}
-
-.observation-card.history-missing {
-  background: #f8fafc;
-  border-style: dashed;
-  color: #64748b;
-}
-
-.observation-card.history-missing .big-price {
-  color: #94a3b8;
-}
-
-.offer-history .observation-grid {
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+.history-chart text.chart-quarter-label {
+  font-size: 11px;
+  fill: #64748b;
+  font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
@@ -1855,11 +1812,7 @@ dialog select {
   }
 
   .history-chart svg {
-    min-width: 580px;
-  }
-
-  .observation-grid {
-    grid-template-columns: 1fr;
+    min-width: 640px;
   }
 }
 
