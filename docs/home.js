@@ -16,7 +16,8 @@ function renderProteinTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="table-wrap">
+    <div class="scroll-hint"><span>⇄ Swipe horizontally to inspect metrics</span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Protein Bio-Efficiency Rankings">
       <table>
         <thead>
           <tr>
@@ -63,7 +64,8 @@ function renderCreatineTable() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="table-wrap">
+    <div class="scroll-hint"><span>⇄ Swipe horizontally to inspect metrics</span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Top 10 Creatine Bio-Efficiency Rankings">
       <table>
         <thead>
           <tr>
