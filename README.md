@@ -2,11 +2,11 @@
 
 [Website](https://vijayptiwari.github.io/supplement-research/) · [GitHub project](https://github.com/vijayptiwari/supplement-research)
 
-Product categories: **Protein** (home page) and **Creatine** (`creatine.html`). Both share the same filtering interface and keep their own category-specific data and pricing measures.
+Product categories: **Protein** (`protein.html`) and **Creatine** (`creatine.html`), accessible from the **Supplement Research** homepage (`index.html`). Both categories share the same filtering interface and keep their own category-specific data and pricing measures.
 
-A static comparison website for 504 protein product/flavour listings across 18 brands, with 799 exact 1 kg, 2 kg and 4 kg pack offers. Research snapshot: **25 October 2026**. Prices and stock are not live.
+The **Protein** catalog provides a static comparison website for 504 protein product/flavour listings across 18 brands, with 799 exact 1 kg, 2 kg and 4 kg pack offers. Research snapshot: **25 October 2026**. Prices and stock are not live.
 
-The **Creatine** tab adds a separate researched catalog across 17 brands. It includes monohydrate, hydrochloride (HCl) and nitrate; actual single-pack weights; processing labels; ingredient trademarks; formulations; and flavours. Download the creatine workbook from that page.
+The **Creatine** catalog adds a separate researched catalog across 17 brands. It includes monohydrate, hydrochloride (HCl) and nitrate; actual single-pack weights; processing labels; ingredient trademarks; formulations; and flavours. Download the creatine workbook from that page.
 
 Creatine prices have two denominators: net powder mass, and the labelled creatine compound mass where disclosed. Compound cost is **not** a free-creatine-equivalent comparison or an equal-efficacy claim across chemical forms. A 3 g comparison cost is available in Details and filters; it is not a dosing recommendation. Missing evidence stays null and excluded from applicable numeric constraints.
 

@@ -1,11 +1,138 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Compare protein powders available in India by price, protein content, nutrition, flavour and pack size."><title>Protein | Supplement Research</title><link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Evidence-based supplement research in India. Compare protein powders and creatine by actual nutrient content, verified single-pack pricing, and official lab/label sources.">
+<title>Supplement Research — India | Independent Evidence & Cost Comparison</title>
+<link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<header><a class="logo" href="./">SR<span> / </span>SUPPLEMENT RESEARCH</a><nav aria-label="Product categories"><span class="nav-label">Product categories</span><a href="./" aria-current="page">Protein</a><a href="creatine.html">Creatine</a><a href="data/catalog.json" download>Download full data ↗</a></nav></header>
-<section class="hero"><div class="eyebrow">THE INDIA PROTEIN CATALOG</div><h1>Find your protein.<br><span>Know what you pay.</span></h1><p>Compare real pack prices and the cost of actual protein. Explore whey, plant, yeast and more, with nutrition and sources in one place.</p><div class="stats" id="stats"></div><p class="date">Research snapshot · 25 October 2026 · Prices and availability may have changed.</p></section>
-<main id="catalog"><aside><div class="filter-heading"><h2>Refine your search</h2><button id="reset" class="text-button">Reset all</button></div><form id="filters"><label class="search-label">Search catalog<input name="q" type="search" placeholder="Brand, product, flavour…"></label><div id="categorical"></div><details open><summary>Price & nutrition</summary><div id="numeric"></div></details><label class="check"><input type="checkbox" name="complete">All nutrition fields available</label></form><p class="hint">Filters apply together to individual pack offers. Blank nutrition is unknown, never zero.</p></aside>
-<section class="results"><div class="toolbar"><div><h2>Explore the catalog</h2><p id="count" role="status" aria-live="polite">Loading catalog…</p></div><label>Sort by<select id="sort"><option value="brand">Brand A–Z</option><option value="cost">Lowest cost / g protein</option><option value="price">Lowest pack price</option><option value="protein">Highest protein %</option><option value="energy">Lowest calories / 100 g</option><option value="scoop">Smallest scoop</option></select></label><button id="csv">Export results ↓</button></div><div class="table-wrap"><table><thead><tr><th>Product / flavour</th><th>Type / subclass</th><th>Pack</th><th>Price</th><th>₹ / g protein</th><th>Protein</th><th>Scoop</th><th>kcal / 100 g</th><th>Availability</th><th>Evidence</th></tr></thead><tbody id="rows"></tbody></table></div><div id="empty" hidden><h3>No matching offers</h3><p>Try clearing a filter or widening your ranges.</p><button id="empty-reset">Clear filters</button></div><div class="pagination"><button id="prev">← Previous</button><span id="page"></span><button id="next">Next →</button></div></section></main>
-<section class="method"><h2>A clearer comparison.</h2><div><p><strong>Actual protein, actual cost.</strong> Cost per gram = pack price ÷ (pack grams × protein percentage ÷ 100). Rounded for display; sorting uses full precision.</p><p><strong>Exact sizes only.</strong> Single 1 kg, 2 kg and 4 kg packs. No extrapolated prices or multipack comparisons. Sold-out offers remain visible and can be filtered out.</p><p><strong>Evidence has limits.</strong> Selected prominent brands, not a market-share ranking. Some protein values are indicative product-family claims. Nutrition notes disclose conflicts, serving proxies and shared labels. No inference of missing calories or scoop size.</p></div></section><footer><span>Supplement Research / India</span><span>Independent research catalog · No affiliate links</span></footer>
-<dialog id="evidence"><button id="close" aria-label="Close evidence">Close ×</button><h2 id="evidence-title"></h2><div id="evidence-body"></div></dialog>
-</body></html>
+<header>
+<a class="logo" href="index.html">SR<span> / </span>SUPPLEMENT RESEARCH</a>
+<nav aria-label="Main navigation">
+<span class="nav-label">Product categories</span>
+<a href="index.html" aria-current="page">Home</a>
+<a href="protein.html">Protein</a>
+<a href="creatine.html">Creatine</a>
+<a href="#categories">Explore Categories</a>
+<a href="#method">Methodology</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="eyebrow">INDEPENDENT RESEARCH · INDIA SUPPLEMENT CATALOG</div>
+<h1>Evidence-based supplement research.<br><span>Know what you pay. Verify what you take.</span></h1>
+<p>Transparent, single-pack cost and nutrition comparisons for supplements in India. Zero affiliate links, zero brand sponsorships, exact verified pack offerings, and complete official source evidence.</p>
+<div class="stats">
+<div><strong>2</strong><span>product categories</span></div>
+<div><strong>993</strong><span>exact pack offers</span></div>
+<div><strong>22+</strong><span>researched brands</span></div>
+<div><strong>100%</strong><span>disclosed sources</span></div>
+</div>
+<p class="date">Research snapshot · 25 October 2026 · Prices and availability may have changed.</p>
+</section>
+
+<div class="portal-container" id="categories">
+<div class="section-header">
+<h2 class="section-title">Researched Product Categories</h2>
+<p class="section-desc">Select a category below to explore interactive comparison tables with multi-select filters, sortable cost metrics, and official evidence notes.</p>
+</div>
+
+<div class="category-grid">
+<a class="category-card" href="protein.html">
+<div>
+<span class="card-badge">799 Pack Offers · 18 Brands</span>
+<h3 class="card-title">Protein Powders</h3>
+<p class="card-subtitle">Whey Isolate, Concentrate, Plant Blends &amp; Yeast</p>
+<p class="card-desc">Compare single 1 kg, 2 kg, and 4 kg pack prices against the cost of actual protein. Filter by protein source, subclass, flavour, scoop size, and calorie density.</p>
+<div class="card-stats">
+<div><strong>799</strong><span>exact offers</span></div>
+<div><strong>504</strong><span>listings</span></div>
+<div><strong>18</strong><span>brands</span></div>
+</div>
+<ul class="card-features">
+<li>Cost / g actual protein calculation with full precision</li>
+<li>Standardized single packs (1 kg, 2 kg, 4 kg)</li>
+<li>Complete nutrition &amp; official brand evidence links</li>
+</ul>
+</div>
+<span class="card-button">Explore Protein Catalog →</span>
+</a>
+
+<a class="category-card" href="creatine.html">
+<div>
+<span class="card-badge">194 Single-Pack Offers · 17 Brands</span>
+<h3 class="card-title">Creatine</h3>
+<p class="card-subtitle">Monohydrate, Hydrochloride (HCl) &amp; Nitrate</p>
+<p class="card-desc">Compare verified single-pack weights (jars &amp; pouches) across chemical forms. Distinct metrics for net powder cost, compound concentration, and 3 g reference cost.</p>
+<div class="card-stats">
+<div><strong>194</strong><span>exact offers</span></div>
+<div><strong>3</strong><span>chemical forms</span></div>
+<div><strong>17</strong><span>brands</span></div>
+</div>
+<ul class="card-features">
+<li>Dual pricing: ₹ / g powder &amp; ₹ / g labelled compound</li>
+<li>Formulations: Creapure®, Micronized, and Blends</li>
+<li>Excel workbook download with verified live formulas</li>
+</ul>
+</div>
+<span class="card-button">Explore Creatine Catalog →</span>
+</a>
+</div>
+
+<div class="section-header" id="method">
+<h2 class="section-title">Research Methodology &amp; Standards</h2>
+<p class="section-desc">How we evaluate, verify, and calculate every supplement offer in the catalog.</p>
+</div>
+
+<div class="features-grid">
+<div class="feature-box">
+<h3>Actual Single Packs Only</h3>
+<p>We research actual single-pack selling prices. We never extrapolate prices from a 1 kg pack to assume what a 2 kg pack costs, nor do we scale bulk discounts down. Accessory combos and multipacks are excluded.</p>
+</div>
+<div class="feature-box">
+<h3>Active Nutrient Cost Denominators</h3>
+<p>Pricing uses actual disclosed nutrient mass rather than total powder mass. Flavoured blends are never assumed to have unflavoured 100% purity. Missing values remain null, never zero.</p>
+</div>
+<div class="feature-box">
+<h3>Chemical Form &amp; Trademark Integrity</h3>
+<p>Monohydrate, HCl, and Nitrate are distinct chemical forms. Creapure® and Creasure® are ingredient trademarks, not separate compounds. Costs use the labelled compound, not estimated free-creatine equivalents.</p>
+</div>
+<div class="feature-box">
+<h3>Auditable Evidence Links</h3>
+<p>Every record includes direct links to official store snapshots and nutrition labels. Discrepancies between FAQs, packaging photos, and serving claims are explicitly documented in evidence notes.</p>
+</div>
+</div>
+</div>
+
+<section class="downloads-section" id="downloads">
+<div class="portal-container" style="padding:0">
+<h2 class="section-title">Download Open Research Data</h2>
+<p class="section-desc">The complete researched datasets are available in open JSON and Excel formats for independent research and offline analysis.</p>
+<div class="downloads-grid">
+<a class="download-card" href="data/catalog.json" download="protein-catalog.json">
+<h4>Protein Catalog (JSON)</h4>
+<p>799 exact pack offers, 504 listings, 18 brands, with full nutrition and calculation evidence.</p>
+<span>Download JSON ↗</span>
+</a>
+<a class="download-card" href="data/creatine.json" download="creatine-catalog.json">
+<h4>Creatine Catalog (JSON)</h4>
+<p>194 single-pack offers across 17 brands, covering Monohydrate, HCl, and Nitrate forms.</p>
+<span>Download JSON ↗</span>
+</a>
+<a class="download-card" href="data/India_Creatine_Catalog.xlsx" download>
+<h4>Creatine Catalog (Excel)</h4>
+<p>Formatted spreadsheet with live formulas, number formatting, and methodology reference sheet.</p>
+<span>Download XLSX ↗</span>
+</a>
+</div>
+</div>
+</section>
+
+<footer>
+<span>Supplement Research / India</span>
+<span>Independent research catalog · No affiliate links · Open data</span>
+</footer>
+</body>
+</html>

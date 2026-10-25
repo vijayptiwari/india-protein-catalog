@@ -1,9 +1,9 @@
 import pathlib
 root=pathlib.Path(__file__).resolve().parents[1]
-page=(root/'docs/index.html').read_text(encoding='utf-8')
-page=page.replace('<body>','<body data-category="creatine">').replace('Protein | Supplement Research','Creatine | Supplement Research')
+page=(root/'docs/protein.html').read_text(encoding='utf-8')
+page=page.replace('data-category="protein"','data-category="creatine"').replace('Protein | Supplement Research','Creatine | Supplement Research')
 page=page.replace('Compare protein powders available in India by price, protein content, nutrition, flavour and pack size.','Compare creatine powders in India by chemical form, processing, flavour, pack price and cost per gram of labelled compound.')
-page=page.replace('<a href="./" aria-current="page">Protein</a><a href="creatine.html">Creatine</a>','<a href="./">Protein</a><a href="creatine.html" aria-current="page">Creatine</a>')
+page=page.replace('<a href="protein.html" aria-current="page">Protein</a><a href="creatine.html">Creatine</a>','<a href="protein.html">Protein</a><a href="creatine.html" aria-current="page">Creatine</a>')
 page=page.replace('data/catalog.json','data/creatine.json').replace('THE INDIA PROTEIN CATALOG','THE INDIA CREATINE CATALOG').replace('Find your protein.','Compare your creatine.').replace('Know what you pay.','Every form. Every gram.')
 page=page.replace('Compare real pack prices and the cost of actual protein. Explore whey, plant, yeast and more, with nutrition and sources in one place.','Explore monohydrate, HCl and nitrate. Compare actual pack prices, processing labels and disclosed creatine quantities, with official sources for each offer.')
 page=page.replace('All nutrition fields available</label>','All nutrition fields available</label><label class="check"><input type="checkbox" name="knownCost">Compound cost available</label>')
