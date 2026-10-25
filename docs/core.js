@@ -13,12 +13,13 @@ export function filterOffers(offers,state,category='protein'){return offers.filt
 export function sortOffers(offers,key){return [...offers].sort((a,b)=>{if(key==='brand')return a.brand.localeCompare(b.brand)||a.product.localeCompare(b.product)||a.flavour.localeCompare(b.flavour)||a.kg-b.kg;if(a[key]==null)return b[key]==null?0:1;if(b[key]==null)return -1;return (a[key]-b[key])*(key==='protein'||key==='creatine'?-1:1);});}
 export function csv(offers,category='protein'){
  const keys=category==='creatine'?['brand','product','type','subclass','grade','formulation','flavour','grams','packaging','price','powderCost','cost','doseCost','creatine','scoop','serving','creatineServing','energy','stock','checked','url','nutritionUrl','basis','notes']:['brand','product','type','subclass','flavour','kg','price','cost','protein','scoop','energy','stock','url','nutritionUrl','basis','notes'];
+ keys.unshift('id','category');
+ for(const key of ['checked','grams','referenceCost','referenceGrams','compoundLabel','proteinPerScoop'])if(!keys.includes(key))keys.push(key);
  keys.push('currentPriceStatus','quarterComparisonStatus','baselinePrice','baselineDate','changePct','direction','baselineSource','currentPriceSource');
  const rows=offers.map(r=>({...r,currentPriceStatus:r.priceAudit?.status,quarterComparisonStatus:r.trend?.status,baselinePrice:r.trend?.prevPrice,baselineDate:r.trend?.baselineDate,changePct:r.trend?.pct,direction:r.trend?.direction,baselineSource:r.trend?.baselineSource,currentPriceSource:r.priceAudit?.sourceUrl}));
  return '\uFEFF'+[keys,...rows.map(r=>keys.map(k=>r[k]??''))].map(row=>row.map(x=>'"'+String(x).replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"').join(',')).join('\r\n');
 }
-export function scoreProtein(r){if(r.cost==null||r.protein==null)return 0;const energy=r.energy||390;const calPurity=Math.min(1,(4*r.protein)/energy);const purityRatio=r.protein/100;const yieldPer100=100/r.cost;return yieldPer100*purityRatio*calPurity;}
-export function scoreCreatine(r){if(r.cost==null||r.creatine==null)return 0;const compoundPurity=r.creatine/100;const yieldPer100=100/r.cost;const calClean=(r.energy&&r.energy>0)?Math.max(0.5,1-(r.energy/400)):1.0;return yieldPer100*compoundPurity*calClean;}
+export {scoreProtein,scoreCreatine} from './model.js';
 
 export function groupOffersByProduct(offers, category='protein'){
   const groups = new Map();
@@ -85,9 +86,9 @@ export function groupOffersByProduct(offers, category='protein'){
 export function formatTrendBadge(trend, isNew){
   if(trend?.status==='partial')return `<span class="trend-badge trend-mixed">${trend.verifiedCount}/${trend.total} variants verified</span>`;
   if(trend?.status==='mixed')return '<span class="trend-badge trend-mixed">↕ Mixed variant changes</span>';
-  if(trend?.status!=='verified'||!Number.isFinite(trend.pct))return '<span class="trend-badge trend-unknown" title="No exact-variant dated Q3 comparison is verified. Missing history does not mean unchanged.">? No verified history</span>';
+  if(trend?.status!=='verified'||!Number.isFinite(trend.pct))return '<span class="trend-badge trend-unknown" title="No exact-variant dated comparison is verified. Missing history does not mean unchanged.">? No verified history</span>';
   const n=Math.abs(trend.pct).toLocaleString('en-IN',{maximumFractionDigits:2});
-  const title='Compared with a dated official-store Q3 2026 observation; current quarter is incomplete.';
+  const title='Compared with a dated official-store observation from the previous completed quarter; not a quarterly average.';
   if(trend.direction==='down')return `<span class="trend-badge trend-down" title="${title}">▼ ${n}%</span>`;
   if(trend.direction==='up')return `<span class="trend-badge trend-up" title="${title}">▲ +${n}%</span>`;
   return `<span class="trend-badge trend-stable" title="${title}">─ Unchanged 0%</span>`;
@@ -102,10 +103,5 @@ export function summarizeTrends(trends){
  return {status:'verified',pct:Math.round(valid.reduce((n,t)=>n+t.pct,0)/valid.length*100)/100,direction:valid[0].direction,verifiedCount:valid.length,total:trends.length};
 }
 
-export function priceAuditNotice(offers){
- const comparable=offers.filter(r=>r.trend?.status==='verified').length,current=offers.filter(r=>r.priceAudit?.status==='verified').length;
- return `<section class="price-audit-note" aria-label="Price audit coverage"><strong>Price history audit · Q3 2026 → 25 October 2026</strong><p>${comparable} / ${offers.length} exact pack offers have a verified quarter comparison; ${current} current prices verified. ${offers.length-current} current prices remain unverified and retain their previous catalog value. Baselines are dated official-store observations, not quarterly averages. Q4 is incomplete.</p><div class="trend-legend"><span class="down">▼ Green: decreased</span><span class="up">▲ Red: increased</span><span class="unchanged">─ Blue: unchanged</span><span class="missing">? Grey: no verified history</span></div><a href="data/price-audit.csv" download>Download all offer audit results (CSV) ↗</a> · <a href="data/price-observations.json" download>Dated price observations ↗</a></section>`;
-}
-
-export function priceAuditFlag(offer){return offer.priceAudit?.status==='verified'?'':'<span class="price-unverified" title="This audit could not verify the exact current pack price. Previous catalog value retained.">Price unverified</span>';}
+export function priceAuditFlag(offer){return offer.priceAudit?.status==='verified'?'':'<span class="price-unverified" title="No matching recent dated observation verifies this catalog price. Open details for the evidence date.">Price unverified</span>';}
 

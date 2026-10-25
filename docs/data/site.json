@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "name": "Supplement Research",
+  "baseUrl": "https://vijayptiwari.github.io/supplement-research/",
+  "locale": "en-IN",
+  "currency": "INR",
+  "timezone": "Asia/Kolkata",
+  "rankingLimit": 10,
+  "refreshIntervalMs": 60000,
+  "maxPriceAgeDays": 100,
+  "pageSizes": {"grouped": 15, "flat": 40},
+  "observationsFile": "price-observations.json",
+  "brandsFile": "brands.json",
+  "categories": [
+    {"id": "protein", "label": "Protein", "file": "catalog.json", "page": "protein.html", "concentrationField": "protein", "compoundLabel": "protein", "referenceGrams": 24},
+    {"id": "creatine", "label": "Creatine", "file": "creatine.json", "page": "creatine.html", "concentrationField": "creatine", "compoundLabel": "labelled creatine compound", "referenceGrams": 3}
+  ],
+  "quickPicks": [
+    {"label": "Plant protein", "category": "protein", "typeIncludes": ["plant", "pea", "soy", "rice"]},
+    {"label": "Unflavoured whey", "category": "protein", "typeIncludes": ["whey"], "unflavoured": true},
+    {"label": "Flavoured whey", "category": "protein", "typeIncludes": ["whey"], "unflavoured": false},
+    {"label": "Creatine monohydrate", "category": "creatine", "typeIncludes": ["monohydrate"]}
+  ],
+  "archives": [{"file": "India_Creatine_Catalog.xlsx", "label": "Archived creatine workbook", "dataAsOf": "2026-10-25"}]
+}

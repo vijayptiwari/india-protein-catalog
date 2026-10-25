@@ -2,47 +2,58 @@
 
 [Website](https://vijayptiwari.github.io/supplement-research/) · [GitHub project](https://github.com/vijayptiwari/supplement-research)
 
-Product categories: **Protein** (`protein.html`) and **Creatine** (`creatine.html`), accessible from the **Supplement Research** homepage (`index.html`). Both categories share the same filtering interface and keep their own category-specific data and pricing measures.
+Protein and creatine research from dated public product listings, labels and archived prices. The website is a static app powered by one validated dataset revision. Counts, filter choices, ranges, rankings, costs, evidence coverage, trend colours, dates, examples, metadata and downloads are derived from that revision. No quarterly UI edits are needed.
 
-The **Protein** catalog provides a static comparison website for 504 protein product/flavour listings across 18 brands, with 799 exact 1 kg, 2 kg and 4 kg pack offers. Research snapshot: **25 October 2026**. Prices and stock are not live.
+## Quarterly update workflow
 
-The **Creatine** catalog adds a separate researched catalog across 17 brands. It includes monohydrate, hydrochloride (HCl) and nitrate; actual single-pack weights; processing labels; ingredient trademarks; formulations; and flavours. Download the creatine workbook from that page.
+1. Update `docs/data/catalog.json` and/or `docs/data/creatine.json`. Retain stable offer IDs for the same exact brand, product, flavour, weight and packaging; assign new IDs to different variants. Set each category's `checked` date to the research date in `YYYY-MM-DD` format.
+2. Add dated exact-variant prices to `docs/data/price-observations.json`. Retain old observations, exclusions and reasons. Price evidence must match the offer ID, category and official product URL. Do not extrapolate prices to unavailable sizes or flavours.
+3. Record missing nutrition as `null`, with source URLs, basis and uncertainty in the offer notes. Update price, weight, concentration, energy and scoop inputs only after checking the exact variant. Energy uses **kcal per 100 g**, not kJ or kcal per serving. Creatine concentration uses the **labelled compound**, not a presumed free-creatine equivalent.
+4. Run `npm test` and `npm run build`. Review `dist/data/quality-report.json` and the local site with `npm start`. Fix validation errors; inspect warnings and conflicts. Build errors prevent publication, while explicit unknowns remain visible.
+5. Commit and push the dataset changes to `main`. GitHub Actions validates, builds and deploys `dist/` to GitHub Pages. UI code and generated statistics do not need to be edited.
 
-Creatine prices have two denominators: net powder mass, and the labelled creatine compound mass where disclosed. Compound cost is **not** a free-creatine-equivalent comparison or an equal-efficacy claim across chemical forms. A 3 g comparison cost is available in Details and filters; it is not a dosing recommendation. Missing evidence stays null and excluded from applicable numeric constraints.
+After a successful deployment, an open visible page checks for a new revision every minute, on returning to the tab, and through **Refresh data**. It downloads a new snapshot only when its version changes. Filters, layout, sorting and an open evidence dialog are retained. A failed or corrupt update keeps the last validated revision with an error status. This refreshes the **published research dataset**; it does not check merchant prices live. The status bar distinguishes dataset dates from the browser's last update check.
 
-## Features
+## Source files and calculations
 
-### Price history audit
+- `docs/data/site.json`: category definitions, comparison quantities, ranking limit, freshness policy, quick-pick rules and polling interval.
+- `docs/data/catalog.json`: protein inputs; pack weight in `kg`, labelled `protein` percentage.
+- `docs/data/creatine.json`: creatine inputs; net pack weight in `grams`, labelled `creatine` compound percentage.
+- `docs/data/price-observations.json`: append-only dated evidence ledger (except correcting an explicitly documented mistake).
+- `docs/data/brands.json`: optional official brand directory. Catalog counts and available brands come from offers, so adding a new brand does not require a UI change.
+- `docs/model.js`: shared normalization, validation and calculations used by the browser, build and tests.
 
-The Q3 2026 audit compares the latest retrievable exact-variant official-store observation dated **1 July–30 September 2026** with the verified selling price on **25 October 2026**. This is a comparison of dated listed-price snapshots, not a quarter average or completed Q4 trend. Every numeric change has a dated source and an exact variant/SKU or product, flavour and weight match. Archived variant IDs with different weight/flavour labels are rejected. Unavailable historical quotes implying changes over 100% require corroboration and are excluded until then; the original quoted value and reason remain in the audit export and observation ledger.
+Compound cost = price / (net pack grams × labelled percentage / 100). Powder cost = price / net pack grams. Comparison-portion cost = compound cost × the configured reference grams. The portion is not the manufacturer's scoop or intake advice. Protein per scoop uses the recorded scoop weight and concentration. Missing energy stays unknown, including on the homepage; a recorded zero remains zero.
 
-Green means a decrease, red an increase, blue verified unchanged, and grey missing verified history. Unverified current prices carry a separate amber marker. Group summaries disclose partial evidence or mixed directions rather than averaging away missing values. Generated launch dates and historical prices have been removed; the old synthetic generators are disabled.
+Rankings use **grams of labelled compound per ₹100**, with the best eligible pack per brand and product. Eligibility requires known concentration, confirmed in-stock status and a matching recent dated price. This is a cost comparison, not an assessment of efficacy or independent laboratory quality. Different creatine chemical forms are not assumed equivalent. Shared label profiles and conflicts are disclosed, not silently resolved. Stored legacy `cost`, `doseCost`, `score` and `trend` values are ignored and recalculated.
 
-Download `docs/data/price-audit.csv` for every offer's audit, `price-audit.json` for machine-readable coverage, and `price-observations.json` for dated evidence. These remain separate from nutrition assumptions. `scripts/quarter_price_audit.py --archives --live --fetch-archives --selected` collects sources; `scripts/apply_quarter_audit.py` applies only exact matches and retains unverified catalog prices with explicit flags. Raw responses and the pre-audit data are retained locally under `outputs/quarter_audit_20261025`. Never substitute an MRP discount, a marketplace price, another flavour/weight, or today's live page for historical evidence.
+## Price evidence and trends
 
-- Search and multi-select filters for brand, product, protein source, subclass, flavour, pack size and stock.
-- Minimum/maximum filters for pack price, cost per gram of actual protein, protein percentage, scoop size and calories per 100 g.
-- Nutrition completeness filter, sorting, pagination, shareable filter URLs, filtered CSV and full JSON download.
-- Official source links and evidence notes per offer, including uncertainty and label conflicts.
-- Responsive layout, accessible labelled controls, keyboard navigation and no external runtime dependencies.
-- Creatine-specific chemical form, processing, trademark, formulation, packaging and gram-weight filters, plus powder/compound cost and concentration ranges.
+Each observation includes `category`, `offerId`, ISO `date`, numeric `price`, `currency: INR`, exact official `sourceUrl`, public `evidenceUrl`, and `kind` (`official-live` or `official-archive`). Preserve `variantId` and `matchBasis` where available. Historical evidence accepted for comparison has `qualityStatus: verified`; excluded quotes retain `qualityStatus: excluded` and `exclusionReason`. A former live observation is not automatically promoted to publicly verified historical evidence.
 
-## Run
+The latest official-live observation must match the catalog price and fall within the configured age window relative to the category research date. Missing, conflicting or stale observations cannot verify a price. The previous completed calendar quarter is calculated from each research date, including year rollover. The latest eligible verified observation in that quarter is the baseline. Every displayed change has two dated sources; missing history is never interpolated or treated as unchanged. These are listed-price snapshots, **not quarterly averages**.
 
-Serve `docs/` with any static HTTP server, for example `python -m http.server 8080 --directory docs`. Open http://localhost:8080. Run `npm test` with Node 22+.
+Green = decrease, red = increase, blue = verified unchanged, grey = no verified comparison. Group summaries disclose mixed directions and partial coverage. Unverified current catalog prices have an amber marker and are excluded from rankings. Unknown concentration is excluded from compound-cost comparisons. The freshness threshold is a research policy, not a promise that prices remain valid for that duration.
 
-## Data and updates
+Prior synthetic history generators remain disabled. Existing research scripts can help collect inputs, but their output must be checked for exact weight/flavour/SKU matches. Never substitute MRP discounts, another variant or a current page for dated historical evidence.
 
-The website reads `docs/data/catalog.json`. One record represents one actual pack offer. Unknown values are `null`, not zero. Cost = price / (pack kg × 10 × protein g per 100 g). Filtered results apply all conditions to the same pack, avoiding cross-size nutrition mismatches.
+## Build, exports and hosting
 
-The research files remain local and are excluded from Git. To regenerate after updating them, run `python scripts/export_catalog.py`; verify the output and run tests before committing. Updating Excel alone does not refresh the website automatically. The exporter uses the matched research JSON.
+Use Node 22+ and Python 3 for the preview server:
 
-Creatine source snapshots live locally in `outputs/creatine_catalog_20261025`. Research uses `scripts/research_creatine.py`, `inspect_creatine.py`, `creatine_labels.py`, and `fetch_creatine_variants.py`. Exact official product pages and label photos are curated by `scripts/assemble_creatine.py` into `docs/data/creatine.json`; manual label overrides are traceable to the source URLs and notes. Run all tests after refreshing. Do not blindly infer powder concentration from ingredient purity, or use an unflavoured table for flavoured products.
+```sh
+npm test
+npm run build
+npm start
+```
 
-`scripts/build_creatine_workbook.mjs` builds the downloadable Excel workbook with the bundled `@oai/artifact-tool` runtime. It requires the local source/output directory and validates each derived pricing cell. The browser reads the JSON; Excel edits alone do not update it.
+Open http://localhost:8080. Serve **`dist/`**, not `docs/` directly: the build creates the version manifest and validated snapshot. No application dependencies, backend or API keys are required.
 
-## Hosting
+The build produces normalized catalog JSON, price-audit JSON/CSV, a field-level quality report and dataset-driven SEO/JSON-LD. It publishes one content-addressed `snapshot.<sha256>.json` and a small `version.json` pointer. The browser verifies the hash, validates the whole revision and swaps it atomically, avoiding mixed category versions. CSV export uses the currently displayed validated revision and active filters. JSON download files belong to the latest deployed build. Original dated Excel workbooks remain archival files and are not presented as current downloads; editing a workbook alone does not update the website.
 
-GitHub Pages serves the `docs/` folder of `main`. Relative asset paths support repository subpaths. No backend, credentials, analytics, affiliate links or API keys are required.
+`.github/workflows/check.yml` runs tests and the build before deploying the Pages artifact. GitHub Pages must use **GitHub Actions** as its build source. A rejected update leaves the last successful deployment available. Generated `dist/` is ignored by Git; edit source inputs rather than generated bundles. Relative paths support the repository subpath.
 
-Selected brands are not a formal top-10 ranking. Sold-out offers are retained; family-level protein claims and missing/conflicting label evidence are disclosed. No prices are extrapolated from other sizes. Product names and nutrition claims belong to their respective brands.
+## Data quality priorities
+
+The coverage panel and quality report identify missing concentration, energy and scoop values, price evidence gaps and nutrition notes requiring review. Complete those fields from exact-variant labels first, archive dated merchant evidence for future comparisons, and keep source/research dates explicit. Recorded manufacturer claims are not independent lab verification. Sold-out offers and uncertain stock remain searchable but do not enter rankings. No pack price is inferred from another size.
+Deployment follows the [GitHub Pages custom workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
