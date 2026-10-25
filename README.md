@@ -1,4 +1,8 @@
-# Supplement Index — India
+# Supplement Research — India
+
+[Website](https://vijayptiwari.github.io/supplement-research/) · [GitHub project](https://github.com/vijayptiwari/supplement-research)
+
+Product categories: **Protein** (home page) and **Creatine** (`creatine.html`). Both share the same filtering interface and keep their own category-specific data and pricing measures.
 
 A static comparison website for 504 protein product/flavour listings across 18 brands, with 799 exact 1 kg, 2 kg and 4 kg pack offers. Research snapshot: **25 October 2026**. Prices and stock are not live.
 
