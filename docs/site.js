@@ -1,7 +1,7 @@
 import {watchData,dataStore} from './data-store.js';
 import {escapeHtml as esc,formatDate,rankedOffers,quickPick,stats,pageMetadata,historyRows} from './model.js';
 import {facets,metrics,creatineFacets,creatineMetrics,filterOffers,sortOffers,csv,groupOffersByProduct,formatTrendBadge,priceAuditFlag} from './core.js';
-const $=s=>document.querySelector(s),categoryId=document.body.dataset.category;
+const $=s=>document.querySelector(s),categoryId=document.body.dataset.category,pageType=document.body.dataset.page;
 let snapshot,category,filtered=[],page=1,view='grouped',selected=null;
 const rankingFilters={};
 const num=(n,d=1)=>n==null?'Unknown':Number(n).toLocaleString(snapshot?.config.locale||'en-IN',{maximumFractionDigits:d});
@@ -36,8 +36,15 @@ function coverage(categories){
  $('#coverage').insertAdjacentHTML('beforeend',historyCoverage(categories));
 }
 function formula(offers){const r=offers.find(r=>r.rankingEligible)||offers.find(r=>r.cost!=null);$('#formula-example').innerHTML=r?`<p class="calculation"><strong>Dataset example: ${esc(r.brand)} · ${esc(r.product)} · ${esc(r.flavour)} · ${size(r)}</strong><br>${money(r.price)} ÷ (${num(r.grams)} g × ${num(r[categoryOf(r).concentrationField],2)}% ÷ 100) = <strong>${money(r.cost)} / g ${esc(categoryOf(r).compoundLabel)}</strong>. A ${num(categoryOf(r).referenceGrams)} g comparison portion costs ${money(r.referenceCost)}.</p>`:'<p>No offer currently has the inputs required for a calculation.</p>';}
+function renderDownloads(){
+ const el=$('#downloads');if(!el)return;const categories=Object.values(snapshot.categories);
+ el.innerHTML=[...categories.map(c=>({file:c.file,label:`${c.label} JSON · ${num(c.stats.offers,0)} offers`})),{file:'price-history.csv',label:`${snapshot.config.historyQuarters}-quarter price history CSV`},{file:'price-audit.csv',label:'Latest-quarter change audit CSV'},{file:'price-observations.json',label:'Dated price observations'},{file:'quality-report.json',label:'Data quality report'}].map(a=>`<a class="research-card" download href="data/${esc(a.file)}"><strong>${esc(a.label)} ↓</strong><p class="muted">${num((snapshot.assets[a.file]?.bytes||0)/1024,1)} KB · dataset as of ${formatDate(snapshot.asOf)}</p></a>`).join('');
+}
+function renderAudit(){
+ const categories=Object.values(snapshot.categories);renderStats(snapshot.stats);coverage(categories);formula(categories.flatMap(c=>c.offers));renderDownloads();
+}
 function renderHome(){
- const categories=Object.values(snapshot.categories);renderStats(snapshot.stats);coverage(categories);formula(categories.flatMap(c=>c.offers));
+ const categories=Object.values(snapshot.categories);renderStats(snapshot.stats);formula(categories.flatMap(c=>c.offers));
  $('#category-links').innerHTML=categories.map(c=>`<a class="category-link" href="${esc(c.page)}"><div class="category-link-text"><strong>Explore ${esc(c.label)}</strong><span>${num(c.stats.offers,0)} packs · ${num(c.stats.brands,0)} brands</span></div><span class="category-link-arrow">→</span></a>`).join('');
  $('#quick-picks').innerHTML=snapshot.config.quickPicks.map(rule=>{
   const p=quickPick(snapshot,rule);return p?`<article class="research-card quick-pick-card"><div class="card-eyebrow">${esc(p.label)}</div><div class="quick-pick-price"><strong class="big-price">${money(p.min)}</strong><span class="price-sub">per ${num(p.referenceGrams)} g ${esc(p.compoundLabel)}</span></div><div class="quick-pick-body"><div class="brand">${esc(p.offer.brand)}</div><h3 class="quick-pick-title">${esc(p.offer.product)}</h3><div class="muted">${esc(p.offer.flavour)} · ${size(p.offer)}</div></div><p class="quick-pick-range">${money(p.min)}–${money(p.max)} across ${num(p.count,0)} eligible offers</p><div class="quick-pick-action">${button(p.offer)}</div></article>`:`<article class="research-card"><h3>${esc(rule.label)}</h3><p>No eligible offer in this dataset.</p></article>`;
@@ -47,7 +54,7 @@ function renderHome(){
   return `<section class="ranking-section" data-ranking="${esc(c.id)}"><div class="section-heading"><div><h2 id="${esc(c.id)}-ranking-title"></h2><p>Best eligible pack per product · ordered by grams of ${esc(c.compoundLabel)} per ₹100.</p></div><label>Source / chemical form<select data-rank-filter="${esc(c.id)}"><option value="">All forms</option>${types.map(t=>`<option ${rankingFilters[c.id]===t?'selected':''}>${esc(t)}</option>`).join('')}</select></label></div><div id="${esc(c.id)}-rankings"></div><a class="catalog-more" href="${esc(c.page)}">Browse all ${num(c.stats.offers,0)} ${esc(c.label.toLowerCase())} packs &amp; filters →</a></section>`;
  }).join('');
  for(const c of categories)renderRanking(c.id);
- $('#downloads').innerHTML=[...categories.map(c=>({file:c.file,label:`${c.label} JSON · ${num(c.stats.offers,0)} offers`})),{file:'price-history.csv',label:`${snapshot.config.historyQuarters}-quarter price history CSV`},{file:'price-audit.csv',label:'Latest-quarter change audit CSV'},{file:'price-observations.json',label:'Dated price observations'},{file:'quality-report.json',label:'Data quality report'}].map(a=>`<a class="research-card" download href="data/${esc(a.file)}"><strong>${esc(a.label)} ↓</strong><p class="muted">${num((snapshot.assets[a.file]?.bytes||0)/1024,1)} KB · dataset as of ${formatDate(snapshot.asOf)}</p></a>`).join('');
+ renderDownloads();
 }
 function renderRanking(id){
  const c=snapshot.categories[id],rows=rankedOffers(c,snapshot.config.rankingLimit,r=>!rankingFilters[id]||r.type===rankingFilters[id]);
@@ -92,12 +99,13 @@ function renderOffer(){
 function onSnapshot(next){
  const previous=category&&categoryId?{...state(),sort:$('#sort').value,view}:null;snapshot=next;category=next.categories[categoryId];
  document.querySelectorAll('[data-site-name]').forEach(e=>e.textContent=next.config.name);
- $('#navigation').innerHTML=`<a href="index.html" ${!categoryId?'aria-current="page"':''}>Overview</a>`+next.config.categories.map(c=>`<a href="${esc(c.page)}" ${categoryId===c.id?'aria-current="page"':''}>${esc(c.label)} catalog</a>`).join('');
+ $('#navigation').innerHTML=`<a href="index.html" ${!categoryId&&pageType!=='audit'?'aria-current="page"':''}>Overview</a>`+next.config.categories.map(c=>`<a href="${esc(c.page)}" ${categoryId===c.id?'aria-current="page"':''}>${esc(c.label)} catalog</a>`).join('')+`<a href="audit.html" ${pageType==='audit'?'aria-current="page"':''}>Data audit</a>`;
  if(categoryId){if(!category)throw Error('Category missing from dataset.');$('#catalog-title').textContent=`Compare ${num(category.stats.offers,0)} ${category.label.toLowerCase()} pack offers`;
   $('#catalog-description').textContent=`Prices and labelled nutrition across ${category.stats.brands} brands. Dataset as of ${formatDate(category.asOf)}. Open each exact offer for its source, observation date and limitations.`;$('#results-title').textContent=category.label+' pack offers';
-  renderStats(category.stats);coverage([category]);formula(category.offers);buildFilters(previous||paramsState());renderCatalog();
- }else renderHome();
- const metadata=pageMetadata(next,categoryId);document.title=metadata.title;
+  renderStats(category.stats);formula(category.offers);buildFilters(previous||paramsState());renderCatalog();
+ }else if(pageType==='audit')renderAudit();
+ else renderHome();
+ const metadata=pageMetadata(next,pageType||categoryId);document.title=metadata.title;
  for(const [selector,value] of [['meta[name="description"]',metadata.description],['meta[property="og:description"]',metadata.description],['meta[property="og:title"]',metadata.title]]){const el=$(selector);if(el)el.content=value;}
  const structured=$('script[type="application/ld+json"]');if(structured)structured.textContent=JSON.stringify(metadata.structured);
  if(selected&&$('#evidence').open)renderOffer();

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Transparent audit of public archive price history, data quality and formula inputs."><meta name="theme-color" content="#2563eb"><!-- DATA_METADATA --><title>Data &amp; Price History Audit · Supplement Research</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="data-ui.css?v=20261025b"><script type="module" src="site.js?v=20261025b"></script></head>
+<body data-page="audit"><header><a class="logo" href="index.html"><span class="logo-icon">SR</span><span data-site-name>Supplement Research</span></a><nav id="navigation" aria-label="Product categories"></nav></header>
+<div class="dataset-bar"><span id="dataset-status" role="status" aria-live="polite">Loading published dataset…</span><button id="refresh-data" type="button">Refresh data</button></div>
+<section class="hero"><div class="eyebrow">RESEARCH METHODOLOGY &amp; DATA INTEGRITY</div><h1>Data coverage &amp;<br><span>12-quarter price history audit.</span></h1><p>Transparent public-archive coverage metrics, data completeness, and quarter-on-quarter price tracking across Indian supplements.</p><div id="stats" class="stats"></div></section>
+<main class="research-content">
+<div id="coverage"></div>
+<section id="methodology" class="method-card"><h2>Methodology &amp; Calculation Basis</h2><p>Compound cost = pack price ÷ (net pack grams × labelled concentration ÷ 100). Rankings and value metrics require matching dated price evidence, verified in-stock observations, and recorded compound concentration.</p><p>Nutrition and label metrics are recorded directly from official product packaging; conflicting claims and unverified fields remain highlighted in each offer's evidence breakdown. Unknown values remain unknown and are never imputed with category averages.</p><div id="formula-example"></div></section>
+<section><h2>Research downloads</h2><p>JSON and CSV exports generated directly from the published dataset.</p><div id="downloads" class="research-grid"></div></section>
+</main>
+<footer><span data-site-name>Supplement Research</span> · Dated public retail listings in India. <a href="index.html#methodology">Methodology</a> · <a href="audit.html" aria-current="page">Data audit</a> · <a href="https://github.com/vijayptiwari/supplement-research">Source ↗</a></footer>
+<dialog id="evidence"><div class="modal-header"><h2 id="evidence-title">Offer evidence</h2><button id="close" aria-label="Close dialog">✕ Close</button></div><div id="evidence-body"></div></dialog>
+<noscript><p>This page needs JavaScript to view the audit dataset. <a href="data/price-history.csv">Download history CSV</a> or <a href="data/price-audit.csv">download audit CSV</a>.</p></noscript>
+</body></html>

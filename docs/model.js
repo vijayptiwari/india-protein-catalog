@@ -130,6 +130,11 @@ export function historyRows(snapshot){
  return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
 }
 export function pageMetadata(snapshot,categoryId){
+ if(categoryId==='audit')return {
+  title:`Data & Price History Audit · ${snapshot.config.name}`,
+  description:`Audit of data coverage, dated price observations, and 12-quarter price tracking across Indian supplements. Dataset as of ${snapshot.asOf}.`,
+  structured:{'@context':'https://schema.org','@type':'Dataset',name:`Data & Price History Audit · ${snapshot.config.name}`,description:`Audit of data coverage, dated price observations, and 12-quarter price tracking across Indian supplements. Dataset as of ${snapshot.asOf}.`,dateModified:snapshot.asOf,url:snapshot.config.baseUrl+'audit.html'}
+ };
  const c=snapshot.categories[categoryId],s=c?.stats||snapshot.stats,page=c?.page||'index.html';
  const title=`${c?c.label+' catalog':snapshot.config.name} · ${s.offers.toLocaleString(snapshot.config.locale)} pack offers`;
  const description=`Compare ${s.offers.toLocaleString(snapshot.config.locale)} ${c?c.label.toLowerCase()+' ':''}pack offers across ${s.brands} brands. Dated sources, calculated compound costs and data quality coverage. Dataset as of ${c?.asOf||snapshot.asOf}.`;
