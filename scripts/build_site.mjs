@@ -48,7 +48,7 @@ export async function buildSite(destination=path.join(root,'dist')){
   let html=await fs.readFile(path.join(destination,page),'utf8');
   html=html.replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(title)}</title>`).replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHtml(description)}">`);
   html=html.replace('<!-- DATA_METADATA -->',`<meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><script type="application/ld+json">${JSON.stringify(structured).replaceAll('<','\\u003c')}</script>`);
-  html=html.replace(/((?:src|href)=["'])([^"']+\.(?:js|css))(["'])/g,(match,prefix,file,suffix)=>assetNames.includes(file)?`${prefix}${file}?v=${assetVersion}${suffix}`:match);
+  html=html.replace(/((?:src|href)=["'])([^"'?]+\.(?:js|css))(?:\?[^"']*)?(["'])/g,(match,prefix,file,suffix)=>assetNames.includes(file)?`${prefix}${file}?v=${assetVersion}${suffix}`:match);
   await fs.writeFile(path.join(destination,page),html);
  }
  console.log(`Built ${snapshot.stats.offers} offers; ${snapshot.stats.verifiedPrices} verified prices; ${snapshot.quality.warnings.length} field warnings. Revision ${hash.slice(0,12)}.`);
