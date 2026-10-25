@@ -53,6 +53,11 @@ export function groupOffersByProduct(offers, category='protein'){
     if(trends.length > 0){
       avgTrend = Math.round((trends.reduce((a,b) => a + b, 0) / trends.length) * 10) / 10;
     }
+    const t12List = vars.filter(v => v.trend && v.trend.twelveQuarterChangePct != null).map(v => v.trend.twelveQuarterChangePct);
+    let avg12QTrend = 0;
+    if(t12List.length > 0){
+      avg12QTrend = Math.round((t12List.reduce((a,b) => a + b, 0) / t12List.length) * 10) / 10;
+    }
     result.push({
       ...g,
       minPrice: Math.min(...prices),
@@ -63,6 +68,7 @@ export function groupOffersByProduct(offers, category='protein'){
       flavours,
       hasNew,
       avgTrend,
+      avg12QTrend,
       count: vars.length
     });
   }
@@ -73,15 +79,18 @@ export function formatTrendBadge(trend, isNew){
   if(isNew){
     return `<span class="trend-badge trend-new" title="Newly added flavour or pack size">✨ Newly Added</span>`;
   }
+  const t12 = trend?.twelveQuarterChangePct != null ? ` · 12-Qtr: ${trend.twelveQuarterChangePct >= 0 ? '+' : ''}${trend.twelveQuarterChangePct}%` : '';
+  const range = (trend?.lowestPrice && trend?.highestPrice) ? ` (Range: ₹${trend.lowestPrice.toLocaleString('en-IN')} - ₹${trend.highestPrice.toLocaleString('en-IN')})` : '';
+
   if(!trend || trend.pct === 0 || trend.direction === 'stable'){
-    return `<span class="trend-badge trend-stable" title="Price stable over past audit cycles">─ Stable</span>`;
+    return `<span class="trend-badge trend-stable" title="Price stable over past audit cycle${t12}${range}">─ Stable</span>`;
   }
   if(trend.direction === 'down' || trend.pct < 0){
-    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')}"` : '';
+    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')} (QoQ)${t12}${range}"` : '';
     return `<span class="trend-badge trend-down"${prev}>▼ ${Math.abs(trend.pct)}%</span>`;
   }
   if(trend.direction === 'up' || trend.pct > 0){
-    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')}"` : '';
+    const prev = trend.prevPrice ? ` title="Was ₹${trend.prevPrice.toLocaleString('en-IN')} (QoQ)${t12}${range}"` : '';
     return `<span class="trend-badge trend-up"${prev}>▲ +${Math.abs(trend.pct)}%</span>`;
   }
   return `<span class="trend-badge trend-stable">─ Stable</span>`;

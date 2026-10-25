@@ -26,6 +26,65 @@ function safeLink(url,label){
   return 'Not provided';
 }
 
+function renderSparklineSvg(history, width=130, height=26){
+  const pts = (history || []).filter(h => h.price != null);
+  if(pts.length < 2) return '';
+  const prices = pts.map(h => h.price);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const range = max - min || 1;
+  const pad = 3;
+  const w = width - pad * 2;
+  const h = height - pad * 2;
+  const coords = pts.map((pt, i) => {
+    const x = pad + (i / (pts.length - 1)) * w;
+    const y = pad + h - ((pt.price - min) / range) * h;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const color = pts[pts.length - 1].price > pts[0].price ? '#e11d48' : (pts[pts.length - 1].price < pts[0].price ? '#059669' : '#64748b');
+  const lastCoord = coords[coords.length - 1].split(',');
+  return `<svg class="trend-sparkline-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-label="12-quarter price curve">
+    <polyline fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${coords.join(' ')}" />
+    <circle cx="${lastCoord[0]}" cy="${lastCoord[1]}" r="3" fill="${color}" stroke="#ffffff" stroke-width="1.5" />
+  </svg>`;
+}
+
+function renderQuarterTimeline(history){
+  if(!history || !history.length) return '';
+  return `
+  <div class="quarter-timeline-wrap">
+    <div class="quarter-timeline-header">
+      <span>12-Quarter Rate History Timeline (Q4 2023 – Q4 2026):</span>
+      <span class="timeline-hint">⇄ Swipe / scroll horizontally</span>
+    </div>
+    <div class="quarter-chips-scroll">
+      ${history.map((h, i) => {
+        const isCurrent = i === history.length - 1;
+        if(h.price == null){
+          return `
+          <div class="quarter-chip unlaunched">
+            <div class="chip-q">${esc(h.quarter)}</div>
+            <div class="chip-price">—</div>
+            <div class="chip-status">Not Launched</div>
+          </div>`;
+        }
+        const delta = h.qoqPct;
+        const deltaHtml = delta == null || delta === 0
+          ? '<span class="chip-delta delta-stable">─ 0%</span>'
+          : (delta < 0
+            ? `<span class="chip-delta delta-down">▼ ${Math.abs(delta)}%</span>`
+            : `<span class="chip-delta delta-up">▲ +${Math.abs(delta)}%</span>`);
+        return `
+        <div class="quarter-chip ${isCurrent ? 'current' : ''}">
+          <div class="chip-q">${esc(h.quarter)}${isCurrent ? ' <span class="chip-now-tag">Current</span>' : ''}</div>
+          <div class="chip-price">${money(h.price)}</div>
+          ${deltaHtml}
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
 function renderModal(productOffers, activeWeight){
   if(!productOffers||!productOffers.length)return;
   const sample=productOffers[0];
@@ -37,8 +96,34 @@ function renderModal(productOffers, activeWeight){
   const wSample=wOffers[0]||sample;
   const concentration=isCreatine?wSample.creatine:wSample.protein;
 
+  // Global product 12-quarter metrics
+  const allPrices=productOffers.map(p=>p.price);
+  const globalMin=Math.min(...allPrices);
+  const globalMax=Math.max(...allPrices);
+  const valid12Q=productOffers.filter(p=>p.trend?.twelveQuarterChangePct!=null).map(p=>p.trend.twelveQuarterChangePct);
+  const avg12Q=valid12Q.length ? Math.round((valid12Q.reduce((a,b)=>a+b,0)/valid12Q.length)*10)/10 : null;
+  const launchQuarters=[...new Set(productOffers.map(p=>p.trend?.launchQuarter).filter(Boolean))];
+  const launchDesc=launchQuarters.includes('Q4 2023') ? '12 Quarters Tracked (Q4 2023 – Q4 2026)' : `Tracked from ${launchQuarters[0]} (${productOffers[0]?.trend?.quartersTracked || 4} Quarters)`;
+
   $('#evidence-title').textContent=`${sample.brand} — ${sample.product}`;
   $('#evidence-body').innerHTML=`
+  <div class="modal-12q-summary-card">
+    <div class="m-stat">
+      <span class="m-lbl">Historical Audit Range</span>
+      <span class="m-val">${esc(launchDesc)}</span>
+    </div>
+    <div class="m-stat">
+      <span class="m-lbl">Catalog Price Range</span>
+      <span class="m-val">${money(globalMin)} – ${money(globalMax)}</span>
+    </div>
+    <div class="m-stat">
+      <span class="m-lbl">12-Quarter Price Evolution</span>
+      <span class="m-val ${avg12Q<0?'text-green':(avg12Q>0?'text-red':'')}">
+        ${avg12Q!=null?(avg12Q>0?'+':'')+avg12Q+'% (Avg)': 'Stable'}
+      </span>
+    </div>
+  </div>
+
   <div class="direct-dispatch-box">
     <div class="direct-dispatch-header">
       <span class="direct-dispatch-badge">FACTORY DIRECT DISPATCH</span>
@@ -81,33 +166,60 @@ function renderModal(productOffers, activeWeight){
     ${wOffers.map(f=>{
       const fBrand=getBrandInfo(f.brand,f.url);
       const fConc=isCreatine?f.creatine:f.protein;
-      const historyItems=f.trend?.history?.length>1
-        ? f.trend.history.map(h=>`${h.date.slice(5)}: <strong>${money(h.price)}</strong>`).join(' ➔ ')
-        : 'Official manufacturer retail price';
+      const t=f.trend||{};
+      const history=t.history||[];
+      const t12Change=t.twelveQuarterChangePct;
+      const minP=t.lowestPrice||f.price;
+      const maxP=t.highestPrice||f.price;
+      const launchQ=t.launchQuarter||'Q4 2023';
+      const trackedCount=t.quartersTracked||history.filter(h=>h.price!=null).length||1;
+      const sparklineHtml=renderSparklineSvg(history,130,26);
+      const timelineHtml=renderQuarterTimeline(history);
+
       return `
       <div class="flavour-trend-card">
-        <div class="flavour-info">
-          <div class="flavour-header-line">
-            <span class="flavour-name-title">${esc(f.flavour)}${isCreatine&&f.packaging?' · '+esc(f.packaging):''}</span>
-            ${f.isNew?'<span class="new-pill">✨ Newly Added</span>':''}
+        <div class="flavour-top-row">
+          <div class="flavour-info">
+            <div class="flavour-header-line">
+              <span class="flavour-name-title">${esc(f.flavour)}${isCreatine&&f.packaging?' · '+esc(f.packaging):''}</span>
+              ${f.isNew?'<span class="new-pill">✨ Newly Added</span>':''}
+            </div>
+            <div class="flavour-specs-line">
+              Purity: <strong>${number(fConc)}%</strong> · Cost: <strong>${optionalMoney(f.cost)} / g</strong>
+              ${isCreatine?`· 3g Dose: <strong>${optionalMoney(f.doseCost)}</strong>`:`· 24g Scoop: <strong>${f.cost?money(f.cost*24):'Unknown'}</strong>`}
+            </div>
           </div>
-          <div class="flavour-specs-line">
-            Purity: <strong>${number(fConc)}%</strong> · Cost: <strong>${optionalMoney(f.cost)} / g</strong>
-            ${isCreatine?`· 3g Dose: <strong>${optionalMoney(f.doseCost)}</strong>`:`· 24g Scoop: <strong>${f.cost?money(f.cost*24):'Unknown'}</strong>`}
-          </div>
-          <div class="flavour-history-timeline">
-            Price history: <span>${historyItems}</span>
+          <div class="flavour-trend-right">
+            <div class="flavour-price-col">
+              <div class="flavour-price-num">${money(f.price)}</div>
+              <div>${formatTrendBadge(f.trend,f.isNew)}</div>
+            </div>
+            <a class="btn-buy-variant" href="${esc(fBrand.purchaseUrl)}" target="_blank" rel="noopener noreferrer">
+              Buy Direct ↗
+            </a>
           </div>
         </div>
-        <div class="flavour-trend-right">
-          <div class="flavour-price-col">
-            <div class="flavour-price-num">${money(f.price)}</div>
-            <div>${formatTrendBadge(f.trend,f.isNew)}</div>
+
+        <div class="flavour-12q-summary">
+          <div class="summary-left">
+            <div class="summary-stat">
+              <span class="lbl">12-Quarter Trend:</span>
+              <span class="val ${t12Change<0?'text-green':(t12Change>0?'text-red':'')}">
+                ${t12Change!=null?(t12Change>0?'+':'')+t12Change+'%': 'Stable'}
+              </span>
+              <span class="timeline-meta">(${trackedCount} quarters · from ${esc(launchQ)})</span>
+            </div>
+            <div class="summary-stat">
+              <span class="lbl">Price Range:</span>
+              <span class="val">${money(minP)} – ${money(maxP)}</span>
+            </div>
           </div>
-          <a class="btn-buy-variant" href="${esc(fBrand.purchaseUrl)}" target="_blank" rel="noopener noreferrer">
-            Buy Direct ↗
-          </a>
+          <div class="summary-right">
+            ${sparklineHtml}
+          </div>
         </div>
+
+        ${timelineHtml}
       </div>`;
     }).join('')}
   </div>
@@ -115,7 +227,7 @@ function renderModal(productOffers, activeWeight){
   <p><strong>Serving &amp; Scoop Information:</strong><br>Serving Size: ${number(wSample.serving)} g · Scoop Size: ${number(wSample.scoop)} g${isCreatine?`<br>Disclosed active creatine / serving: ${number(wSample.creatineServing)} g`:''}</p>
   <p><strong>Verified Lab Nutrition Label:</strong><br>${safeLink(wSample.nutritionUrl,'View Official Manufacturer Nutrition Panel')}</p>
   ${wSample.notes?`<p><strong>Label &amp; Ingredient Notes:</strong><br>${esc(wSample.notes)}</p>`:''}
-  <p class="muted">Prices reflect official manufacturer direct store listings. Zero generic marketplace listings.</p>`;
+  <p class="muted">Prices reflect official manufacturer direct store listings audited across 12 quarters. Zero generic marketplace listings.</p>`;
 
   // Bind tab click events inside modal
   const tabBtns=$('#evidence-body').querySelectorAll('.weight-tab-btn');
