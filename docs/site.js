@@ -109,7 +109,7 @@ watchData(onSnapshot,(current,status)=>{
 });
 $('#refresh-data').addEventListener('click',async()=>{const b=$('#refresh-data');b.disabled=true;try{await dataStore.refresh();}finally{b.disabled=false;}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-offer]');if(b)openOffer(b.dataset.category,b.dataset.offer);});
-$('#close').addEventListener('click',()=>$('#evidence').close());$('#evidence').addEventListener('close',()=>{selected=null;});
+$('#close').addEventListener('click',()=>$('#evidence').close());$('#evidence').addEventListener('click',e=>{if(e.target===$('#evidence'))$('#evidence').close();});$('#evidence').addEventListener('close',()=>{selected=null;});
 document.addEventListener('change',e=>{if(e.target.matches('[data-rank-filter]')){rankingFilters[e.target.dataset.rankFilter]=e.target.value;renderRanking(e.target.dataset.rankFilter);}});
 if(categoryId){
  $('#history-csv').addEventListener('click',()=>{

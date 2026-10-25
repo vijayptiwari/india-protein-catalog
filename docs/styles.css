@@ -1193,8 +1193,14 @@ dialog {
   color: var(--text-body);
   max-width: 600px;
   width: 90%;
-  padding: 24px;
+  padding: 0;
   box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+dialog[open] {
+  display: flex;
+  flex-direction: column;
 }
 
 dialog::backdrop {
@@ -1203,12 +1209,14 @@ dialog::backdrop {
 }
 
 .modal-header {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  gap: 16px;
+  margin: 0;
   border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 12px;
+  padding: 16px 20px;
 }
 
 .modal-header h2 {
@@ -2143,7 +2151,7 @@ footer a { color: var(--accent-blue); font-weight: 600; }
   .downloads-section { padding: 24px 5%; }
   .downloads-grid { grid-template-columns: 1fr; }
 
-  dialog { width: 95%; padding: 18px 16px; }
+  dialog { width: 95%; padding: 0; }
 }
 
 @media (max-width: 380px) {

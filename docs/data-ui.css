@@ -1366,18 +1366,36 @@ dialog#evidence {
   max-width: 860px;
   width: min(92vw, 860px);
   max-height: 88vh;
-  padding: 24px clamp(16px, 3vw, 32px);
+  padding: 0;
   box-shadow: var(--shadow-lg);
-  overflow-y: auto;
+  overflow: hidden;
 }
 
-.modal-header {
+dialog#evidence[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+#evidence .modal-header {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  gap: 16px;
+  padding: 16px clamp(16px, 3vw, 28px);
+  background: #ffffff;
   border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 14px;
+  margin: 0;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+#evidence #evidence-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 20px clamp(16px, 3vw, 28px) 28px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-header h2,
@@ -1386,9 +1404,13 @@ dialog#evidence {
   font-weight: 800;
   color: var(--text-title);
   margin: 0;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
 #close {
+  flex-shrink: 0;
+  white-space: nowrap;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
@@ -1812,7 +1834,15 @@ dialog select {
   dialog#evidence {
     width: 95%;
     max-width: 95%;
-    padding: 18px 14px;
+    padding: 0;
+  }
+
+  #evidence .modal-header {
+    padding: 14px 16px;
+  }
+
+  #evidence #evidence-body {
+    padding: 16px;
   }
 
   .offer-facts {
@@ -1872,4 +1902,3 @@ summary:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 2px;
 }
-#evidence .modal-header { position: sticky; top: 0; z-index: 5; background: var(--bg-card, #fff); }
