@@ -24,7 +24,7 @@ function historyChart(history){
  const x=i=>pad+i/span*(width-pad*2);
  const y=p=>max===min?85:45+(max-p)/range*75;
  const color=h=>h.qoqDirection==='up'?'#dc2626':h.qoqDirection==='down'?'#059669':h.qoqDirection==='stable'?'#2563eb':'#64748b';
- return `<div class="history-chart"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Verified dated price snapshots. Missing quarters have gaps and are not interpolated.">${history.map((h,i)=>`${i>0&&h.verified&&history[i-1].verified?`<line x1="${x(i-1)}" y1="${y(history[i-1].price)}" x2="${x(i)}" y2="${y(h.price)}" stroke="${color(h)}" stroke-width="2.5" stroke-linecap="round"/>`:''}${h.verified?`<circle cx="${x(i)}" cy="${y(h.price)}" r="5.5" fill="${color(h)}" stroke="#ffffff" stroke-width="2"><title>${esc(h.quarter+' · '+(h.date?formatDate(h.date):'')+' · ')}${money(h.price)}</title></circle><text x="${x(i)}" y="${y(h.price)-12}" text-anchor="middle" class="chart-price-label">${money(h.price)}</text>`:`<text x="${x(i)}" y="89" text-anchor="middle" class="chart-missing-label">?</text>`}<text x="${x(i)}" y="162" text-anchor="middle" class="chart-quarter-label">${esc(h.isCurrent?'Current':h.quarter.slice(0,2))}</text><text x="${x(i)}" y="179" text-anchor="middle" class="chart-quarter-label">${esc(h.isCurrent?'observed':h.quarter.slice(3))}</text>`).join('')}</svg></div>`;
+ return `<div class="history-chart"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Verified dated price snapshots. Missing quarters have gaps and are not interpolated.">${history.map((h,i)=>`${i>0&&h.verified&&history[i-1].verified?`<line x1="${x(i-1)}" y1="${y(history[i-1].price)}" x2="${x(i)}" y2="${y(h.price)}" stroke="${color(h)}" stroke-width="2.5" stroke-linecap="round"/>`:''}${h.verified?`<circle cx="${x(i)}" cy="${y(h.price)}" r="5.5" fill="${color(h)}" stroke="var(--bg-card)" stroke-width="2"><title>${esc(h.quarter+' · '+(h.date?formatDate(h.date):'')+' · ')}${money(h.price)}</title></circle><text x="${x(i)}" y="${y(h.price)-12}" text-anchor="middle" class="chart-price-label">${money(h.price)}</text>`:`<text x="${x(i)}" y="89" text-anchor="middle" class="chart-missing-label">?</text>`}<text x="${x(i)}" y="162" text-anchor="middle" class="chart-quarter-label">${esc(h.isCurrent?'Current':h.quarter.slice(0,2))}</text><text x="${x(i)}" y="179" text-anchor="middle" class="chart-quarter-label">${esc(h.isCurrent?'observed':h.quarter.slice(3))}</text>`).join('')}</svg></div>`;
 }
 function renderHistory(r,c){
  const t=r.trend;
@@ -125,3 +125,45 @@ if(categoryId){
  for(const mode of ['grouped','flat'])$('#view-'+mode).addEventListener('click',()=>{if(!category)return;view=mode;page=1;renderCatalog();});
  for(const [selector,delta] of [['#prev',-1],['#next',1]])$(selector).addEventListener('click',()=>{page+=delta;renderCatalog();$('#results-title').scrollIntoView({block:'start'});});
 }
+function setupTheme(){
+ const getStored=()=>{try{return localStorage.getItem('theme')||'system';}catch{return 'system';}};
+ const applyTheme=mode=>{
+  if(mode==='dark'){
+   document.documentElement.setAttribute('data-theme','dark');
+   document.documentElement.style.colorScheme='dark';
+  }else if(mode==='light'){
+   document.documentElement.setAttribute('data-theme','light');
+   document.documentElement.style.colorScheme='light';
+  }else{
+   document.documentElement.removeAttribute('data-theme');
+   document.documentElement.style.colorScheme='light dark';
+  }
+  document.querySelectorAll('.theme-btn').forEach(btn=>{
+   const isActive=btn.dataset.themeValue===mode;
+   btn.classList.toggle('active',isActive);
+   btn.setAttribute('aria-pressed',isActive?'true':'false');
+  });
+ };
+ const setTheme=mode=>{
+  try{
+   if(mode==='system')localStorage.removeItem('theme');
+   else localStorage.setItem('theme',mode);
+  }catch{}
+  applyTheme(mode);
+ };
+ document.addEventListener('click',e=>{
+  const btn=e.target.closest('.theme-btn');
+  if(btn&&btn.dataset.themeValue)setTheme(btn.dataset.themeValue);
+ });
+ window.addEventListener('storage',e=>{
+  if(e.key==='theme')applyTheme(e.newValue||'system');
+ });
+ try{
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
+   if(getStored()==='system')applyTheme('system');
+  });
+ }catch{}
+ applyTheme(getStored());
+}
+setupTheme();
+

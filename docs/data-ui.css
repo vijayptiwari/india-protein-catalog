@@ -74,9 +74,9 @@ footer {
 .dataset-bar button,
 #refresh-data {
   font: 600 12px var(--font-sans);
-  color: #1d4ed8;
-  background: #ffffff;
-  border: 1px solid #bfdbfe;
+  color: var(--accent-blue);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 6px 14px;
   cursor: pointer;
@@ -149,9 +149,9 @@ footer {
   gap: 16px;
   padding: 14px 20px;
   border-radius: 12px;
-  background: #ffffff;
-  border: 1px solid #bfdbfe;
-  color: #1d4ed8;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--accent-blue);
   font-weight: 700;
   font-size: 14px;
   box-shadow: var(--shadow-sm);
@@ -173,7 +173,7 @@ footer {
 }
 
 .category-link .category-link-text strong {
-  color: #0f172a;
+  color: var(--text-title);
   font-size: 14.5px;
 }
 
@@ -206,7 +206,7 @@ footer {
 }
 
 .research-content h2 {
-  color: #0f172a;
+  color: var(--text-title);
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -227,7 +227,7 @@ main#catalog {
 /* Footer alignment */
 footer {
   border-top: 1px solid var(--border-subtle);
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 32px var(--page-pad);
   text-align: center;
   color: var(--text-muted);
@@ -248,8 +248,8 @@ footer {
 }
 
 .price-audit-note {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-card) !important;
   border-radius: var(--card-radius);
   padding: 24px clamp(16px, 2.5vw, 28px);
   box-shadow: var(--shadow-sm);
@@ -261,7 +261,7 @@ footer {
   margin: 0 0 8px;
   font-size: 18px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-title);
 }
 
 .price-audit-note p {
@@ -318,7 +318,7 @@ footer {
   display: block;
   font-size: 20px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-title);
   line-height: 1.2;
 }
 
@@ -394,7 +394,7 @@ footer {
 /* History Coverage Section */
 .history-coverage {
   margin: 24px 0;
-  background: #ffffff;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--card-radius);
   padding: 24px clamp(16px, 2.5vw, 28px);
@@ -484,7 +484,7 @@ footer {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   margin: 18px 0;
-  background: #f8fafc;
+  background: var(--bg-surface);
   padding: 18px 14px 14px;
   -webkit-overflow-scrolling: touch;
 }
@@ -497,7 +497,7 @@ footer {
 
 .history-chart text {
   font: 11px var(--font-sans);
-  fill: #64748b;
+  fill: var(--text-muted);
   font-weight: 500;
 }
 
@@ -505,18 +505,18 @@ footer {
   font-size: 11.5px;
   font-weight: 700;
   font-family: var(--font-mono);
-  fill: #0f172a;
+  fill: var(--text-title);
 }
 
 .history-chart text.chart-missing-label {
   font-size: 13px;
   font-weight: 600;
-  fill: #94a3b8;
+  fill: var(--text-muted);
 }
 
 .history-chart text.chart-quarter-label {
   font-size: 11px;
-  fill: #64748b;
+  fill: var(--text-muted);
   font-weight: 500;
 }
 
@@ -589,15 +589,15 @@ aside input[type="search"] {
 .filter-details {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 8px 12px;
   transition: border-color 0.15s;
 }
 
 #categorical details[open],
 .filter-details[open] {
-  border-color: #cbd5e1;
-  background: #ffffff;
+  border-color: var(--border-focus);
+  background: var(--bg-card);
 }
 
 #categorical summary,
@@ -834,7 +834,7 @@ details .hint {
 
 .view-btn.active,
 .view-btn[aria-pressed="true"] {
-  background: #ffffff;
+  background: var(--bg-card);
   color: var(--accent-blue);
   font-weight: 700;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -858,7 +858,7 @@ details .hint {
   margin: 0;
   padding: 7px 12px;
   font-size: 13px;
-  background: #ffffff;
+  background: var(--bg-input);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   color: var(--text-title);
@@ -879,7 +879,7 @@ details .hint {
 }
 
 .product-group-card {
-  background: #ffffff;
+  background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-sm);
@@ -894,7 +894,7 @@ details .hint {
 
 .group-header {
   padding: 20px 24px;
-  background: #ffffff;
+  background: var(--bg-card);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -1044,7 +1044,7 @@ details .hint {
 
 .variant-table-wrap,
 .variant-content {
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 0;
 }
 
@@ -1065,7 +1065,7 @@ details .hint {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  background: #ffffff;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
@@ -1262,8 +1262,8 @@ td.cost,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--card-radius);
   padding: 22px;
   box-shadow: var(--shadow-sm);
@@ -1273,7 +1273,7 @@ td.cost,
 .research-card:hover,
 .quick-pick-card:hover {
   transform: translateY(-2px);
-  border-color: #cbd5e1;
+  border-color: var(--border-strong);
   box-shadow: var(--shadow-md);
 }
 
@@ -1338,8 +1338,8 @@ td.cost,
 
 /* Method card / Calculation note */
 .method-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--card-radius);
   padding: 24px clamp(16px, 2.5vw, 28px);
   box-shadow: var(--shadow-sm);
@@ -1361,7 +1361,7 @@ td.cost,
 
 .calculation {
   padding: 16px 20px;
-  background: #f8fafc;
+  background: var(--bg-surface);
   border-left: 4px solid #2563eb;
   border-radius: var(--radius-sm);
   font-size: 13.5px;
@@ -1374,7 +1374,7 @@ td.cost,
    -------------------------------------------------------------------------- */
 
 dialog#evidence {
-  background: #ffffff;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   color: var(--text-body);
@@ -1398,7 +1398,7 @@ dialog#evidence[open] {
   align-items: center;
   gap: 16px;
   padding: 16px clamp(16px, 3vw, 28px);
-  background: #ffffff;
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border-subtle);
   margin: 0;
   border-top-left-radius: var(--radius-lg);
@@ -1463,7 +1463,7 @@ dialog select {
   font-size: 13.5px;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  background: #ffffff;
+  background: var(--bg-input);
   color: var(--text-title);
 }
 
@@ -1503,7 +1503,7 @@ dialog select {
 .offer-facts dt {
   font-size: 11px;
   font-weight: 700;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
@@ -1512,7 +1512,7 @@ dialog select {
   margin: 4px 0 0;
   font-size: 14.5px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-title);
 }
 
 .quality-warning {
@@ -1543,7 +1543,7 @@ dialog select {
     border: 1px solid var(--border-subtle);
     border-radius: var(--card-radius);
     padding: 18px 16px;
-    background: #ffffff;
+    background: var(--bg-card);
     box-shadow: var(--shadow-sm);
   }
 
@@ -1806,7 +1806,7 @@ dialog select {
   .table-wrap table td:first-child {
     position: sticky;
     left: 0;
-    background: #ffffff;
+    background: var(--bg-card);
     z-index: 2;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   }
@@ -1815,7 +1815,7 @@ dialog select {
     z-index: 3;
   }
   .table-wrap table tbody tr:hover td:first-child {
-    background: #f8fafc;
+    background: var(--bg-card-hover);
   }
 
   /* Pagination on mobile */
@@ -1901,3 +1901,53 @@ summary:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 2px;
 }
+
+/* --------------------------------------------------------------------------
+   11. DARK MODE SPECIFIC ADAPTATIONS
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="dark"] .dataset-bar,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .dataset-bar {
+    background: #0f172a;
+    border-bottom-color: var(--border-subtle);
+    color: var(--text-muted);
+  }
+}
+
+:root[data-theme="dark"] .card-eyebrow,
+:root[data-theme="dark"] .research-card .eyebrow,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .card-eyebrow,
+  :root:not([data-theme="light"]) .research-card .eyebrow {
+    color: #60a5fa;
+    background: rgba(37, 99, 235, 0.16);
+    border-color: rgba(96, 165, 250, 0.28);
+  }
+}
+
+:root[data-theme="dark"] .coverage-progress,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .coverage-progress {
+    background: #1e293b;
+  }
+}
+
+:root[data-theme="dark"] .quality-warning,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .quality-warning {
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.28);
+  }
+}
+
+:root[data-theme="dark"] .catalog-more,
+:root[data-theme="dark"] .price-audit-note a,
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .catalog-more,
+  :root:not([data-theme="light"]) .price-audit-note a {
+    color: #60a5fa;
+  }
+}
+
