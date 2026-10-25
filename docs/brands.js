@@ -14,8 +14,8 @@ export const BRANDS = {
     name: 'AS-IT-IS Nutrition',
     domain: 'asitisnutrition.com',
     storeUrl: 'https://asitisnutrition.com',
-    couponCode: 'RESEARCH',
-    discount: '5% Extra Off',
+    couponCode: '',
+    discount: 'Direct Factory Price',
     affiliateParam: '', // e.g., 'ref=supplementresearch'
     verification: 'Scratch unique seal on tub & scan QR code with TruSeal App.',
     directDispatch: true
@@ -24,8 +24,8 @@ export const BRANDS = {
     name: 'NAKPRO',
     domain: 'nakpro.com',
     storeUrl: 'https://nakpro.com',
-    couponCode: 'RESEARCH',
-    discount: '5% Extra Off',
+    couponCode: '',
+    discount: 'Direct Factory Price',
     affiliateParam: '',
     verification: 'Scratch authentication panel & verify via official Nakpro authentication SMS/portal.',
     directDispatch: true
@@ -64,8 +64,8 @@ export const BRANDS = {
     name: 'Naturaltein',
     domain: 'naturaltein.in',
     storeUrl: 'https://naturaltein.in',
-    couponCode: 'RESEARCH',
-    discount: 'Up to 10% Off',
+    couponCode: '',
+    discount: 'Direct Factory Price',
     affiliateParam: '',
     verification: 'Cologne List certified batch & tamper-proof hologram seal.',
     directDispatch: true
