@@ -1848,3 +1848,4 @@ summary:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 2px;
 }
+`n#evidence .modal-header { position: sticky; top: 0; z-index: 5; background: var(--bg-card, #fff); }
