@@ -6,24 +6,35 @@ export const https=s=>{try{return new URL(s).protocol==='https:';}catch{return f
 export const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function quarterFor(date){const year=Number(date.slice(0,4)),q=Math.floor((Number(date.slice(5,7))-1)/3)+1;return {year,q,label:`Q${q} ${year}`};}
 export function previousQuarter(date){const now=quarterFor(date),q=now.q===1?4:now.q-1,year=now.q===1?now.year-1:now.year;return {year,q,label:`Q${q} ${year}`,start:`${year}-${String((q-1)*3+1).padStart(2,'0')}-01`,end:new Date(Date.UTC(year,q*3,0)).toISOString().slice(0,10)};}
+export function completedQuarters(date,count=12){
+ const now=quarterFor(date),index=now.year*4+now.q-1;
+ return Array.from({length:count},(_,i)=>{const n=index-count+i,year=Math.floor(n/4),q=n%4+1;return {year,q,label:`Q${q} ${year}`,start:`${year}-${String((q-1)*3+1).padStart(2,'0')}-01`,end:new Date(Date.UTC(year,q*3,0)).toISOString().slice(0,10)};});
+}
 export function formatDate(date){return isoDate(date)?new Intl.DateTimeFormat('en-IN',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z')):'Not recorded';}
-export function stats(offers){return {offers:offers.length,products:new Set(offers.map(r=>JSON.stringify([r.brand,r.product]))).size,listings:new Set(offers.map(r=>JSON.stringify([r.brand,r.product,r.flavour,r.packaging||'']))).size,brands:new Set(offers.map(r=>r.brand)).size,knownCost:offers.filter(r=>r.cost!=null).length,knownEnergy:offers.filter(r=>r.energy!=null).length,knownScoop:offers.filter(r=>r.scoop!=null).length,verifiedPrices:offers.filter(r=>r.priceAudit?.status==='verified').length,verifiedTrends:offers.filter(r=>r.trend?.status==='verified').length};}
+export function stats(offers){const historical=offers.flatMap(r=>(r.trend?.history||[]).filter(h=>!h.isCurrent));return {offers:offers.length,products:new Set(offers.map(r=>JSON.stringify([r.brand,r.product]))).size,listings:new Set(offers.map(r=>JSON.stringify([r.brand,r.product,r.flavour,r.packaging||'']))).size,brands:new Set(offers.map(r=>r.brand)).size,knownCost:offers.filter(r=>r.cost!=null).length,knownEnergy:offers.filter(r=>r.energy!=null).length,knownScoop:offers.filter(r=>r.scoop!=null).length,verifiedPrices:offers.filter(r=>r.priceAudit?.status==='verified').length,verifiedTrends:offers.filter(r=>r.trend?.status==='verified').length,historicalSlots:historical.length,historicalVerified:historical.filter(h=>h.verified).length,fullHistoryOffers:offers.filter(r=>r.trend?.completedQuartersTracked===r.trend?.historyWindowQuarters).length};}
 export function observationMatches(o,r,category){return o.category===category&&String(o.offerId)===String(r.id)&&o.currency==='INR'&&positive(o.price)&&isoDate(o.date)&&https(o.evidenceUrl)&&o.sourceUrl===r.url&&o.qualityStatus!=='excluded';}
-function computeTrend(r,category,asOf,observations,maxAgeDays){
- const prior=previousQuarter(asOf),currentQuarter=quarterFor(asOf);
+function computeTrend(r,category,asOf,observations,maxAgeDays,historyCount){
+ const window=completedQuarters(asOf,historyCount),prior=window.at(-1),currentQuarter=quarterFor(asOf),currentStart=`${currentQuarter.year}-${String((currentQuarter.q-1)*3+1).padStart(2,'0')}-01`;
  const relevant=observations.filter(o=>observationMatches(o,r,category)&&o.date<=asOf).sort((a,b)=>b.date.localeCompare(a.date));
  const current=relevant.find(o=>o.kind==='official-live');
  const ambiguous=current&&new Set(relevant.filter(o=>o.kind==='official-live'&&o.date===current.date).map(o=>o.price)).size>1;
  const priceAge=current?Math.floor((Date.parse(asOf)-Date.parse(current.date))/86400000):null;
- const currentVerified=Boolean(current&&!ambiguous&&current.price===r.price&&priceAge<=maxAgeDays);
- const baseline=relevant.find(o=>o.date>=prior.start&&o.date<=prior.end&&o.qualityStatus==='verified');
- const comparable=Boolean(currentVerified&&baseline&&current.date>baseline.date);
- const pct=comparable?Math.round((r.price-baseline.price)/baseline.price*10000)/100:null;
- const direction=comparable?(r.price<baseline.price?'down':r.price>baseline.price?'up':'stable'):'unknown';
- const excluded=observations.find(o=>o.category===category&&String(o.offerId)===String(r.id)&&o.sourceUrl===r.url&&o.qualityStatus==='excluded'&&o.date>=prior.start&&o.date<=prior.end);
- const history=[{quarter:prior.label,date:baseline?.date??null,price:baseline?.price??null,verified:Boolean(baseline),status:baseline?'Verified listed-price snapshot':'No verified history',source:baseline?.evidenceUrl??null,qoqPct:null},{quarter:`${currentQuarter.label} as of ${formatDate(asOf)}`,date:current?.date??null,price:currentVerified?r.price:null,verified:currentVerified,status:currentVerified?'Verified listed-price snapshot':'Current price unverified',source:current?.evidenceUrl??null,qoqPct:pct}];
+ const currentVerified=Boolean(current&&!ambiguous&&current.price===r.price&&priceAge<=maxAgeDays&&current.date>=currentStart);
+ const change=(a,b)=>Math.round((b-a)/a*10000)/100;
+ const history=window.map(q=>{
+  const candidates=relevant.filter(o=>o.date>=q.start&&o.date<=q.end&&o.kind==='official-archive'&&o.qualityStatus==='verified'),quote=candidates[0];
+  const conflict=quote&&new Set(candidates.filter(o=>o.date===quote.date).map(o=>o.price)).size>1;
+  const excluded=observations.find(o=>o.category===category&&String(o.offerId)===String(r.id)&&o.sourceUrl===r.url&&o.qualityStatus==='excluded'&&o.date>=q.start&&o.date<=q.end);
+  const verified=Boolean(quote&&!conflict);
+  return {quarter:q.label,start:q.start,end:q.end,isCurrent:false,date:verified?quote.date:null,price:verified?quote.price:null,verified,status:conflict?'Conflicting dated quotes':verified?'Verified listed-price snapshot':'No verified history',source:verified?quote.evidenceUrl:null,qoqPct:null,auditNote:conflict?'Different prices recorded for the same date; comparison withheld.':excluded?.exclusionReason??null};
+ });
+ history.push({quarter:`${currentQuarter.label} to date`,start:currentStart,end:asOf,isCurrent:true,date:current?.date??null,price:currentVerified?r.price:null,verified:currentVerified,status:currentVerified?'Verified current observation':'Current price unverified',source:current?.evidenceUrl??null,qoqPct:null,auditNote:null});
+ for(let i=1;i<history.length;i++)if(history[i].verified&&history[i-1].verified&&history[i].date>history[i-1].date){history[i].qoqPct=change(history[i-1].price,history[i].price);history[i].qoqDirection=history[i].price<history[i-1].price?'down':history[i].price>history[i-1].price?'up':'stable';}
+ const baseline=history.at(-2),comparable=history.at(-1).qoqPct!=null,pct=history.at(-1).qoqPct;
+ const direction=comparable?history.at(-1).qoqDirection:'unknown';
+ const completedCount=history.filter(h=>!h.isCurrent&&h.verified).length,endpointChange=currentVerified&&history[0].verified?change(history[0].price,r.price):null;
  const known=history.filter(h=>h.verified).map(h=>h.price);
- return {priceAudit:{status:currentVerified?'verified':current&&priceAge>maxAgeDays?'stale':'unverified',checked:current?.date??null,sourceUrl:current?.evidenceUrl??r.url,ageDays:priceAge},trend:{status:comparable?'verified':'unverified',pct,direction,prevPrice:baseline?.price??null,currentPrice:r.price,comparisonQuarter:prior.label,comparisonStart:prior.start,comparisonEnd:prior.end,currentAsOf:asOf,baselineDate:baseline?.date??null,baselineSource:baseline?.evidenceUrl??null,history,quartersTracked:known.length,lowestPrice:known.length?Math.min(...known):null,highestPrice:known.length?Math.max(...known):null,auditNote:excluded?.exclusionReason??null,twelveQuarterChangePct:null,launchQuarter:null}};
+ return {priceAudit:{status:currentVerified?'verified':current&&(priceAge>maxAgeDays||current.date<currentStart)?'stale':'unverified',checked:current?.date??null,sourceUrl:current?.evidenceUrl??r.url,ageDays:priceAge},trend:{status:comparable?'verified':'unverified',pct,direction,prevPrice:baseline.price,currentPrice:r.price,comparisonQuarter:prior.label,comparisonStart:prior.start,comparisonEnd:prior.end,currentAsOf:asOf,baselineDate:baseline.date,baselineSource:baseline.source,history,historyWindowQuarters:historyCount,completedQuartersTracked:completedCount,fullHistoryVerified:completedCount===historyCount,endpointChangePct:endpointChange,endpointQuarter:window[0].label,quartersTracked:known.length,lowestPrice:known.length?Math.min(...known):null,highestPrice:known.length?Math.max(...known):null,auditNote:baseline.auditNote,twelveQuarterChangePct:completedCount===historyCount?endpointChange:null,launchQuarter:null}};
 }
 export function scoreProtein(r){return positive(r.cost)?100/r.cost:0;}
 export function scoreCreatine(r){return positive(r.cost)?100/r.cost:0;}
@@ -55,7 +66,7 @@ export function normalizeOffer(raw,definition,asOf,observations,config){
  r.doseCost=category==='creatine'?r.referenceCost:null;
  r.proteinPerScoop=category==='protein'&&concentration!=null&&r.scoop!=null?concentration*r.scoop/100:null;
  r.category=category;r.checked=asOf;
- Object.assign(r,computeTrend(r,category,asOf,observations,config.maxPriceAgeDays));
+ Object.assign(r,computeTrend(r,category,asOf,observations,config.maxPriceAgeDays,config.historyQuarters??12));
  r.score=category==='protein'?scoreProtein(r):scoreCreatine(r);
  r.rankingEligible=r.priceAudit.status==='verified'&&r.stock==='In stock'&&r.cost!=null&&!issues.some(i=>i.severity==='error');
  if(r[definition.concentrationField]==null)issues.push({severity:'warning',field:definition.concentrationField,message:'Concentration unknown; compound cost and ranking excluded.'});
@@ -72,14 +83,20 @@ export function createSnapshot(bundle){
  if(config.currency!=='INR'||!https(config.baseUrl)||!config.baseUrl.endsWith('/')||!config.name?.trim())throw Error('INR currency, site name and HTTPS base URL ending in / are required.');
  if(!Array.isArray(config.quickPicks)||config.quickPicks.some(r=>!config.categories.some(c=>c.id===r.category)||!Array.isArray(r.typeIncludes)||!r.typeIncludes.every(s=>typeof s==='string')))throw Error('Invalid quick-comparison rules.');
  if(!Array.isArray(observations))throw Error('Missing dated observation ledger.');
- const result={},errors=[],warnings=[];
+ const historyQuarters=config.historyQuarters??12;if(!Number.isInteger(historyQuarters)||historyQuarters<1||historyQuarters>40)throw Error('History window must be between 1 and 40 completed quarters.');
+ const result={},errors=[],warnings=[],byOffer=new Map();
  const categoryIds=config.categories.map(c=>c.id);
  if(new Set(categoryIds).size!==categoryIds.length)throw Error('Duplicate category ID.');
  if(!positive(config.pageSizes?.flat)||!positive(config.pageSizes?.grouped))throw Error('Positive pagination sizes are required.');
  if(![config.rankingLimit,config.pageSizes.flat,config.pageSizes.grouped].every(Number.isInteger))throw Error('Ranking and pagination limits must be integers.');
  for(const o of observations){
+  const key=JSON.stringify([o.category,String(o.offerId)]);if(!byOffer.has(key))byOffer.set(key,[]);byOffer.get(key).push(o);
   if(o.qualityStatus==='excluded')continue;
   if(!categoryIds.includes(o.category)||o.offerId==null||!isoDate(o.date)||!positive(o.price)||o.currency!==config.currency||!https(o.sourceUrl)||!https(o.evidenceUrl)||!['official-live','official-archive'].includes(o.kind))errors.push({category:o.category,id:o.offerId,severity:'error',field:'observation',message:'Invalid dated observation, currency, price or source URL.'});
+  if(o.kind==='official-archive'&&https(o.evidenceUrl)&&new URL(o.evidenceUrl).hostname==='web.archive.org'){
+   const stamp=new URL(o.evidenceUrl).pathname.match(/\/web\/(\d{14})(?:[a-z_]+)?\//)?.[1];
+   if(!stamp||`${stamp.slice(0,4)}-${stamp.slice(4,6)}-${stamp.slice(6,8)}`!==o.date)errors.push({category:o.category,id:o.offerId,severity:'error',field:'observationDate',message:'Historical date must match the exact public capture timestamp.'});
+  }
  }
  for(const definition of config.categories){
   if(!['protein','creatine'].includes(definition.concentrationField)||!definition.id?.match(/^[a-z][a-z0-9-]*$/)||!definition.label?.trim()||!definition.compoundLabel?.trim())throw Error('Category needs valid labels, ID and concentration field.');
@@ -87,16 +104,16 @@ export function createSnapshot(bundle){
   if(!positive(definition.referenceGrams))throw Error(`Invalid reference quantity for ${definition.id}.`);
   const ids=new Set(),variants=new Set();
   const offers=input.offers.map(raw=>{
-   const r=normalizeOffer(raw,definition,input.checked,observations,config);
+   const r=normalizeOffer(raw,definition,input.checked,byOffer.get(JSON.stringify([definition.id,String(raw.id)]))||[],config);
    if(ids.has(String(r.id))){r.quality.issues.push({severity:'error',field:'id',message:'Duplicate offer ID.'});r.quality.errors++;r.rankingEligible=false;}ids.add(String(r.id));
    const variant=JSON.stringify([r.brand,r.product,r.flavour,r.grams,r.packaging||'']);
    if(variants.has(variant)){r.quality.issues.push({severity:'error',field:'variant',message:'Duplicate exact pack variant.'});r.quality.errors++;r.rankingEligible=false;}variants.add(variant);
    for(const issue of r.quality.issues)(issue.severity==='error'?errors:warnings).push({category:definition.id,id:r.id,...issue});return r;
   });
-  result[definition.id]={...definition,asOf:input.checked,previousQuarter:previousQuarter(input.checked),offers,stats:stats(offers)};
+  result[definition.id]={...definition,asOf:input.checked,previousQuarter:previousQuarter(input.checked),historyWindow:completedQuarters(input.checked,historyQuarters),offers,stats:stats(offers)};
  }
  const all=Object.values(result).flatMap(c=>c.offers),dates=Object.values(result).map(c=>c.asOf).sort();
- return {config,brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
+ return {config:{...config,historyQuarters},brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
 }
 export function rankedOffers(category,limit=10,predicate=()=>true){
  const best=new Map();for(const r of category.offers.filter(r=>r.rankingEligible&&predicate(r))){const key=JSON.stringify([r.brand,r.product]);if(!best.has(key)||r.score>best.get(key).score)best.set(key,r);}
@@ -109,6 +126,9 @@ export function quickPick(snapshot,rule){
  return eligible.length?{...rule,offer:eligible[0],count:eligible.length,min:eligible[0].referenceCost,max:eligible.at(-1).referenceCost,referenceGrams:c.referenceGrams,compoundLabel:c.compoundLabel}:null;
 }
 export function auditRows(snapshot){return Object.values(snapshot.categories).flatMap(c=>c.offers.map(r=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,currentPrice:r.price,currentStatus:r.priceAudit.status,currentChecked:r.priceAudit.checked,baselinePrice:r.trend.prevPrice,baselineDate:r.trend.baselineDate,changePct:r.trend.pct,direction:r.trend.direction,baselineSource:r.trend.baselineSource,currentSource:r.priceAudit.sourceUrl,historyAuditNote:r.trend.auditNote})));}
+export function historyRows(snapshot){
+ return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
+}
 export function pageMetadata(snapshot,categoryId){
  const c=snapshot.categories[categoryId],s=c?.stats||snapshot.stats,page=c?.page||'index.html';
  const title=`${c?c.label+' catalog':snapshot.config.name} · ${s.offers.toLocaleString(snapshot.config.locale)} pack offers`;

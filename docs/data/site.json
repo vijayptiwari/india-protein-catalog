@@ -8,6 +8,7 @@
   "rankingLimit": 10,
   "refreshIntervalMs": 60000,
   "maxPriceAgeDays": 100,
+  "historyQuarters": 12,
   "pageSizes": {"grouped": 15, "flat": 40},
   "observationsFile": "price-observations.json",
   "brandsFile": "brands.json",

@@ -3,6 +3,10 @@ export const metrics = [['price','Pack price (₹)'],['cost','Cost / g protein (
 export const creatineFacets=[['brand','Brand'],['product','Product'],['type','Creatine chemical form'],['subclass','Processing / particle size'],['grade','Ingredient trademark'],['formulation','Formulation'],['flavour','Flavour'],['grams','Pack size (g)'],['packaging','Packaging'],['stock','Availability']];
 export const creatineMetrics=[['price','Pack price (₹)'],['powderCost','Cost / g powder (₹)'],['cost','Cost / g compound (₹)'],['doseCost','Cost / 3 g compound (₹)'],['creatine','Labelled compound (%)'],['scoop','Scoop size (g)'],['energy','Energy (kcal / 100 g)']];
 export function filterOffers(offers,state,category='protein'){return offers.filter(r=>{
+ if(state.historyQuarter&&!r.trend?.history?.some(h=>!h.isCurrent&&h.quarter===state.historyQuarter&&h.verified))return false;
+ if(state.historyCoverage==='any'&&!(r.trend?.completedQuartersTracked>0))return false;
+ if(state.historyCoverage==='full'&&!r.trend?.fullHistoryVerified)return false;
+ if(state.historyCoverage==='none'&&r.trend?.completedQuartersTracked>0)return false;
  if(state.priceTrend && (r.trend?.status==='verified'?r.trend.direction:'unknown')!==state.priceTrend)return false;
  if(state.q && ![r.brand,r.product,r.flavour,r.type,r.subclass,r.grade,r.formulation].join(' ').toLowerCase().includes(state.q.toLowerCase()))return false;
  for(const [key] of category==='creatine'?creatineFacets:facets)if(state[key]?.length&&!state[key].includes(String(r[key])))return false;
@@ -15,9 +19,10 @@ export function csv(offers,category='protein'){
  const keys=category==='creatine'?['brand','product','type','subclass','grade','formulation','flavour','grams','packaging','price','powderCost','cost','doseCost','creatine','scoop','serving','creatineServing','energy','stock','checked','url','nutritionUrl','basis','notes']:['brand','product','type','subclass','flavour','kg','price','cost','protein','scoop','energy','stock','url','nutritionUrl','basis','notes'];
  keys.unshift('id','category');
  for(const key of ['checked','grams','referenceCost','referenceGrams','compoundLabel','proteinPerScoop'])if(!keys.includes(key))keys.push(key);
+ keys.push('historyWindowQuarters','completedQuartersTracked','fullHistoryVerified','endpointQuarter','endpointChangePct');
  keys.push('currentPriceStatus','quarterComparisonStatus','baselinePrice','baselineDate','changePct','direction','baselineSource','currentPriceSource');
- const rows=offers.map(r=>({...r,currentPriceStatus:r.priceAudit?.status,quarterComparisonStatus:r.trend?.status,baselinePrice:r.trend?.prevPrice,baselineDate:r.trend?.baselineDate,changePct:r.trend?.pct,direction:r.trend?.direction,baselineSource:r.trend?.baselineSource,currentPriceSource:r.priceAudit?.sourceUrl}));
- return '\uFEFF'+[keys,...rows.map(r=>keys.map(k=>r[k]??''))].map(row=>row.map(x=>'"'+String(x).replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"').join(',')).join('\r\n');
+ const rows=offers.map(r=>({...r,historyWindowQuarters:r.trend?.historyWindowQuarters,completedQuartersTracked:r.trend?.completedQuartersTracked,fullHistoryVerified:r.trend?.fullHistoryVerified,endpointQuarter:r.trend?.endpointQuarter,endpointChangePct:r.trend?.endpointChangePct,currentPriceStatus:r.priceAudit?.status,quarterComparisonStatus:r.trend?.status,baselinePrice:r.trend?.prevPrice,baselineDate:r.trend?.baselineDate,changePct:r.trend?.pct,direction:r.trend?.direction,baselineSource:r.trend?.baselineSource,currentPriceSource:r.priceAudit?.sourceUrl}));
+ return '\uFEFF'+[keys,...rows.map(r=>keys.map(k=>r[k]??''))].map(row=>row.map(x=>'"'+(typeof x==='string'?x.replace(/^[=+@-]/,"'$&"):String(x)).replaceAll('"','""')+'"').join(',')).join('\r\n');
 }
 export {scoreProtein,scoreCreatine} from './model.js';
 
@@ -86,8 +91,8 @@ export function groupOffersByProduct(offers, category='protein'){
 export function formatTrendBadge(trend, isNew){
   if(trend?.status==='partial')return `<span class="trend-badge trend-mixed">${trend.verifiedCount}/${trend.total} variants verified</span>`;
   if(trend?.status==='mixed')return '<span class="trend-badge trend-mixed">↕ Mixed variant changes</span>';
-  if(trend?.status!=='verified'||!Number.isFinite(trend.pct))return '<span class="trend-badge trend-unknown" title="No exact-variant dated comparison is verified. Missing history does not mean unchanged.">? No verified history</span>';
-  const n=Math.abs(trend.pct).toLocaleString('en-IN',{maximumFractionDigits:2});
+  if(trend?.status!=='verified'||!Number.isFinite(trend.pct))return '<span class="trend-badge trend-unknown" title="No verified adjacent-quarter comparison. Other dated history may be available.">? QoQ unverified</span>';
+  const n=trend.pct===0&&trend.direction!=='stable'?'&lt;0.01':Math.abs(trend.pct).toLocaleString('en-IN',{maximumFractionDigits:2});
   const title='Compared with a dated official-store observation from the previous completed quarter; not a quarterly average.';
   if(trend.direction==='down')return `<span class="trend-badge trend-down" title="${title}">▼ ${n}%</span>`;
   if(trend.direction==='up')return `<span class="trend-badge trend-up" title="${title}">▲ +${n}%</span>`;

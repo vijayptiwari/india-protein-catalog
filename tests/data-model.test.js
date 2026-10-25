@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {createSnapshot,previousQuarter,rankedOffers,quickPick} from '../docs/model.js';
+import {createSnapshot,previousQuarter,completedQuarters,historyRows,rankedOffers,quickPick} from '../docs/model.js';
 import {filterOffers,sortOffers,csv,groupOffersByProduct,formatTrendBadge,summarizeTrends} from '../docs/core.js';
 import {createDataStore} from '../docs/data-store.js';
 import {loadBundle,buildSite} from '../scripts/build_site.mjs';
@@ -33,13 +33,40 @@ test('unknown concentration stays unknown; zero calories remain zero; no energy 
 test('new quarter including year rollover changes comparison window without UI edits',()=>{
  assert.deepEqual(previousQuarter('2027-01-15'),{year:2026,q:4,label:'Q4 2026',start:'2026-10-01',end:'2026-12-31'});
  assert.equal(previousQuarter('2028-04-01').end,'2028-03-31');
- const b=fixture();b.categories.protein.checked='2027-01-25';b.observations.push(observation('protein',protein,'2027-01-25',1600));const r=offer(b);assert.equal(r.trend.comparisonQuarter,'Q4 2026');assert.equal(r.trend.baselineDate,'2026-10-25');assert.equal(r.trend.direction,'stable');
+ const b=fixture();b.categories.protein.checked='2027-01-25';b.observations.push(observation('protein',protein,'2027-01-25',1600),observation('protein',protein,'2026-10-25',1600,'official-archive'));const r=offer(b);assert.equal(r.trend.comparisonQuarter,'Q4 2026');assert.equal(r.trend.baselineDate,'2026-10-25');assert.equal(r.trend.direction,'stable');
+});
+test('history contains twelve completed quarters plus a separate current observation, with no invented launch dates',()=>{
+ const periods=completedQuarters('2026-10-25',12);assert.equal(periods.length,12);assert.deepEqual(periods[0],{year:2023,q:4,label:'Q4 2023',start:'2023-10-01',end:'2023-12-31'});assert.equal(periods.at(-1).label,'Q3 2026');assert.equal(periods.at(-1).end,'2026-09-30');
+ const r=offer(fixture());assert.equal(r.trend.history.length,13);assert.equal(r.trend.history.filter(h=>h.isCurrent).length,1);assert.equal(r.trend.history.at(-1).isCurrent,true);assert.equal(r.trend.completedQuartersTracked,1);assert.equal(r.trend.history[0].price,null);assert.equal(r.trend.launchQuarter,null);
+ const rollover=completedQuarters('2027-01-01');assert.equal(rollover[0].label,'Q1 2024');assert.equal(rollover.at(-1).label,'Q4 2026');
+});
+test('adjacent quarter changes stop at missing data; endpoint change never implies complete intervening history',()=>{
+ const b=fixture(),periods=completedQuarters('2026-10-25');b.observations=b.observations.filter(o=>o.kind!=='official-archive');
+ for(const [i,q] of periods.entries())b.observations.push(observation('protein',protein,q.end,1000+i*100,'official-archive'));
+ let r=offer(b);assert.equal(r.trend.completedQuartersTracked,12);assert.equal(r.trend.history[1].qoqPct,10);assert.equal(r.trend.endpointChangePct,60);assert.equal(r.trend.twelveQuarterChangePct,60);assert.equal(r.trend.fullHistoryVerified,true);
+ b.observations=b.observations.filter(o=>o.date!==periods[4].end);r=offer(b);assert.equal(r.trend.history[4].price,null);assert.equal(r.trend.history[4].qoqPct,null);assert.equal(r.trend.history[5].qoqPct,null);assert.notEqual(r.trend.history[6].qoqPct,null);assert.equal(r.trend.completedQuartersTracked,11);assert.equal(r.trend.fullHistoryVerified,false);assert.equal(r.trend.twelveQuarterChangePct,null);assert.equal(r.trend.endpointChangePct,60);
+ b.observations=b.observations.filter(o=>o.date!==periods[0].end);assert.equal(offer(b).trend.endpointChangePct,null);
+});
+test('conflicting historical quotes are withheld and current-quarter prices cannot be borrowed from an older quarter',()=>{
+ const b=fixture();b.observations.push(observation('protein',protein,'2026-09-20',2100,'official-archive'));const r=offer(b);assert.equal(r.trend.history.at(-2).verified,false);assert.equal(r.trend.pct,null);assert.match(r.trend.history.at(-2).auditNote,/Different prices/);
+ const c=fixture();c.observations[0].date='2026-09-25';assert.equal(offer(c).priceAudit.status,'stale');assert.equal(offer(c).trend.history.at(-1).price,null);
+});
+test('past live quotes are not promoted to historical evidence and archive dates must match public capture timestamps',()=>{
+ const b=fixture();b.observations[1].kind='official-live';assert.equal(offer(b).trend.history.at(-2).verified,false);
+ const c=fixture();c.observations[1].evidenceUrl='https://web.archive.org/web/20240615104145id_/https://brand.example/whey';assert.ok(createSnapshot(c).quality.errors.some(e=>e.field==='observationDate'));
+});
+test('long-format history export preserves every missing quarter, exact-variant identity and source',()=>{
+ const s=createSnapshot(fixture()),rows=historyRows(s);assert.equal(rows.length,s.stats.offers*13);assert.equal(rows.filter(r=>r.isCurrent).length,s.stats.offers);assert.equal(rows.filter(r=>!r.isCurrent).length,s.stats.historicalSlots);assert.equal(s.stats.historicalVerified,1);assert.equal(s.stats.fullHistoryOffers,0);assert.ok(rows.some(r=>r.price===null&&r.source===null&&r.quarter==='Q4 2023'));assert.ok(rows.filter(r=>r.verified).every(r=>r.source.startsWith('https://')));
+});
+test('historical quarter and coverage filters select exact offers without confusing missing data with verified history',()=>{
+ const b=fixture(),missing={...protein,id:'missing',brand:'No history'};b.categories.protein.offers.push(missing);const rows=createSnapshot(b).categories.protein.offers;
+ assert.equal(filterOffers(rows,{historyQuarter:'Q3 2026'})[0].id,'p1');assert.equal(filterOffers(rows,{historyQuarter:'Q4 2023'}).length,0);assert.equal(filterOffers(rows,{historyCoverage:'any'}).length,1);assert.equal(filterOffers(rows,{historyCoverage:'none'})[0].id,'missing');assert.equal(filterOffers(rows,{historyCoverage:'full'}).length,0);
 });
 test('missing, excluded, wrong-variant, conflicting and stale observations cannot verify a price or manufacture trends',()=>{
  for(const mutate of [b=>b.observations=[],b=>b.observations[0].sourceUrl='https://brand.example/different',b=>b.observations[0].offerId='different',b=>b.observations[0].qualityStatus='excluded',b=>b.categories.protein.checked='2027-09-01',b=>b.observations.push(observation('protein',protein,'2026-10-25',1900))]){
   const b=fixture();mutate(b);const r=offer(b);assert.notEqual(r.priceAudit.status,'verified');assert.equal(r.trend.pct,null);assert.equal(r.rankingEligible,false);
  }
- const b=fixture();b.observations[1].qualityStatus='excluded';b.observations[1].exclusionReason='Wrong flavour';const r=offer(b);assert.equal(r.trend.prevPrice,null);assert.equal(r.trend.auditNote,'Wrong flavour');assert.match(formatTrendBadge(r.trend),/No verified history/);
+ const b=fixture();b.observations[1].qualityStatus='excluded';b.observations[1].exclusionReason='Wrong flavour';const r=offer(b);assert.equal(r.trend.prevPrice,null);assert.equal(r.trend.auditNote,'Wrong flavour');assert.match(formatTrendBadge(r.trend),/QoQ unverified/);
 });
 test('invalid units, unsafe URLs, impossible values, malformed observations and duplicate IDs fail validation',()=>{
  for(const patch of [{price:-1},{price:'1600'},{kg:0},{kg:1,grams:500},{protein:101},{energy:-1},{energy:950},{scoop:1100},{url:'javascript:alert(1)'},{nutritionUrl:'http://insecure.example'},{id:null}]){
@@ -58,12 +85,13 @@ test('filters combine exact variants and ranges while retaining unknowns only wh
 });
 test('group summaries disclose partial and opposing histories and verified zero changes',()=>{
  const down={status:'verified',pct:-10,direction:'down'},up={status:'verified',pct:10,direction:'up'},zero={status:'verified',pct:0,direction:'stable'};
- assert.equal(summarizeTrends([down,up]).status,'mixed');assert.equal(summarizeTrends([down,{}]).status,'partial');assert.equal(summarizeTrends([zero,zero]).direction,'stable');assert.match(formatTrendBadge(zero),/Unchanged 0%/);assert.match(formatTrendBadge({pct:0,direction:'stable'}),/No verified history/);
+ assert.equal(summarizeTrends([down,up]).status,'mixed');assert.equal(summarizeTrends([down,{}]).status,'partial');assert.equal(summarizeTrends([zero,zero]).direction,'stable');assert.match(formatTrendBadge(zero),/Unchanged 0%/);assert.match(formatTrendBadge({pct:0,direction:'stable'}),/QoQ unverified/);
  const g=groupOffersByProduct(createSnapshot(fixture()).categories.protein.offers);assert.equal(g[0].trendSummary.total,g[0].count);
 });
 test('CSV exports normalized costs, source evidence and nulls, and escapes spreadsheet formulas',()=>{
  const s=createSnapshot(fixture()),out=csv([{...s.categories.protein.offers[0],brand:'=1+1',product:'A "test"'}]);assert.ok(out.includes('"\'=1+1"'));assert.ok(out.includes('"A ""test"""'));assert.ok(out.includes('baselineSource'));assert.ok(out.includes('https://evidence.example/'));
  const cr=csv(s.categories.creatine.offers,'creatine');assert.ok(cr.includes('"creatineServing"'));assert.ok(cr.includes('"powderCost"'));assert.ok(!cr.split('\r\n')[0].includes('"protein"'));
+ assert.ok(out.includes('"-20"'));assert.ok(!out.includes('"\'-20"'));
 });
 test('production dataset validates without hardcoded counts, supports arbitrary future packs and has evidence-backed trends',async()=>{
  const b=await loadBundle(),s=createSnapshot(b);assert.deepEqual(s.quality.errors,[]);assert.equal(s.stats.offers,Object.values(b.categories).reduce((n,c)=>n+c.offers.length,0));
@@ -78,6 +106,7 @@ test('build publishes content-addressed snapshot, computed downloads and dataset
   assert.equal(createHash('sha256').update(raw).digest('hex'),hash);assert.equal(pointer.version,hash);
   const html=await fs.readFile(path.join(destination,'protein.html'),'utf8');assert.ok(html.includes(`${s.categories.protein.stats.offers.toLocaleString('en-IN')} pack offers`));assert.ok(html.includes('application/ld+json'));assert.ok(!html.includes('DATA_METADATA'));
   const download=JSON.parse(await fs.readFile(path.join(destination,'data/catalog.json'),'utf8'));assert.equal(download.offers[0].cost,s.categories.protein.offers[0].cost);
+  const history=JSON.parse(await fs.readFile(path.join(destination,'data/price-history.json'),'utf8'));assert.equal(history.rows.length,s.stats.offers*(s.config.historyQuarters+1));assert.equal(history.completedQuarters,12);
  }finally{await fs.rm(destination,{recursive:true,force:true});}
 });
 test('client swaps whole validated revisions, avoids unchanged downloads, rejects corrupt updates and retains last good data',async()=>{

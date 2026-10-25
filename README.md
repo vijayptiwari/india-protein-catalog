@@ -27,9 +27,27 @@ Compound cost = price / (net pack grams × labelled percentage / 100). Powder co
 
 Rankings use **grams of labelled compound per ₹100**, with the best eligible pack per brand and product. Eligibility requires known concentration, confirmed in-stock status and a matching recent dated price. This is a cost comparison, not an assessment of efficacy or independent laboratory quality. Different creatine chemical forms are not assumed equivalent. Shared label profiles and conflicts are disclosed, not silently resolved. Stored legacy `cost`, `doseCost`, `score` and `trend` values are ignored and recalculated.
 
+## Twelve-quarter price history
+
+The audit uses the **12 completed calendar quarters** before each category research date, plus a separately labelled current observation. The window rolls automatically with the dataset date; `historyQuarters` in `site.json` controls its length. Every offer retains a slot for every requested quarter, including explicit unknowns.
+
+Each completed-quarter price is the latest verified, exact-variant dated snapshot available in that quarter. Quarter-on-quarter percentages require two adjacent verified snapshots; gaps are never interpolated or carried forward. A current-versus-oldest endpoint comparison is labelled separately and does not imply complete intervening evidence. A full-window change is recorded only when all requested historical quarters are verified. Current price evidence must also belong to the research date's current calendar quarter.
+
+The website shows coverage per category and quarter, per-offer timelines and charts with visible gaps, historical-coverage filters, and filtered history export. `dist/data/price-history.csv` and `price-history.json` contain one row per exact offer and quarter, plus current observations. The existing `price-audit.csv` remains the latest-quarter change summary. Missing prices remain null in JSON and empty in CSV, never zero.
+
+To collect public archival evidence for the full window:
+
+```sh
+python scripts/research_price_history.py --quarters 12 --alternatives 2 --structured --workers 4
+npm test
+npm run build
+```
+
+The collector searches HTML captures and optional archived product JSON/JS feeds through the [Internet Archive CDX API](https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server), follows index pagination, checks capture timestamps, and accepts prices only when an exact variant or SKU can be matched. Local response caches support repeatable review and retries. Use `--cached-only --alternatives 2` for an offline re-audit, or `--skip-known-failures` when trying additional capture dates without repeating already failed requests. Previous manual exclusions are retained. `docs/data/history-research.json` records attempted public sources, archive retrieval failures and quotes collected per quarter; a failed lookup or absent archive is not proof of a product launch date. Review the research log and exclusions before publishing. Incomplete index queries are explicitly flagged, and incomplete historical coverage is shown on the site.
+
 ## Price evidence and trends
 
-Each observation includes `category`, `offerId`, ISO `date`, numeric `price`, `currency: INR`, exact official `sourceUrl`, public `evidenceUrl`, and `kind` (`official-live` or `official-archive`). Preserve `variantId` and `matchBasis` where available. Historical evidence accepted for comparison has `qualityStatus: verified`; excluded quotes retain `qualityStatus: excluded` and `exclusionReason`. A former live observation is not automatically promoted to publicly verified historical evidence.
+Each observation includes `category`, `offerId`, ISO `date`, numeric `price`, `currency: INR`, exact official `sourceUrl`, public `evidenceUrl`, and `kind` (`official-live` or `official-archive`). Preserve `variantId` and `matchBasis` where available. Historical evidence accepted for comparison has `kind: official-archive` and `qualityStatus: verified`; excluded quotes retain `qualityStatus: excluded` and `exclusionReason`. A former live observation is not automatically promoted to publicly verified historical evidence.
 
 The latest official-live observation must match the catalog price and fall within the configured age window relative to the category research date. Missing, conflicting or stale observations cannot verify a price. The previous completed calendar quarter is calculated from each research date, including year rollover. The latest eligible verified observation in that quarter is the baseline. Every displayed change has two dated sources; missing history is never interpolated or treated as unchanged. These are listed-price snapshots, **not quarterly averages**.
 

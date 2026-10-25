@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {createSnapshot,auditRows,escapeHtml,pageMetadata} from '../docs/model.js';
+import {createSnapshot,auditRows,historyRows,escapeHtml,pageMetadata} from '../docs/model.js';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const read=async file=>JSON.parse(await fs.readFile(path.join(root,'docs/data',file),'utf8'));
 export async function loadBundle(){
@@ -21,15 +21,18 @@ export async function buildSite(destination=path.join(root,'dist')){
  const write=async(file,value)=>fs.writeFile(path.join(destination,file),typeof value==='string'?value:JSON.stringify(value));
  for(const c of Object.values(snapshot.categories))await write('data/'+c.file,{checked:c.asOf,category:c.id,offers:c.offers});
  const rows=auditRows(snapshot),summary={offers:rows.length,current_verified:snapshot.stats.verifiedPrices,quarter_comparable:snapshot.stats.verifiedTrends,up:rows.filter(r=>r.direction==='up').length,down:rows.filter(r=>r.direction==='down').length,stable:rows.filter(r=>r.direction==='stable').length,historical_quotes_excluded:bundle.observations.filter(o=>o.qualityStatus==='excluded').length};
- await write('data/price-audit.json',{checked:snapshot.asOf,summary,rows});
- const columns=Object.keys(rows[0]||{}),cell=x=>'"'+String(x??'').replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"';
+ await write('data/price-audit.json',{checked:snapshot.asOf,historyWindowQuarters:snapshot.config.historyQuarters,summary:{...summary,historicalSlots:snapshot.stats.historicalSlots,verifiedHistoricalSlots:snapshot.stats.historicalVerified,completeHistoryOffers:snapshot.stats.fullHistoryOffers},comparisonScope:'Change counts describe current versus the latest completed quarter. All requested quarters are in price-history.json and price-history.csv.',rows});
+ const columns=Object.keys(rows[0]||{}),cell=x=>'"'+(typeof x==='string'?x.replace(/^[=+@-]/,"'$&"):String(x??'')).replaceAll('"','""')+'"';
  await write('data/price-audit.csv','\uFEFF'+[columns,...rows.map(r=>columns.map(k=>r[k]))].map(row=>row.map(cell).join(',')).join('\r\n'));
+ const history=historyRows(snapshot),historyColumns=Object.keys(history[0]||{});
+ await write('data/price-history.json',{asOf:snapshot.asOf,completedQuarters:snapshot.config.historyQuarters,summary:{historicalSlots:snapshot.stats.historicalSlots,verifiedSnapshots:snapshot.stats.historicalVerified,completeHistoryOffers:snapshot.stats.fullHistoryOffers},rows:history});
+ await write('data/price-history.csv','\uFEFF'+[historyColumns,...history.map(r=>historyColumns.map(k=>r[k]))].map(row=>row.map(cell).join(',')).join('\r\n'));
  await write('data/quality-report.json',{checked:snapshot.asOf,stats:snapshot.stats,...snapshot.quality});
  const pages=[{page:'',date:snapshot.asOf},...Object.values(snapshot.categories).map(c=>({page:c.page,date:c.asOf}))];
  await write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+pages.map(p=>`<url><loc>${escapeHtml(snapshot.config.baseUrl+p.page)}</loc><lastmod>${p.date}</lastmod></url>`).join('')+'</urlset>\n');
  await write('robots.txt',`User-agent: *\nAllow: /\nSitemap: ${snapshot.config.baseUrl}sitemap.xml\n`);
  bundle.assets={};
- for(const file of [...bundle.config.categories.map(c=>c.file),'price-audit.csv','price-observations.json','quality-report.json'])bundle.assets[file]={bytes:(await fs.stat(path.join(destination,'data',file))).size};
+ for(const file of [...bundle.config.categories.map(c=>c.file),'price-audit.csv','price-history.csv','price-observations.json','quality-report.json'])bundle.assets[file]={bytes:(await fs.stat(path.join(destination,'data',file))).size};
  const bytes=JSON.stringify(bundle),hash=createHash('sha256').update(bytes).digest('hex'),file=`snapshot.${hash}.json`;
  await write('data/'+file,bytes);
  // Publish one small pointer last: clients never combine different dataset revisions.
