@@ -3,105 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Next-generation supplement intelligence and laboratory-backed cost comparison for dietary supplements in India.">
-<title>Supplement Research Lab — India | Bioanalytical & Cost Intelligence</title>
+<meta name="description" content="Next-generation supplement intelligence. Top 10 most bio-effective protein and creatine rankings in India, scored transparently across pricing, purity, quantity, and caloric efficiency.">
+<title>Supplement Research Lab — India | Top 10 Bio-Effective Rankings</title>
 <link rel="stylesheet" href="styles.css">
+<script type="module" src="home.js"></script>
 </head>
 <body>
 <header>
 <a class="logo" href="index.html"><span class="logo-beacon"></span>SR<span> // </span>SUPPLEMENT RESEARCH LAB</a>
 <nav aria-label="Main navigation">
 <span class="nav-label">Protocol Modules</span>
-<a href="index.html" aria-current="page">Overview</a>
-<a href="protein.html">Protein Index</a>
-<a href="creatine.html">Creatine Index</a>
-<a href="#categories">Specimens</a>
-<a href="#method">Lab Standards</a>
+<a href="index.html" aria-current="page">Overview &amp; Top 10</a>
+<a href="protein.html">Protein Matrix</a>
+<a href="creatine.html">Creatine Matrix</a>
+<a href="#rankings">Rankings</a>
+<a href="#formula">Scoring Formula</a>
+<a href="#downloads">Datasets</a>
 </nav>
 </header>
 
 <section class="hero">
 <div class="eyebrow">[ BIOANALYTICAL SPECTROMETRY &amp; PRICING AUDIT // SR-LABS ]</div>
-<h1>Next-Gen Supplement Intelligence.<br><span>Research-Backed Analytics. Zero Marketing Bias.</span></h1>
-<p>Independent laboratory-standard price-per-compound analysis, biochemical composition auditing, and certified label verification across the Indian dietary supplement ecosystem.</p>
+<h1>Empirical Supplement Intelligence.<br><span>Top 10 Rankings. Verified Lab Formulations. Zero Marketing Bias.</span></h1>
+<p>Independent laboratory-standard evaluation of dietary supplements in India. Rather than subjective promotional claims, each product is scored using transparent, peer-auditable Bio-Efficiency Formulas across real market price, pack mass, nutrient concentration, and caloric efficiency.</p>
 <div class="stats">
 <div><strong>02</strong><span>molecular categories</span></div>
 <div><strong>993</strong><span>verified pack assays</span></div>
 <div><strong>22+</strong><span>laboratory audited brands</span></div>
-<div><strong>100%</strong><span>disclosed evidence sources</span></div>
+<div><strong>100%</strong><span>mathematically reproducible</span></div>
 </div>
-<p class="date">Lab audit snapshot · 25 October 2026 · Specimen pricing and stock subject to market variance.</p>
+<p class="date">Lab audit snapshot · 25 October 2026 · Specimen prices and stock subject to real-time market fluctuations.</p>
 </section>
 
-<div class="portal-container" id="categories">
+<div class="portal-container" id="rankings">
 <div class="section-header">
-<h2 class="section-title">Researched Specimen Databases</h2>
-<p class="section-desc">Select an analytical dossier below to initialize the interactive laboratory filter matrix, sort by true compound cost, and inspect official verification evidence.</p>
+<h2 class="section-title">Top 10 Bio-Effective Protein Powders</h2>
+<p class="section-desc">Ranked by the <strong>Protein Bio-Efficiency Score (PBES)</strong>. Evaluates true isolated protein delivered per rupee, protein purity percentage, and caloric lean efficiency.</p>
 </div>
 
-<div class="category-grid">
-<a class="category-card" href="protein.html">
-<div>
-<span class="card-badge">SPECIMEN // PROTEIN MATRIX · 799 ASSAYS</span>
-<h3 class="card-title">Bioactive Protein Powders</h3>
-<p class="card-subtitle">WHEY ISOLATE, CONCENTRATE, HYDROLYSATE, PLANT &amp; YEAST PEPTIDES</p>
-<p class="card-desc">Empirical pack price evaluation vs. actual isolated protein yield. Standardized laboratory filters for amino acid source, subclass purity, scoop mass variance, and caloric density.</p>
-<div class="card-stats">
-<div><strong>799</strong><span>verified offers</span></div>
-<div><strong>504</strong><span>specimen listings</span></div>
-<div><strong>18</strong><span>audited brands</span></div>
+<div class="filter-tabs" role="tablist" aria-label="Protein filter categories">
+<button class="tab-btn active" data-protein-filter="all">All Protein Sources</button>
+<button class="tab-btn" data-protein-filter="whey">Whey Protein Only</button>
+<button class="tab-btn" data-protein-filter="plant">Plant &amp; Vegan Sources</button>
 </div>
-<ul class="card-features">
-<li>Exact ₹ / g isolated protein yield with full analytical precision</li>
-<li>Standardized single-pack specifications (1 kg, 2 kg, 4 kg)</li>
-<li>Official brand certificate &amp; nutrition label links per specimen</li>
+
+<div id="protein-rankings">
+<p class="muted">Loading bio-analytical rankings…</p>
+</div>
+
+<div class="section-cta-wrap">
+<p class="hint">Showing top unique product formulations ranked by best pack offer. All calculations utilize verified manufacturer labels.</p>
+<a class="full-catalog-link" href="protein.html">Explore All 799 Protein Pack Offers in Complete Matrix →</a>
+</div>
+
+<div style="height: 56px;"></div>
+
+<div class="section-header">
+<h2 class="section-title">Top 10 Bio-Effective Creatine Formulations</h2>
+<p class="section-desc">Ranked by the <strong>Creatine Bio-Efficiency Score (CBES)</strong>. Compares net pack market price against active compound yield, chemical purity, and zero-sugar cleanliness.</p>
+</div>
+
+<div class="filter-tabs" role="tablist" aria-label="Creatine filter categories">
+<button class="tab-btn active" data-creatine-filter="all">All Chemical Forms</button>
+<button class="tab-btn" data-creatine-filter="mono">Monohydrate &amp; Creapure®</button>
+<button class="tab-btn" data-creatine-filter="hcl_nitrate">HCl &amp; Nitrate Species</button>
+</div>
+
+<div id="creatine-rankings">
+<p class="muted">Loading bio-analytical rankings…</p>
+</div>
+
+<div class="section-cta-wrap">
+<p class="hint">Compound costs include hydrate and salt counter-ion portions. No cross-form equal-efficacy claims inferred.</p>
+<a class="full-catalog-link" href="creatine.html">Explore All 194 Creatine Offers in Complete Matrix →</a>
+</div>
+
+<!-- FORMULA TRANSPARENCY SECTION -->
+<div class="formula-container" id="formula">
+<div class="section-header">
+<span class="card-badge">SCIENTIFIC TRANSPARENCY PROTOCOL</span>
+<h2 class="section-title">Mathematical Scoring Derivation &amp; Formula Specification</h2>
+<p class="section-desc">To build absolute trust, every ranking score on this platform is completely transparent and mathematically auditable. We eliminate all subjective reviewer bias and commercial sponsorships.</p>
+</div>
+
+<div class="formula-grid">
+<div class="formula-card">
+<h3 class="formula-card-title">Protein Bio-Efficiency Score (PBES)</h3>
+<span class="formula-card-badge">EVALUATION METRIC: 0 — 100+ INDEX</span>
+<div class="math-display">
+PBES = (100 ÷ Cost_per_g) × (Protein_% ÷ 100) × ((4 × Protein_%) ÷ Energy_100g)
+</div>
+<ul class="formula-vars">
+<li><strong>1. Economic Yield (100 ÷ Cost_per_g):</strong> Grams of isolated pure protein delivered per ₹100 spent. Combines pack mass, market price, and protein percentage into an objective cost denominator: <code>Cost/g = Price ÷ (Pack_kg × 10 × Protein_%)</code>.</li>
+<li><strong>2. Protein Purity Ratio (Protein_% ÷ 100):</strong> Rewards high-concentration powders (e.g. 85–90% isolates) and penalizes excessive fillers, emulsifiers, or binders.</li>
+<li><strong>3. Caloric Lean Efficiency ((4 × Protein_%) ÷ Energy_100g):</strong> Pure protein provides 4 kcal per gram. This measures the exact percentage of total calories derived strictly from protein versus non-protein fats, sugars, and maltodextrin.</li>
 </ul>
 </div>
-<span class="card-button">INITIALIZE PROTEIN ANALYZER →</span>
-</a>
 
-<a class="category-card" href="creatine.html">
-<div>
-<span class="card-badge">SPECIMEN // PHOSPHAGEN COMPLEX · 194 ASSAYS</span>
-<h3 class="card-title">Creatine Compounds</h3>
-<p class="card-subtitle">MONOHYDRATE, HYDROCHLORIDE (HCL), NITRATE &amp; CREAPURE®</p>
-<p class="card-desc">Single-pack molecular assays comparing net bulk powder cost with active compound concentration. Specific differentiation for Creapure® trademarks and chemical counter-ion portions.</p>
-<div class="card-stats">
-<div><strong>194</strong><span>verified offers</span></div>
-<div><strong>03</strong><span>chemical forms</span></div>
-<div><strong>17</strong><span>audited brands</span></div>
+<div class="formula-card">
+<h3 class="formula-card-title">Creatine Bio-Efficiency Score (CBES)</h3>
+<span class="formula-card-badge">EVALUATION METRIC: 0 — 100+ INDEX</span>
+<div class="math-display">
+CBES = (100 ÷ Compound_Cost) × (Creatine_% ÷ 100) × Caloric_Cleanliness
 </div>
-<ul class="card-features">
-<li>Dual assay: ₹ / g bulk powder vs. ₹ / g active chemical compound</li>
-<li>Trademark analysis: Creapure®, Micronized, and Functional Blends</li>
-<li>Laboratory audit spreadsheet (.XLSX) with live recalculation formulas</li>
+<ul class="formula-vars">
+<li><strong>1. Active Compound Yield (100 ÷ Compound_Cost):</strong> Grams of verified active creatine compound delivered per ₹100 spent: <code>Compound_Cost = Price ÷ (Pack_g × Creatine_% ÷ 100)</code>.</li>
+<li><strong>2. Compound Purity Ratio (Creatine_% ÷ 100):</strong> Evaluates active compound purity (100% for pure Monohydrate/HCl; proportionally adjusted for flavoured formulas or blends with HMB/Taurine).</li>
+<li><strong>3. Caloric Cleanliness:</strong> <code>1 - min(0.5, Energy_100g ÷ 400)</code>. Pure zero-calorie creatine receives a multiplier of 1.0; blends diluted with carbohydrates or sugars receive proportional penalties.</li>
 </ul>
 </div>
-<span class="card-button">INITIALIZE CREATINE ANALYZER →</span>
-</a>
 </div>
 
-<div class="section-header" id="method">
-<h2 class="section-title">Laboratory Verification Protocol</h2>
-<p class="section-desc">Rigorous, standardized scientific guidelines applied to eliminate commercial marketing bias.</p>
-</div>
-
-<div class="features-grid">
-<div class="feature-box">
-<h3>1. ISO-Pack Integrity (Zero Extrapolation)</h3>
-<p>Empirical analysis relies strictly on real single-pack selling points. We never algorithmically extrapolate a 1 kg price to estimate 2 kg or 4 kg tiers. Multi-packs and accessory bundles are quarantined.</p>
-</div>
-<div class="feature-box">
-<h3>2. Active Compound Denominator Assays</h3>
-<p>Pricing formulas evaluate actual disclosed nutrient concentration, not inert powder mass. Flavoured products never inherit 100% pure concentration without explicit lab evidence. Unknown metrics remain null.</p>
-</div>
-<div class="feature-box">
-<h3>3. Biochemical Form &amp; Trademark Rigor</h3>
-<p>Monohydrate, HCl, and Nitrate are distinct chemical entities. Creapure® and Creasure® are patented trademarks, not chemical variants. Compound costs retain hydrate and salt counter-ion portions.</p>
-</div>
-<div class="feature-box">
-<h3>4. Auditable Source Dossiers</h3>
-<p>Every individual specimen links directly to official archived manufacturer product dossiers and nutrition tables. Serving conflicts, packaging anomalies, and label discrepancies are fully documented.</p>
+<div class="trust-banner">
+<strong>Verification Guarantee:</strong> No brand can buy, sponsor, or artificially inflate a placement in these rankings. All calculations are executed strictly on verified official price and nutrition label data snapshot as of <strong>25 October 2026</strong>.
 </div>
 </div>
 </div>
@@ -109,7 +123,7 @@
 <section class="downloads-section" id="downloads">
 <div class="portal-container" style="padding:0">
 <h2 class="section-title">Open Scientific Datasets</h2>
-<p class="section-desc">The complete verified research matrices are available in open data formats for peer analysis and independent algorithmic auditing.</p>
+<p class="section-desc">Download complete verified laboratory data matrices for academic verification, peer review, and independent algorithmic analysis.</p>
 <div class="downloads-grid">
 <a class="download-card" href="data/catalog.json" download="protein-catalog.json">
 <h4>Protein Specimen Matrix (JSON)</h4>
@@ -132,7 +146,13 @@
 
 <footer>
 <span>SR-LABS // SUPPLEMENT RESEARCH INTELLIGENCE</span>
-<span>Independent Research Directive · No Affiliate Links · Peer-Auditable Methodology</span>
+<span>Independent Research Directive · No Commercial Sponsorship · Audited 25 October 2026</span>
 </footer>
+
+<dialog id="evidence">
+<button id="close" aria-label="Close evidence">Dismiss [×]</button>
+<h2 id="evidence-title"></h2>
+<div id="evidence-body"></div>
+</dialog>
 </body>
 </html>
