@@ -220,6 +220,19 @@ h1 span {
   margin-bottom: 2px;
 }
 
+.author-name-link {
+  color: var(--accent-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.author-name-link:hover {
+  color: var(--accent-blue-light);
+  text-decoration-thickness: 2px;
+}
+
 /* 4 STATS ROW */
 .stats {
   display: grid;
