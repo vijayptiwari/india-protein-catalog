@@ -1976,3 +1976,5 @@ summary:focus-visible {
 #stack-builder .method-card { margin-bottom:24px; }
 #stack-total { font-weight:700; }
 #stack-results { scroll-margin-top:180px; }
+#category-switch { flex-shrink:0; min-width:150px; }
+@media(max-width:768px) { #navigation { flex-wrap:wrap; overflow:visible; } }
