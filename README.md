@@ -86,3 +86,10 @@ Refresh official prices with `python scripts/build_additional_catalog.py --as-of
 Amounts refer to the stated label serving. Fish oil comparisons use verified EPA+DHA rather than total oil; Vitamin D converts 1 microgram to 40 IU; mineral comparisons use explicitly elemental amounts, with compound masses stored separately. Ashwagandha material and extract classes remain distinct, and withanolides require a verified standardized extract amount. ZMC requires all three named minerals and compares serving costs without combining mineral masses into an efficacy score. Reference quantities are comparison units, not intake recommendations.
 
 Unknown serving sizes, conflicting labels and uncertain elemental amounts remain null. Historical slots for new categories remain unverified until exact-variant dated public evidence is found. No past prices are generated from current prices. Every offer exposes official price and label sources in its evidence dialog.
+
+
+## Articles and research
+
+`docs/data/research.json` contains the category guides, editorial review dates, selected reference metadata, summaries and limitations. It is bundled into the same content-addressed dataset as the catalogs, so editing the data and publishing a validated build updates the reading library without editing UI components. `research.html` supports category, topic and reference-type filters, with shareable query parameters. Catalog pages link directly to the relevant guide collection.
+
+This is curated educational coverage, not a systematic review or a brand endorsement. Preserve population, formulation, outcome and safety context. Check original sources and disclosures, update review dates only after review, and distinguish publication years from the date a reference was checked. Dataset validation rejects unsafe source URLs, duplicate IDs and unresolved citations. Avoid extrapolating component evidence to ZMC combinations or one extract to all Ashwagandha products.

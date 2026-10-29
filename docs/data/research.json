@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "reviewed": "2026-10-29",
+  "scope": "Curated educational guides and selected references; not a systematic or exhaustive literature search. Research does not endorse catalog brands. Guidance is not individualized medical advice. International research may not generalize to every Indian population or product.",
+  "articles": [
+    {
+      "id": "protein-guide",
+      "category": "protein",
+      "title": "Protein supplements: total intake, training and label quality",
+      "summary": "A powder is one way to supply dietary protein. The useful comparison starts with actual protein content and the training context.",
+      "evidence": "Trial syntheses support modest additional gains when protein supplementation accompanies resistance training. The benefit depends on the wider diet and training programme.",
+      "limitations": "Trials do not establish that every whey, plant or fermented product has the same effect. A price ranking is not a ranking of digestibility, amino-acid quality or clinical benefit.",
+      "catalogReading": "Use cost per gram of labelled protein rather than cost per gram of powder. Check serving size, concentration, ingredient source and label evidence separately.",
+      "safety": "Check food allergens and individual dietary restrictions. People with medically restricted protein intake need individual advice.",
+      "sourceIds": [
+        "protein-review",
+        "exercise"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "creatine-guide",
+      "category": "creatine",
+      "title": "Creatine: why the studied form matters",
+      "summary": "Monohydrate has an extensive exercise-research base; premium names and smaller portions do not establish superiority.",
+      "evidence": "Research supports creatine monohydrate for repeated high-intensity work and some resistance-training adaptations.",
+      "limitations": "Evidence is strongest for particular outcomes and studied protocols. It cannot automatically be transferred to HCl, nitrate or a proprietary blend.",
+      "catalogReading": "The catalog compares labelled compound mass. Equal grams of different creatine salts are not assumed chemically equivalent; micronization describes processing rather than proven greater efficacy.",
+      "safety": "Discuss use with a clinician if you have kidney disease or another relevant medical condition. Research protocols are not personalized instructions.",
+      "sourceIds": [
+        "exercise",
+        "creatine-position"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "ashwagandha-guide",
+      "category": "ashwagandha",
+      "title": "Ashwagandha: promising short trials, uncertain equivalence",
+      "summary": "Stress and sleep findings need to be read alongside extract identity, standardization and trial duration.",
+      "evidence": "Some small randomized trials report improvements in stress measures and sleep with specific preparations.",
+      "limitations": "Short follow-up, small samples and heterogeneous extracts limit certainty. Results for a standardized root extract do not establish the same benefit for whole root powder or a blend.",
+      "catalogReading": "Compare the same material class. Withanolide mass can be calculated only when both the standardized extract mass and percentage are verified. A headline milligram figure may represent a different basis.",
+      "safety": "Liver injury has been reported, and thyroid effects and drug interactions are concerns. Avoid use in pregnancy; seek professional advice for relevant conditions or medicines.",
+      "sourceIds": [
+        "ash-overview",
+        "ash-trial"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "fish-oil-guide",
+      "category": "fish-oil",
+      "title": "Fish oil: EPA+DHA, outcomes and the prescription distinction",
+      "summary": "Total fish-oil mass is not the same as the amount of EPA and DHA. More oil does not by itself establish greater benefit.",
+      "evidence": "Omega-3 research differs by population and preparation. VITAL did not show a significant reduction in its primary cardiovascular or cancer outcomes with the tested marine omega-3 supplement.",
+      "limitations": "Specific prescription formulations, high-risk patients and treatment of high triglycerides address different questions from routine retail supplementation.",
+      "catalogReading": "Use verified EPA+DHA per label serving and cost per common active amount. Keep total oil, chemical form, serving count and stock status visible.",
+      "safety": "Discuss use with a clinician when taking anticoagulants or considering high doses. High-dose trials have raised atrial-fibrillation concerns in some settings.",
+      "sourceIds": [
+        "omega-overview",
+        "omega-vital"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "vitamin-d-guide",
+      "category": "vitamin-d",
+      "title": "Vitamin D: deficiency treatment versus routine supplementation",
+      "summary": "Strength is a unit of amount, not a promise of improved health. The reason for taking vitamin D matters.",
+      "evidence": "Vitamin D supports calcium regulation and bone health. In generally healthy adults not selected for deficiency, the VITAL fracture study did not demonstrate fewer fractures from supplementation.",
+      "limitations": "This finding should not be generalized to treatment of diagnosed deficiency or specific bone disorders. A high-strength product is not automatically a better choice.",
+      "catalogReading": "The catalog shows IU and micrograms together: 1 microgram equals 40 IU. Read the serving size and intended product directions; the comparison unit is not a recommended daily amount.",
+      "safety": "Excess vitamin D can cause harm, including high blood calcium. Consider existing prescriptions and other supplements before combining products.",
+      "sourceIds": [
+        "d-overview",
+        "d-vital"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "magnesium-guide",
+      "category": "magnesium",
+      "title": "Magnesium: elemental amounts before salt names",
+      "summary": "Glycinate, citrate and oxide describe compounds. Their full mass must not be mistaken for elemental magnesium.",
+      "evidence": "Magnesium is an essential nutrient; the evidence and relevance of supplementation depend on the indication and baseline nutritional status.",
+      "limitations": "Absorption differences between forms do not, by themselves, establish superiority for sleep or athletic recovery. Broad wellness claims need outcome-specific trials.",
+      "catalogReading": "Compare explicitly labelled elemental magnesium per serving. The site keeps compound mass separate and withholds active-content cost when elemental amounts or serving size are unclear.",
+      "safety": "Supplemental magnesium can cause diarrhoea and interact with some medicines. Kidney impairment changes safety considerations; seek individual advice.",
+      "sourceIds": [
+        "mg-overview"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    },
+    {
+      "id": "zmc-guide",
+      "category": "zmc",
+      "title": "ZMC: assess zinc, magnesium and calcium separately",
+      "summary": "A three-mineral tablet is a formulation choice, not a single active ingredient with one meaningful strength score.",
+      "evidence": "Each mineral has established nutritional roles. Evidence about individual nutrients does not demonstrate that every ZMC combination improves outcomes.",
+      "limitations": "This guide makes no combination-specific efficacy claim. Product ratios, baseline diet, clinical need and co-ingredients differ; ZMA studies are not evidence for calcium-containing ZMC products.",
+      "catalogReading": "Review the elemental amount of each mineral, the label serving and its cost. Do not add their masses into a combined value score or treat calcium-salt weight as elemental calcium.",
+      "safety": "Check overlapping supplements and medicines. Excess zinc can affect copper status; calcium and magnesium can interfere with absorption of some medicines.",
+      "sourceIds": [
+        "ca-overview",
+        "mg-overview",
+        "zn-overview"
+      ],
+      "reviewed": "2026-10-29",
+      "author": "Supplement Research editorial synthesis"
+    }
+  ],
+  "sources": [
+    {
+      "id": "exercise",
+      "title": "NIH ODS: Exercise and athletic performance",
+      "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Reviews protein and creatine in exercise, including differences between studied ingredients and marketing claims.",
+      "limitations": "A broad reference, not an independent test of products in this catalog.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "protein-review",
+      "title": "Morton et al.: Protein supplementation and resistance training",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28698222/",
+      "kind": "Systematic review / meta-analysis",
+      "summary": "Across 49 trials involving 1,863 participants, protein supplements modestly improved training-related gains in strength and fat-free mass.",
+      "limitations": "Healthy adults undertaking resistance training; results do not establish that one commercial brand is superior.",
+      "year": 2018,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "creatine-position",
+      "title": "Kreider et al.: ISSN creatine position stand",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/",
+      "kind": "Position stand",
+      "summary": "Reviews evidence supporting creatine monohydrate for repeated high-intensity exercise and training adaptations.",
+      "limitations": "A narrative position statement, not a head-to-head trial of every form. Read the authors’ disclosed commercial relationships.",
+      "year": 2017,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "ash-overview",
+      "title": "NIH ODS: Ashwagandha for stress, anxiety and sleep",
+      "url": "https://ods.od.nih.gov/factsheets/Ashwagandha-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Small, short trials suggest possible improvements in stress and sleep, with substantial variation in extracts and study methods.",
+      "limitations": "Long-term safety and the best preparation remain uncertain. Liver, thyroid and medication concerns require attention.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "ash-trial",
+      "title": "Chandrasekhar et al.: Ashwagandha root extract and stress",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3573577/",
+      "kind": "Randomized trial",
+      "summary": "A 60-day placebo-controlled study enrolled 64 adults with chronic stress and reported improved stress measures with a specific root extract.",
+      "limitations": "Small and short; findings do not establish equivalence for root powders, other extracts, or blends.",
+      "year": 2012,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "omega-overview",
+      "title": "NIH ODS: Omega-3 fatty acids",
+      "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Reviews EPA and DHA, dietary sources, cardiovascular research and safety. Outcomes depend on the preparation and clinical context.",
+      "limitations": "Prescription omega-3 treatments and ordinary retail fish oil are not interchangeable evidence.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "omega-vital",
+      "title": "Manson et al.: Marine omega-3s in the VITAL trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30415637/",
+      "kind": "Randomized trial",
+      "summary": "In 25,871 US adults, marine omega-3 supplementation did not significantly lower the primary major cardiovascular-event or invasive-cancer outcomes.",
+      "limitations": "Primary prevention in older adults; secondary outcomes and other populations require separate interpretation.",
+      "year": 2019,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "d-overview",
+      "title": "NIH ODS: Vitamin D",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains vitamin D status, bone health, deficiency, units and evidence on supplementation.",
+      "limitations": "Correcting deficiency and routinely supplementing generally healthy adults are different questions.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "d-vital",
+      "title": "LeBoff et al.: Vitamin D and incident fractures",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35939577/",
+      "kind": "Randomized trial",
+      "summary": "In the VITAL ancillary fracture trial, vitamin D did not significantly reduce fractures in generally healthy midlife and older adults.",
+      "limitations": "Participants were not selected for deficiency, low bone mass or osteoporosis; this does not negate treatment for a diagnosed need.",
+      "year": 2022,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "mg-overview",
+      "title": "NIH ODS: Magnesium",
+      "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains elemental magnesium, differences in salt forms, absorption, deficiency and safety.",
+      "limitations": "A chemical form or absorption claim alone does not prove better sleep, recovery or other clinical outcomes.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "ca-overview",
+      "title": "NIH ODS: Calcium",
+      "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Covers calcium requirements, elemental content, bone-health research and supplement considerations.",
+      "limitations": "Benefits depend on dietary intake and population; a larger compound mass is not necessarily more elemental calcium.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "zn-overview",
+      "title": "NIH ODS: Zinc",
+      "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains zinc functions, deficiency, excess intake and interactions.",
+      "limitations": "Evidence for one nutrient or indication does not validate a combined ZMC product.",
+      "year": null,
+      "checked": "2026-10-29"
+    }
+  ]
+}

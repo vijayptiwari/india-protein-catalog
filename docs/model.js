@@ -124,7 +124,16 @@ export function createSnapshot(bundle){
   result[definition.id]={...definition,asOf:input.checked,previousQuarter:previousQuarter(input.checked),historyWindow:completedQuarters(input.checked,historyQuarters),offers,stats:stats(offers)};
  }
  const all=Object.values(result).flatMap(c=>c.offers),dates=Object.values(result).map(c=>c.asOf).sort();
- return {config:{...config,historyQuarters},brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
+ if(bundle.research){
+  const research=bundle.research,invalid=message=>errors.push({category:'research',id:'library',field:'research',message});
+  if(!Array.isArray(research.articles)||!Array.isArray(research.sources)||!isoDate(research.reviewed))invalid('Research needs articles, sources and a valid editorial review date.');
+  else {
+   const sourceIds=new Set();
+   for(const source of research.sources){if(!source.id||sourceIds.has(source.id)||!https(source.url)||!isoDate(source.checked)||['title','kind','summary','limitations'].some(k=>!source[k]))invalid('Invalid, duplicate or unsafe research reference.');sourceIds.add(source.id);}
+   const articleIds=new Set();for(const a of research.articles){if(!a.id||articleIds.has(a.id)||!result[a.category]||!isoDate(a.reviewed)||['title','summary','evidence','limitations','catalogReading','safety','author'].some(k=>!a[k])||!a.sourceIds?.length||a.sourceIds.some(id=>!sourceIds.has(id)))invalid('Invalid guide, category or reference link.');articleIds.add(a.id);}
+  }
+ }
+ return {research:bundle.research,config:{...config,historyQuarters},brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
 }
 export function rankedOffers(category,limit=10,predicate=()=>true){
  const best=new Map();for(const r of category.offers.filter(r=>r.rankingEligible&&predicate(r))){const key=JSON.stringify([r.brand,r.product]);if(!best.has(key)||r.score>best.get(key).score)best.set(key,r);}
@@ -141,6 +150,7 @@ export function historyRows(snapshot){
  return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,packCount:r.packCount??null,dosageForm:r.form??null,currency:snapshot.config.currency,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
 }
 export function pageMetadata(snapshot,categoryId){
+ if(categoryId==='research')return {title:'Articles & Research · '+snapshot.config.name,description:'Evidence guides and selected scientific references for all supplement categories.',structured:{'@context':'https://schema.org','@type':'CollectionPage',name:'Supplement articles and research',url:snapshot.config.baseUrl+'research.html',dateModified:snapshot.research?.reviewed}};
  if(categoryId==='audit')return {
   title:`Data & Price History Audit · ${snapshot.config.name}`,
   description:`Audit of data coverage, dated price observations, and 12-quarter price tracking across Indian supplements. Dataset as of ${snapshot.asOf}.`,

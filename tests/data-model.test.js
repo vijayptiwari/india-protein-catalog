@@ -105,6 +105,7 @@ test('build publishes content-addressed snapshot, computed downloads and dataset
   const {snapshot:s,hash,assetVersion}=await buildSite(destination),pointer=JSON.parse(await fs.readFile(path.join(destination,'data/version.json'),'utf8')),raw=await fs.readFile(path.join(destination,'data',pointer.file),'utf8');
   assert.equal(createHash('sha256').update(raw).digest('hex'),hash);assert.equal(pointer.version,hash);
   const html=await fs.readFile(path.join(destination,'protein.html'),'utf8');assert.ok(html.includes(`${s.categories.protein.stats.offers.toLocaleString('en-IN')} pack offers`));assert.ok(html.includes('application/ld+json'));assert.ok(!html.includes('DATA_METADATA'));
+  const researchPage=await fs.readFile(path.join(destination,'research.html'),'utf8');assert.ok(researchPage.includes('Articles &amp; Research'));assert.ok(researchPage.includes(`site.js?v=${assetVersion}`));assert.ok((await fs.readFile(path.join(destination,'sitemap.xml'),'utf8')).includes('research.html'));
   const download=JSON.parse(await fs.readFile(path.join(destination,'data/catalog.json'),'utf8'));assert.equal(download.offers[0].cost,s.categories.protein.offers[0].cost);
   const history=JSON.parse(await fs.readFile(path.join(destination,'data/price-history.json'),'utf8'));assert.equal(history.rows.length,s.stats.offers*(s.config.historyQuarters+1));assert.equal(history.completedQuarters,12);
   assert.ok(html.includes(`data-ui.css?v=${assetVersion}`));assert.ok(html.includes(`site.js?v=${assetVersion}`));

@@ -1961,3 +1961,11 @@ summary:focus-visible {
 @media(max-width: 600px) { #category-switch { max-width: 155px; } }
 .unit-offers-table th { white-space: normal; }
 .product-group-card .variant-summary { background: var(--bg-card); color: var(--text-body); }
+.research-controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:18px; margin-bottom:18px; }
+.research-controls label { display:flex; flex-direction:column; gap:8px; color:var(--text-body); }
+.research-controls input,.research-controls select { width:100%; box-sizing:border-box; padding:12px; background:var(--bg-card); color:var(--text-body); border:1px solid var(--border); border-radius:8px; font:inherit; }
+.research-article { margin-bottom:24px; scroll-margin-top:180px; }
+.research-article h3 { margin-top:14px; font-size:1.4rem; }
+.research-article h4 { margin:24px 0 8px; }
+.research-article p { max-width:85ch; line-height:1.75; }
+#research-sources h3 { font-size:1.1rem; line-height:1.5; }
