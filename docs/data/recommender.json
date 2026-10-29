@@ -1,0 +1,149 @@
+{
+  "reviewed": "2026-10-29",
+  "goals": [
+    {
+      "id": "strength",
+      "label": "Strength & resistance training"
+    },
+    {
+      "id": "protein-gap",
+      "label": "Fill a known protein gap"
+    },
+    {
+      "id": "diet-gaps",
+      "label": "Review low fish / omega-3 intake"
+    },
+    {
+      "id": "stress",
+      "label": "Stress & sleep support"
+    },
+    {
+      "id": "bone",
+      "label": "Bone & mineral health"
+    }
+  ],
+  "presets": [
+    {
+      "id": "training",
+      "label": "Training essentials",
+      "goals": [
+        "strength"
+      ]
+    },
+    {
+      "id": "nutrition",
+      "label": "Dietary gap review",
+      "goals": [
+        "protein-gap",
+        "diet-gaps"
+      ]
+    },
+    {
+      "id": "rest",
+      "label": "Stress & sleep review",
+      "goals": [
+        "stress"
+      ]
+    },
+    {
+      "id": "bones",
+      "label": "Bone-health review",
+      "goals": [
+        "bone"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "category": "protein",
+      "goals": [
+        "strength",
+        "protein-gap"
+      ],
+      "gate": "proteinGap",
+      "status": "Useful if a dietary gap exists",
+      "reason": "Protein powder can help fill a known dietary protein gap. If food already meets your needs, adding powder is optional.",
+      "sources": [
+        "protein-review",
+        "exercise"
+      ]
+    },
+    {
+      "category": "creatine",
+      "goals": [
+        "strength"
+      ],
+      "status": "Optional performance add-on",
+      "reason": "Creatine monohydrate has evidence for repeated high-intensity exercise and resistance-training adaptations. It is not required to begin training.",
+      "sources": [
+        "exercise",
+        "creatine-position"
+      ]
+    },
+    {
+      "category": "fish-oil",
+      "goals": [
+        "diet-gaps"
+      ],
+      "status": "Consider dietary context first",
+      "reason": "Low fish intake is a reason to review dietary omega-3 sources, not proof that a fish-oil supplement will prevent disease. Compare verified EPA+DHA.",
+      "sources": [
+        "omega-overview",
+        "omega-vital"
+      ]
+    },
+    {
+      "category": "ashwagandha",
+      "goals": [
+        "stress"
+      ],
+      "review": true,
+      "status": "Discuss before adding",
+      "reason": "Some short trials suggest benefits for stress or sleep with specific extracts. Long-term safety and equivalence across products remain uncertain.",
+      "sources": [
+        "ash-overview",
+        "ash-trial"
+      ]
+    },
+    {
+      "category": "vitamin-d",
+      "goals": [
+        "bone"
+      ],
+      "review": true,
+      "status": "Use for an established need",
+      "reason": "A bone-health goal alone does not establish vitamin D deficiency or justify a high-strength product. Confirm the need and suitable formulation with a clinician.",
+      "sources": [
+        "d-overview",
+        "d-vital"
+      ]
+    },
+    {
+      "category": "magnesium",
+      "goals": [
+        "bone",
+        "stress"
+      ],
+      "review": true,
+      "status": "Not an automatic sleep or recovery add-on",
+      "reason": "Review dietary intake and an established reason for supplementation. A salt name or elemental amount does not establish a sleep benefit.",
+      "sources": [
+        "mg-overview"
+      ]
+    },
+    {
+      "category": "zmc",
+      "goals": [
+        "bone"
+      ],
+      "review": true,
+      "status": "Combination requires individual review",
+      "reason": "Assess calcium, magnesium and zinc separately. A combined tablet is not automatically better than addressing an individual dietary gap.",
+      "sources": [
+        "ca-overview",
+        "mg-overview",
+        "zn-overview"
+      ]
+    }
+  ]
+}

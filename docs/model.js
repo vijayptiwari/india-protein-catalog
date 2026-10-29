@@ -133,7 +133,12 @@ export function createSnapshot(bundle){
    const articleIds=new Set();for(const a of research.articles){if(!a.id||articleIds.has(a.id)||!result[a.category]||!isoDate(a.reviewed)||['title','summary','evidence','limitations','catalogReading','safety','author'].some(k=>!a[k])||!a.sourceIds?.length||a.sourceIds.some(id=>!sourceIds.has(id)))invalid('Invalid guide, category or reference link.');articleIds.add(a.id);}
   }
  }
- return {research:bundle.research,config:{...config,historyQuarters},brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
+ if(bundle.recommender){
+  const p=bundle.recommender,bad=message=>errors.push({category:'recommender',id:'policy',field:'recommender',message});
+  if(!isoDate(p.reviewed)||!Array.isArray(p.rules)||!Array.isArray(p.goals)||!Array.isArray(p.presets))bad('Invalid recommender policy.');
+  else {const goals=new Set(p.goals.map(g=>g.id)),sources=new Set(bundle.research?.sources.map(s=>s.id)||[]);for(const r of p.rules)if(!result[r.category]||!r.reason||!r.status||!r.goals?.length||r.goals.some(g=>!goals.has(g))||!r.sources?.length||r.sources.some(id=>!sources.has(id)))bad('Unresolved recommender category, goal or evidence.');for(const preset of p.presets)if(!preset.goals?.length||preset.goals.some(g=>!goals.has(g)))bad('Unresolved preset goal.');}
+ }
+ return {recommender:bundle.recommender,research:bundle.research,config:{...config,historyQuarters},brands:brands||{},categories:result,observations,asOf:dates.at(-1),stats:stats(all),quality:{errors,warnings},assets:bundle.assets||{}};
 }
 export function rankedOffers(category,limit=10,predicate=()=>true){
  const best=new Map();for(const r of category.offers.filter(r=>r.rankingEligible&&predicate(r))){const key=JSON.stringify([r.brand,r.product]);if(!best.has(key)||r.score>best.get(key).score)best.set(key,r);}
@@ -150,6 +155,7 @@ export function historyRows(snapshot){
  return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,packCount:r.packCount??null,dosageForm:r.form??null,currency:snapshot.config.currency,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
 }
 export function pageMetadata(snapshot,categoryId){
+ if(categoryId==='recommender')return {title:'Supplement Stack Recommender · '+snapshot.config.name,description:'Build an evidence-informed supplement stack around goals, diet, existing supplements and pack budget.',structured:{'@context':'https://schema.org','@type':'WebApplication',name:'Supplement Stack Recommender',url:snapshot.config.baseUrl+'recommender.html',applicationCategory:'HealthApplication'}};
  if(categoryId==='research')return {title:'Articles & Research · '+snapshot.config.name,description:'Evidence guides and selected scientific references for all supplement categories.',structured:{'@context':'https://schema.org','@type':'CollectionPage',name:'Supplement articles and research',url:snapshot.config.baseUrl+'research.html',dateModified:snapshot.research?.reviewed}};
  if(categoryId==='audit')return {
   title:`Data & Price History Audit · ${snapshot.config.name}`,

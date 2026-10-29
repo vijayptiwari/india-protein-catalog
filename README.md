@@ -93,3 +93,12 @@ Unknown serving sizes, conflicting labels and uncertain elemental amounts remain
 `docs/data/research.json` contains the category guides, editorial review dates, selected reference metadata, summaries and limitations. It is bundled into the same content-addressed dataset as the catalogs, so editing the data and publishing a validated build updates the reading library without editing UI components. `research.html` supports category, topic and reference-type filters, with shareable query parameters. Catalog pages link directly to the relevant guide collection.
 
 This is curated educational coverage, not a systematic review or a brand endorsement. Preserve population, formulation, outcome and safety context. Check original sources and disclosures, update review dates only after review, and distinguish publication years from the date a reference was checked. Dataset validation rejects unsafe source URLs, duplicate IDs and unresolved citations. Avoid extrapolating component evidence to ZMC combinations or one extract to all Ashwagandha products.
+
+
+## Supplement stack recommender
+
+`recommender.html` provides goal presets, requirements, existing-category checks and a total upfront pack budget. Rules and explanatory evidence live in `docs/data/recommender.json`, bundled with the catalog and research dataset. `docs/recommender.js` evaluates those rules and current verified, in-stock offers. It is a transparent rules-based tool, not an AI diagnosis or a dosing engine.
+
+Protein requires a self-identified dietary gap. Creatine candidates are pure unflavoured monohydrate; fish oil requires verified serving and EPA+DHA inputs. Stress and mineral categories provide educational review rather than automatic product picks. Underage, pregnancy/breastfeeding, medicines, health conditions and uncertain contexts pause product shortlists. Existing categories are not suggested again; ZMC overlap is explained. Ingredient preferences are not vegan or allergen certification.
+
+Users explicitly select exact packs; combined totals use current dataset prices and disclose budget overruns. No pack is added automatically. This is an upfront purchase total, not monthly consumption or a personalized regimen. Answers are held in page memory and are not serialized to a URL or local profile. Dataset refreshes re-evaluate eligible choices. Update policy evidence and review dates deliberately, run validation and tests, then deploy.

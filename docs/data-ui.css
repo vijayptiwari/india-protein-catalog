@@ -1969,3 +1969,10 @@ summary:focus-visible {
 .research-article h4 { margin:24px 0 8px; }
 .research-article p { max-width:85ch; line-height:1.75; }
 #research-sources h3 { font-size:1.1rem; line-height:1.5; }
+#stack-builder select { max-width:100%; width:100%; padding:12px; color:var(--text-body); background:var(--bg-card); border:1px solid var(--border); border-radius:8px; font:inherit; }
+#stack-builder fieldset { border:1px solid var(--border); border-radius:10px; padding:18px; margin:22px 0; }
+#stack-builder .check { display:flex; align-items:center; gap:10px; margin:12px 0; }
+#stack-builder .research-controls { margin-top:24px; }
+#stack-builder .method-card { margin-bottom:24px; }
+#stack-total { font-weight:700; }
+#stack-results { scroll-margin-top:180px; }

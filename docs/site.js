@@ -1,3 +1,4 @@
+import {renderRecommender} from './recommender.js';
 import {renderResearch} from './research.js';
 import {unitPack,unitFacets,unitMetrics,unitTable,unitGroups,unitHome,unitFormula,unitDetails} from './unit-catalog.js';
 import {watchData,dataStore} from './data-store.js';
@@ -105,12 +106,13 @@ function renderOffer(){
 function onSnapshot(next){
  const previous=category&&categoryId?{...state(),sort:$('#sort').value,view}:null;snapshot=next;category=next.categories[categoryId];
  document.querySelectorAll('[data-site-name]').forEach(e=>e.textContent=next.config.name);
- $('#navigation').innerHTML=`<a href="index.html" ${!categoryId&&!pageType?'aria-current="page"':''}>Overview</a><select id="category-switch" aria-label="Product category"><option value="">Browse catalogs</option>${next.config.categories.map(c=>`<option value="${esc(c.page)}" ${categoryId===c.id?'selected':''}>${esc(c.label)}</option>`).join('')}</select><a href="research.html" ${pageType==='research'?'aria-current="page"':''}>Articles &amp; Research</a><a href="audit.html" ${pageType==='audit'?'aria-current="page"':''}>Data audit</a>`;
+ $('#navigation').innerHTML=`<a href="index.html" ${!categoryId&&!pageType?'aria-current="page"':''}>Overview</a><select id="category-switch" aria-label="Product category"><option value="">Browse catalogs</option>${next.config.categories.map(c=>`<option value="${esc(c.page)}" ${categoryId===c.id?'selected':''}>${esc(c.label)}</option>`).join('')}</select><a href="recommender.html" ${pageType==='recommender'?'aria-current="page"':''}>Stack builder</a><a href="research.html" ${pageType==='research'?'aria-current="page"':''}>Articles &amp; Research</a><a href="audit.html" ${pageType==='audit'?'aria-current="page"':''}>Data audit</a>`;
  if(categoryId){if(!category)throw Error('Category missing from dataset.');$('#catalog-title').textContent=`Compare ${num(category.stats.offers,0)} ${category.label.toLowerCase()} pack offers`;
   $('#catalog-description').textContent=`Prices and labelled nutrition across ${category.stats.brands} brands. Dataset as of ${formatDate(category.asOf)}. Open each exact offer for its source, observation date and limitations.`;$('#results-title').textContent=category.label+' pack offers';
   let researchLink=$('#category-research');if(!researchLink){researchLink=document.createElement('p');researchLink.id='category-research';$('#catalog-description').after(researchLink);}researchLink.innerHTML=`<a href="research.html?category=${encodeURIComponent(categoryId)}">Read ${esc(category.label)} articles &amp; research →</a>`;
   renderStats(category.stats);formula(category.offers);buildFilters(previous||paramsState());renderCatalog();
- }else if(pageType==='research')renderResearch(next);
+ }else if(pageType==='recommender')renderRecommender(next);
+ else if(pageType==='research')renderResearch(next);
  else if(pageType==='audit')renderAudit();
  else renderHome();
  const metadata=pageMetadata(next,pageType||categoryId);document.title=metadata.title;
