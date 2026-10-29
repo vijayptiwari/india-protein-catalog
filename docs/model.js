@@ -130,7 +130,7 @@ export function createSnapshot(bundle){
   else {
    const sourceIds=new Set();
    for(const source of research.sources){if(!source.id||sourceIds.has(source.id)||!https(source.url)||!isoDate(source.checked)||['title','kind','summary','limitations'].some(k=>!source[k]))invalid('Invalid, duplicate or unsafe research reference.');sourceIds.add(source.id);}
-   const articleIds=new Set();for(const a of research.articles){if(!a.id||articleIds.has(a.id)||!result[a.category]||!isoDate(a.reviewed)||['title','summary','evidence','limitations','catalogReading','safety','author'].some(k=>!a[k])||!a.sourceIds?.length||a.sourceIds.some(id=>!sourceIds.has(id)))invalid('Invalid guide, category or reference link.');articleIds.add(a.id);}
+   const articleIds=new Set();for(const a of research.articles){if(!a.id||articleIds.has(a.id)||!result[a.category]||!isoDate(a.reviewed)||['title','summary','evidence','limitations','catalogReading','safety','author'].some(k=>!a[k])||!a.sourceIds?.length||a.sourceIds.some(id=>!sourceIds.has(id)))invalid('Invalid guide, category or reference link.');articleIds.add(a.id);if(!Array.isArray(a.bodySteps)||a.bodySteps.length<2||a.bodySteps.some(step=>typeof step!=='string'||!step.trim())||['treatment','whoMayBenefit','routineUse'].some(key=>typeof a[key]!=='string'||!a[key].trim())||['bodySources','sectionSources'].some(key=>!Array.isArray(a[key])||!a[key].length||a[key].some(id=>!sourceIds.has(id)||!a.sourceIds.includes(id))))invalid('Each guide needs sourced body processing, treatment limits, eligibility and routine-use context.');}
   }
  }
  if(bundle.recommender){

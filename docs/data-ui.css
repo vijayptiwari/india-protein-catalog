@@ -1978,3 +1978,8 @@ summary:focus-visible {
 #stack-results { scroll-margin-top:180px; }
 #category-switch { flex-shrink:0; min-width:150px; }
 @media(max-width:768px) { #navigation { flex-wrap:wrap; overflow:visible; } }
+.body-process { padding:18px; margin-top:20px; background:var(--bg-card); border:1px solid var(--border); border-radius:10px; }
+.body-process h4 { margin-top:0; }
+.body-process ol { padding-left:24px; }
+.body-process li { line-height:1.7; padding:6px 0 12px 8px; }
+.body-process li::marker { color:var(--accent-blue); font-weight:700; }

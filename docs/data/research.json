@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewed": "2026-10-29",
-  "scope": "Curated educational guides and selected references; not a systematic or exhaustive literature search. Research does not endorse catalog brands. Guidance is not individualized medical advice. International research may not generalize to every Indian population or product.",
+  "scope": "Curated educational guides and selected references; not a systematic or exhaustive review. Biological mechanisms do not by themselves prove clinical benefit. Nutrient requirements, deficiency treatment and routine supplement use are different questions. Research does not endorse catalog brands. Individual and pediatric care require appropriate professional guidance; international findings may not generalize to every Indian product or population.",
   "articles": [
     {
       "id": "protein-guide",
@@ -14,10 +14,28 @@
       "safety": "Check food allergens and individual dietary restrictions. People with medically restricted protein intake need individual advice.",
       "sourceIds": [
         "protein-review",
-        "exercise"
+        "exercise",
+        "digestion"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Stomach and intestinal enzymes break dietary protein into smaller peptides and amino acids.",
+        "The small intestine absorbs these building blocks into circulation.",
+        "Tissues use amino acids to make proteins; resistance training provides a stimulus for muscle adaptation."
+      ],
+      "bodySources": [
+        "digestion",
+        "exercise"
+      ],
+      "treatment": "Protein supplementation can help address inadequate intake within a nutrition plan. Powder alone does not cure muscle wasting or an illness causing poor nutrition.",
+      "whoMayBenefit": "People unable to meet assessed protein needs through food, including some athletes or people receiving supervised nutritional care.",
+      "routineUse": "Everyone needs dietary protein; everyone does not need protein powder. Reassess the food gap rather than assuming lifelong use.",
+      "sectionSources": [
+        "digestion",
+        "exercise",
+        "protein-review"
+      ]
     },
     {
       "id": "creatine-guide",
@@ -33,7 +51,22 @@
         "creatine-position"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Absorbed creatine enters circulation and is taken up by tissues, predominantly muscle.",
+        "Some is stored as phosphocreatine, which helps rapidly regenerate ATP during intense effort.",
+        "Creatine and phosphocreatine gradually form creatinine, which the kidneys excrete."
+      ],
+      "bodySources": [
+        "creatine-position"
+      ],
+      "treatment": "A performance aid is not a cure for weakness, fatigue or a neurological disease. Specialist uses require condition-specific evidence and care.",
+      "whoMayBenefit": "Adults doing repeated high-intensity efforts or resistance training who want an optional performance aid.",
+      "routineUse": "No universal requirement for a creatine supplement. Healthy bodies make creatine, and it is also obtained from some foods.",
+      "sectionSources": [
+        "exercise",
+        "creatine-position"
+      ]
     },
     {
       "id": "ashwagandha-guide",
@@ -49,7 +82,22 @@
         "ash-trial"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "A swallowed product supplies a mixture of plant constituents; powders and extracts can have different compositions.",
+        "Absorption and metabolism depend on the preparation. Human studies do not establish one uniform pathway for all products.",
+        "Proposed stress-response mechanisms do not prove a clinical benefit; withanolide percentage is not a measure of cure."
+      ],
+      "bodySources": [
+        "ash-overview"
+      ],
+      "treatment": "No established cure for anxiety disorders, insomnia or thyroid disease. Persistent symptoms need assessment rather than self-treatment with an extract.",
+      "whoMayBenefit": "Some adults seeking short-term stress or sleep support may consider a specific studied preparation after reviewing risks and alternatives.",
+      "routineUse": "No group should assume it is essential or a lifelong supplement. Long-term safety is uncertain.",
+      "sectionSources": [
+        "ash-overview",
+        "ash-trial"
+      ]
     },
     {
       "id": "fish-oil-guide",
@@ -65,7 +113,22 @@
         "omega-vital"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Digestion releases fatty acids from dietary oils.",
+        "Intestinal cells package absorbed fats into transport particles that reach the circulation through lymph.",
+        "EPA and DHA enter tissue lipids and cell membranes and contribute to signalling pathways."
+      ],
+      "bodySources": [
+        "omega-overview"
+      ],
+      "treatment": "Prescription omega-3 medicines can treat high triglycerides under medical care. Retail fish oil is not an interchangeable prescription or a cure for heart disease.",
+      "whoMayBenefit": "People with a clinician-established indication; those with low fish intake can first review food and suitable alternative omega-3 sources.",
+      "routineUse": "No blanket recommendation that every healthy adult needs fish-oil capsules. Dietary context and the clinical goal matter.",
+      "sectionSources": [
+        "omega-overview",
+        "omega-vital"
+      ]
     },
     {
       "id": "vitamin-d-guide",
@@ -81,7 +144,22 @@
         "d-vital"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "The intestine absorbs vitamin D from food or supplements; skin can also produce it after UVB exposure.",
+        "The liver converts it to 25-hydroxyvitamin D, the main blood marker of status.",
+        "The kidneys produce its active hormone form, which helps regulate calcium absorption and bone mineral balance."
+      ],
+      "bodySources": [
+        "d-overview"
+      ],
+      "treatment": "Correcting vitamin D deficiency can treat deficiency-related rickets or osteomalacia. It is not a general cure for fatigue, cancer or infections.",
+      "whoMayBenefit": "People with established deficiency or malabsorption may need treatment. Some groups have routine preventive guidance, including breastfed infants; a pediatric clinician should guide this, not adult catalog strengths.",
+      "routineUse": "Some people need ongoing supplementation, but the indication and plan differ. A higher-risk group is not proof of an individual deficiency.",
+      "sectionSources": [
+        "d-overview",
+        "d-vital"
+      ]
     },
     {
       "id": "magnesium-guide",
@@ -96,7 +174,21 @@
         "mg-overview"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "A magnesium compound must release magnesium that can be absorbed from the intestine.",
+        "Absorbed magnesium supports enzyme activity, energy metabolism, and normal nerve and muscle function.",
+        "The kidneys help regulate magnesium balance by adjusting excretion."
+      ],
+      "bodySources": [
+        "mg-overview"
+      ],
+      "treatment": "Replacement treats magnesium deficiency when indicated. Some magnesium medicines act as laxatives or antacids; this does not make every supplement a treatment for constipation, insomnia or cramps.",
+      "whoMayBenefit": "People with a diagnosed deficiency or an assessed intake or absorption problem, with attention to kidney function and medicines.",
+      "routineUse": "No universal need for magnesium tablets if intake is adequate. Symptoms such as cramps alone do not establish deficiency.",
+      "sectionSources": [
+        "mg-overview"
+      ]
     },
     {
       "id": "zmc-guide",
@@ -113,7 +205,25 @@
         "zn-overview"
       ],
       "reviewed": "2026-10-29",
-      "author": "Supplement Research editorial synthesis"
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "The tablet releases separate calcium, magnesium and zinc compounds in the digestive tract.",
+        "Intestinal absorption and regulation differ for each mineral; vitamin D supports active calcium absorption.",
+        "Calcium supports bone and signalling functions, magnesium supports enzyme activity, and zinc supports many cellular processes."
+      ],
+      "bodySources": [
+        "ca-overview",
+        "mg-overview",
+        "zn-overview"
+      ],
+      "treatment": "An appropriate individual mineral can correct its deficiency. This is not evidence that a ZMC combination cures osteoporosis, low testosterone or a general immunity problem.",
+      "whoMayBenefit": "Someone with assessed needs for the included minerals may consider a combination if its amounts fit the plan; a single deficient nutrient may need a different product.",
+      "routineUse": "No universal requirement for a three-mineral stack. Review each mineral separately and check overlap with other supplements.",
+      "sectionSources": [
+        "ca-overview",
+        "mg-overview",
+        "zn-overview"
+      ]
     }
   ],
   "sources": [
@@ -140,7 +250,7 @@
     {
       "id": "creatine-position",
       "title": "Kreider et al.: ISSN creatine position stand",
-      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/",
+      "url": "https://link.springer.com/article/10.1186/s12970-017-0173-z",
       "kind": "Position stand",
       "summary": "Reviews evidence supporting creatine monohydrate for repeated high-intensity exercise and training adaptations.",
       "limitations": "A narrative position statement, not a head-to-head trial of every form. Read the authors’ disclosed commercial relationships.",
@@ -234,6 +344,16 @@
       "kind": "Expert overview",
       "summary": "Explains zinc functions, deficiency, excess intake and interactions.",
       "limitations": "Evidence for one nutrient or indication does not validate a combined ZMC product.",
+      "year": null,
+      "checked": "2026-10-29"
+    },
+    {
+      "id": "digestion",
+      "title": "NIDDK: Your digestive system and how it works",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works",
+      "kind": "Expert overview",
+      "summary": "Explains how digestion breaks proteins into amino acids and how the small intestine absorbs nutrients.",
+      "limitations": "Basic physiology does not establish the effectiveness of a supplement or commercial product.",
       "year": null,
       "checked": "2026-10-29"
     }
