@@ -105,3 +105,8 @@ Users explicitly select exact packs; combined totals use current dataset prices 
 
 
 Guides also include sourced `bodySteps`/`bodySources`, `treatment`, `whoMayBenefit`, `routineUse` and `sectionSources`. Explain mechanisms separately from demonstrated outcomes, distinguish treating a deficiency from curing an unrelated disease, and distinguish needing a nutrient from needing a supplement. Do not infer that every member of a risk group has a deficiency. Routine pediatric guidance must not be translated into adult catalog product recommendations. Validation checks these sections and their citations; topic search includes the new text.
+
+
+## Presentation system
+
+`docs/design.css` defines the shared editorial layout and theme tokens used by every page. It loads after the legacy catalog styles and is fingerprinted by the build. Research opens as a guide index; choosing a topic opens an article with stable section links, a desktop contents rail and collapsible mobile contents. Clinical text and citations continue to come from the research dataset. Mobile navigation and catalog filters expand on demand; the homepage links to counted-product catalogs rather than duplicating their full offer tables. Both explicit light/dark choices and system preference remain available through labelled icon controls.

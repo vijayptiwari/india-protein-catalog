@@ -53,7 +53,7 @@ function renderHome(){
   const p=quickPick(snapshot,rule);return p?`<article class="research-card quick-pick-card"><div class="card-eyebrow">${esc(p.label)}</div><div class="quick-pick-price"><strong class="big-price">${money(p.min)}</strong><span class="price-sub">per ${num(p.referenceGrams)} g ${esc(p.compoundLabel)}</span></div><div class="quick-pick-body"><div class="brand">${esc(p.offer.brand)}</div><h3 class="quick-pick-title">${esc(p.offer.product)}</h3><div class="muted">${esc(p.offer.flavour)} · ${size(p.offer)}</div></div><p class="quick-pick-range">${money(p.min)}–${money(p.max)} across ${num(p.count,0)} eligible offers</p><div class="quick-pick-action">${button(p.offer)}</div></article>`:`<article class="research-card"><h3>${esc(rule.label)}</h3><p>No eligible offer in this dataset.</p></article>`;
  }).join('');
  $('#rankings').innerHTML=categories.map(c=>{
-  if(c.measurement==='units')return unitHome(c,{num,money,button});
+  if(c.measurement==='units')return '';
   const types=[...new Set(c.offers.map(r=>r.type))].sort();if(!types.includes(rankingFilters[c.id]))rankingFilters[c.id]='';
   return `<section class="ranking-section" data-ranking="${esc(c.id)}"><div class="section-heading"><div><h2 id="${esc(c.id)}-ranking-title"></h2><p>Best eligible pack per product · ordered by grams of ${esc(c.compoundLabel)} per ₹100.</p></div><label>Source / chemical form<select data-rank-filter="${esc(c.id)}"><option value="">All forms</option>${types.map(t=>`<option ${rankingFilters[c.id]===t?'selected':''}>${esc(t)}</option>`).join('')}</select></label></div><div id="${esc(c.id)}-rankings"></div><a class="catalog-more" href="${esc(c.page)}">Browse all ${num(c.stats.offers,0)} ${esc(c.label.toLowerCase())} packs &amp; filters →</a></section>`;
  }).join('');
@@ -123,7 +123,7 @@ function onSnapshot(next){
 watchData(onSnapshot,(current,status)=>{
  const el=$('#dataset-status');el.classList.toggle('data-error',status.state==='error');
  if(status.state==='error')el.textContent=current?`Refresh failed. Showing last validated revision ${status.version.slice(0,8)}. ${status.message}`:`Dataset unavailable. ${status.message} Use Refresh data to retry.`;
- else el.textContent=`Dataset as of ${formatDate(current.categories[categoryId]?.asOf||current.asOf)} · revision ${status.version.slice(0,8)} · checked ${status.checkedAt.toLocaleTimeString('en-IN')} · checks every ${num(current.config.refreshIntervalMs/1000,0)} seconds while visible`;
+ else {el.textContent=`Data reviewed ${formatDate(current.categories[categoryId]?.asOf||current.asOf)}`;el.title=`Revision ${status.version.slice(0,8)} · automatically checks every ${current.config.refreshIntervalMs/1000} seconds while visible`;}
 });
 $('#refresh-data').addEventListener('click',async()=>{const b=$('#refresh-data');b.disabled=true;try{await dataStore.refresh();}finally{b.disabled=false;}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-offer]');if(b)openOffer(b.dataset.category,b.dataset.offer);});
@@ -177,3 +177,9 @@ function setupTheme(){
 }
 setupTheme();
 
+
+const menuToggle=document.querySelector('#menu-toggle');
+menuToggle?.addEventListener('click',()=>{const open=menuToggle.getAttribute('aria-expanded')!=='true';menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');document.querySelector('#navigation').classList.toggle('is-open',open);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){menuToggle?.setAttribute('aria-expanded','false');menuToggle?.setAttribute('aria-label','Open navigation');document.querySelector('#navigation')?.classList.remove('is-open');}});
+
+const filterToggle=document.querySelector('#filter-toggle');filterToggle?.addEventListener('click',()=>{const open=filterToggle.getAttribute('aria-expanded')!=='true';filterToggle.setAttribute('aria-expanded',String(open));document.querySelector('#catalog-filters').classList.toggle('is-open',open);filterToggle.querySelector('span').textContent=open?'−':'+';});
