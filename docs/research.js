@@ -14,6 +14,10 @@ export function renderResearch(snapshot){
   const params=new URLSearchParams(location.search);document.querySelector('#research-category').value=snapshot.categories[params.get('category')]?params.get('category'):'';document.querySelector('#research-query').value=params.get('q')||'';document.querySelector('#research-kind').value=params.get('kind')||'';
   root.dataset.ready='true';
  }
+ const categorySelect=document.querySelector('#research-category'),kindSelect=document.querySelector('#research-kind'),selectedCategory=categorySelect.value,selectedKind=kindSelect.value;
+ categorySelect.innerHTML=`<option value="">All supplements</option>${snapshot.config.categories.map(c=>`<option value="${esc(c.id)}">${esc(c.label)}</option>`).join('')}`;
+ kindSelect.innerHTML=`<option value="">All reference types</option>${[...new Set(data.sources.map(s=>s.kind))].map(k=>`<option>${esc(k)}</option>`).join('')}`;
+ categorySelect.value=snapshot.categories[selectedCategory]?selectedCategory:'';kindSelect.value=[...kindSelect.options].some(o=>o.value===selectedKind)?selectedKind:'';
  const update=()=>{
   const state={category:document.querySelector('#research-category').value,q:document.querySelector('#research-query').value,kind:document.querySelector('#research-kind').value};const {articles,sources}=selectResearch(data,state),refs=new Map(data.sources.map(s=>[s.id,s]));
   const params=new URLSearchParams(Object.entries(state).filter(([,v])=>v));history.replaceState(null,'',location.pathname+(params.size?'?'+params:'')+location.hash);
