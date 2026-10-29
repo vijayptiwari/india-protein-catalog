@@ -4211,3 +4211,13 @@ body.has-comparison {
     font-size:11px
   }
 }
+
+/* On phones, category discovery follows the intro without duplicating the path panel. */
+@media(max-width:650px) {
+  .home-banner { padding:24px 21px; }
+  .home-banner .learning-panel { display:none; }
+  .banner-copy h1 { font-size:30px; margin:13px 0 18px; }
+  .banner-copy>p { font-size:13px; line-height:1.7; }
+  .banner-actions { margin:21px 0; }
+  .banner-actions a { font-size:11px; padding:10px 12px; }
+}
