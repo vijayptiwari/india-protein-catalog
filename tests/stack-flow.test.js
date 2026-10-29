@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {validateStackAnswers} from '../docs/recommender.js';
+const answers={goals:['strength'],context:'adult-clear',milkAllergy:'no',fishAllergy:'no',budget:''};
+test('goals step validates only goals, so later unanswered requirements do not block it',()=>{assert.deepEqual(validateStackAnswers({goals:['strength']},1),[]);assert.deepEqual(validateStackAnswers({goals:[]},1).map(e=>e.field),['goals']);});
+test('requirements require explicit context and allergy answers instead of assuming eligibility',()=>{assert.deepEqual(validateStackAnswers({goals:['strength']},2).map(e=>e.field),['stack-context','stack-milk','stack-fish']);assert.deepEqual(validateStackAnswers(answers),[]);});
+test('professional-review context and uncertain allergies can continue to an educational review',()=>{assert.deepEqual(validateStackAnswers({...answers,context:'review',milkAllergy:'yes',fishAllergy:'yes'}),[]);});
+test('upfront budgets may be omitted or fractional but must be finite and non-negative',()=>{for(const budget of ['',0,'0','2500.50'])assert.deepEqual(validateStackAnswers({...answers,budget}),[]);for(const budget of [-1,'not a price',Infinity])assert.ok(validateStackAnswers({...answers,budget}).some(e=>e.field==='stack-budget'));});
+import {filterStackOffers} from '../docs/recommender.js';
+test('pack search combines brand, product and flavour terms without losing original candidates',()=>{const offers=[{id:'a',brand:'Alpha',product:'Whey Isolate',flavour:'Chocolate'},{id:'b',brand:'Alpha',product:'Whey',flavour:'Vanilla'},{id:'c',brand:'Beta',product:'Plant',flavour:'Chocolate'}];assert.deepEqual(filterStackOffers(offers,'  ALPHA chocolate ').map(r=>r.id),['a']);assert.deepEqual(filterStackOffers(offers,'vanilla').map(r=>r.id),['b']);assert.equal(filterStackOffers(offers,'missing').length,0);assert.equal(filterStackOffers(offers,'').length,3);assert.equal(offers.length,3);});

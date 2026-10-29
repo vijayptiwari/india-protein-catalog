@@ -70,7 +70,11 @@
           "table": false
         }
       ],
-      "comparisonNote": "Root powder, extracts and blends are distinct profiles. Compare material costs within the same formulation; a standardized extract mass is required to calculate withanolides."
+      "comparisonNote": "Root powder, extracts and blends are distinct profiles. Compare material costs within the same formulation; a standardized extract mass is required to calculate withanolides.",
+      "searchAliases": [
+        "ashwaganda",
+        "withania somnifera"
+      ]
     },
     {
       "id": "fish-oil",
@@ -108,7 +112,12 @@
           "table": false
         }
       ],
-      "comparisonNote": "EPA+DHA and total fish-oil mass are recorded separately. Compare the chemical form and actual label serving alongside cost."
+      "comparisonNote": "EPA+DHA and total fish-oil mass are recorded separately. Compare the chemical form and actual label serving alongside cost.",
+      "searchAliases": [
+        "fishoil",
+        "omega3",
+        "omega 3"
+      ]
     },
     {
       "id": "vitamin-d",
@@ -140,7 +149,11 @@
           "table": true
         }
       ],
-      "comparisonNote": "Vitamin D amounts use IU with micrograms shown alongside (1 µg = 40 IU). Strength comparisons do not specify intake frequency."
+      "comparisonNote": "Vitamin D amounts use IU with micrograms shown alongside (1 µg = 40 IU). Strength comparisons do not specify intake frequency.",
+      "searchAliases": [
+        "vitamind",
+        "vit d"
+      ]
     },
     {
       "id": "magnesium",

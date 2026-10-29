@@ -108,7 +108,7 @@ test('build publishes content-addressed snapshot, computed downloads and dataset
   const researchPage=await fs.readFile(path.join(destination,'research.html'),'utf8');assert.ok(researchPage.includes('Articles &amp; Research'));assert.ok(researchPage.includes(`site.js?v=${assetVersion}`));assert.ok((await fs.readFile(path.join(destination,'sitemap.xml'),'utf8')).includes('research.html'));
   const download=JSON.parse(await fs.readFile(path.join(destination,'data/catalog.json'),'utf8'));assert.equal(download.offers[0].cost,s.categories.protein.offers[0].cost);
   const history=JSON.parse(await fs.readFile(path.join(destination,'data/price-history.json'),'utf8'));assert.equal(history.rows.length,s.stats.offers*(s.config.historyQuarters+1));assert.equal(history.completedQuarters,12);
-  assert.ok(html.includes(`data-ui.css?v=${assetVersion}`));assert.ok(html.includes(`site.js?v=${assetVersion}`));
+  assert.ok(html.includes(`marketplace.css?v=${assetVersion}`));assert.ok(html.includes(`site.js?v=${assetVersion}`));
   for(const file of ['site.js','core.js','data-store.js']){const js=await fs.readFile(path.join(destination,file),'utf8');assert.ok(js.includes(`./model.js?v=${assetVersion}`));assert.ok(!js.includes("from './model.js'"));}
  }finally{await fs.rm(destination,{recursive:true,force:true});}
 });
