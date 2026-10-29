@@ -33,7 +33,7 @@ The audit uses the **12 completed calendar quarters** before each category resea
 
 Each completed-quarter price is the latest verified, exact-variant dated snapshot available in that quarter. Quarter-on-quarter percentages require two adjacent verified snapshots; gaps are never interpolated or carried forward. A current-versus-oldest endpoint comparison is labelled separately and does not imply complete intervening evidence. A full-window change is recorded only when all requested historical quarters are verified. Current price evidence must also belong to the research date's current calendar quarter.
 
-The website shows coverage per category and quarter, per-offer timelines and charts with visible gaps, historical-coverage filters, and filtered history export. `dist/data/price-history.csv` and `price-history.json` contain one row per exact offer and quarter, plus current observations. The existing `price-audit.csv` remains the latest-quarter change summary. Missing prices remain null in JSON and empty in CSV, never zero.
+The website shows coverage per category and quarter, per-offer timelines and charts with visible gaps, historical-coverage filters, and source evidence. `dist/data/price-history.csv` and `price-history.json` contain one row per exact offer and quarter, plus current observations. The existing `price-audit.csv` remains the latest-quarter change summary. Missing prices remain null in JSON and empty in CSV, never zero.
 
 To collect public archival evidence for the full window:
 
@@ -67,7 +67,7 @@ npm start
 
 Open http://localhost:8080. Serve **`dist/`**, not `docs/` directly: the build creates the version manifest and validated snapshot. No application dependencies, backend or API keys are required.
 
-The build produces normalized catalog JSON, price-audit JSON/CSV, a field-level quality report and dataset-driven SEO/JSON-LD. It publishes one content-addressed `snapshot.<sha256>.json` and a small `version.json` pointer. The browser verifies the hash, validates the whole revision and swaps it atomically, avoiding mixed category versions. CSV export uses the currently displayed validated revision and active filters. JSON download files belong to the latest deployed build. Original dated Excel workbooks remain archival files and are not presented as current downloads; editing a workbook alone does not update the website.
+The build produces normalized catalog JSON, price-audit JSON/CSV, a field-level quality report and dataset-driven SEO/JSON-LD. It publishes one content-addressed `snapshot.<sha256>.json` and a small `version.json` pointer. The browser verifies the hash, validates the whole revision and swaps it atomically, avoiding mixed category versions. Generated exports support offline auditing; the website has no export controls. JSON download files belong to the latest deployed build. Original dated Excel workbooks remain archival files and are not presented as current downloads; editing a workbook alone does not update the website.
 
 `.github/workflows/check.yml` runs tests and the build before deploying the Pages artifact. GitHub Pages must use **GitHub Actions** as its build source. A rejected update leaves the last successful deployment available. Generated `dist/` is ignored by Git; edit source inputs rather than generated bundles. Relative paths support the repository subpath.
 
@@ -75,3 +75,14 @@ The build produces normalized catalog JSON, price-audit JSON/CSV, a field-level 
 
 The coverage panel and quality report identify missing concentration, energy and scoop values, price evidence gaps and nutrition notes requiring review. Complete those fields from exact-variant labels first, archive dated merchant evidence for future comparisons, and keep source/research dates explicit. Recorded manufacturer claims are not independent lab verification. Sold-out offers and uncertain stock remain searchable but do not enter rankings. No pack price is inferred from another size.
 Deployment follows the [GitHub Pages custom workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+
+## Count-based supplement categories
+
+Ashwagandha, Fish Oil, Vitamin D, Magnesium and ZMC use counted packs, not inferred kilogram prices. `docs/data/additional-sources.json` records curated official product handles, label sources, serving basis and separate label-check dates. Raw category files and the observation ledger supply all displayed prices, counts, nutrient amounts, filters and calculations.
+
+Refresh official prices with `python scripts/build_additional_catalog.py --as-of YYYY-MM-DD --refresh`, review changes and exact pack counts, then run tests and build. Review labels separately before changing their check dates. This is a quarterly research update workflow, not a live merchant checkout-price feed; deployed dataset revisions refresh automatically in the browser.
+
+Amounts refer to the stated label serving. Fish oil comparisons use verified EPA+DHA rather than total oil; Vitamin D converts 1 microgram to 40 IU; mineral comparisons use explicitly elemental amounts, with compound masses stored separately. Ashwagandha material and extract classes remain distinct, and withanolides require a verified standardized extract amount. ZMC requires all three named minerals and compares serving costs without combining mineral masses into an efficacy score. Reference quantities are comparison units, not intake recommendations.
+
+Unknown serving sizes, conflicting labels and uncertain elemental amounts remain null. Historical slots for new categories remain unverified until exact-variant dated public evidence is found. No past prices are generated from current prices. Every offer exposes official price and label sources in its evidence dialog.

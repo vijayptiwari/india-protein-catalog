@@ -1,4 +1,5 @@
 // Pure calculations shared by browser pages, validation, exports and the site build.
+import {normalizeUnitInputs} from './units.js';
 export const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export const positive=n=>finite(n)&&n>0;
 export const isoDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
@@ -39,6 +40,16 @@ function computeTrend(r,category,asOf,observations,maxAgeDays,historyCount){
 export function scoreProtein(r){return positive(r.cost)?100/r.cost:0;}
 export function scoreCreatine(r){return positive(r.cost)?100/r.cost:0;}
 export function normalizeOffer(raw,definition,asOf,observations,config){
+ if(definition.measurement==='units'){
+  const {offer:r,issues}=normalizeUnitInputs(raw,definition);
+  for(const key of ['brand','product','type','subclass','flavour'])if(typeof raw[key]!=='string'||!raw[key].trim())issues.push({severity:'error',field:key,message:'A non-empty label is required.'});
+  if(raw.id==null||!String(raw.id).trim())issues.push({severity:'error',field:'id',message:'Stable offer ID is required.'});
+  if(!https(raw.url)||raw.nutritionUrl&&!https(raw.nutritionUrl))issues.push({severity:'error',field:'url',message:'HTTPS product and label source URLs are required.'});
+  r.category=definition.id;r.checked=asOf;
+  Object.assign(r,computeTrend(r,definition.id,asOf,observations,config.maxPriceAgeDays,config.historyQuarters??12));
+  if(r.priceAudit.status!=='verified')issues.push({severity:'warning',field:'priceEvidence',message:'Current pack price needs matching dated evidence.'});
+  r.quality={issues,errors:issues.filter(i=>i.severity==='error').length,warnings:issues.filter(i=>i.severity==='warning').length};return r;
+ }
  const category=definition.id,issues=[],r={...raw};
  const grams=category==='creatine'?raw.grams:positive(raw.kg)?raw.kg*1000:null;
  r.grams=positive(grams)?grams:null;r.kg=r.grams==null?null:r.grams/1000;
@@ -99,14 +110,14 @@ export function createSnapshot(bundle){
   }
  }
  for(const definition of config.categories){
-  if(!['protein','creatine'].includes(definition.concentrationField)||!definition.id?.match(/^[a-z][a-z0-9-]*$/)||!definition.label?.trim()||!definition.compoundLabel?.trim())throw Error('Category needs valid labels, ID and concentration field.');
+  if(!(definition.measurement==='units'||['protein','creatine'].includes(definition.concentrationField))||!definition.id?.match(/^[a-z][a-z0-9-]*$/)||!definition.label?.trim()||!definition.compoundLabel?.trim())throw Error('Category needs valid labels, ID and a measurement definition.');
   const input=categories[definition.id];if(!input||!Array.isArray(input.offers)||!isoDate(input.checked))throw Error(`Category ${definition.id} needs offers and an ISO checked date.`);
-  if(!positive(definition.referenceGrams))throw Error(`Invalid reference quantity for ${definition.id}.`);
+  if(definition.measurement==='units'?!positive(definition.referenceQuantity)||!definition.referenceUnit||!Array.isArray(definition.nutrientFields):!positive(definition.referenceGrams))throw Error(`Invalid reference quantity for ${definition.id}.`);
   const ids=new Set(),variants=new Set();
   const offers=input.offers.map(raw=>{
    const r=normalizeOffer(raw,definition,input.checked,byOffer.get(JSON.stringify([definition.id,String(raw.id)]))||[],config);
    if(ids.has(String(r.id))){r.quality.issues.push({severity:'error',field:'id',message:'Duplicate offer ID.'});r.quality.errors++;r.rankingEligible=false;}ids.add(String(r.id));
-   const variant=JSON.stringify([r.brand,r.product,r.flavour,r.grams,r.packaging||'']);
+   const variant=JSON.stringify([r.brand,r.product,r.flavour,r.isUnitOffer?r.packCount:r.grams,r.form||'',r.packaging||'']);
    if(variants.has(variant)){r.quality.issues.push({severity:'error',field:'variant',message:'Duplicate exact pack variant.'});r.quality.errors++;r.rankingEligible=false;}variants.add(variant);
    for(const issue of r.quality.issues)(issue.severity==='error'?errors:warnings).push({category:definition.id,id:r.id,...issue});return r;
   });
@@ -125,9 +136,9 @@ export function quickPick(snapshot,rule){
  const eligible=c.offers.filter(r=>r.rankingEligible&&fits(r)).sort((a,b)=>a.referenceCost-b.referenceCost);
  return eligible.length?{...rule,offer:eligible[0],count:eligible.length,min:eligible[0].referenceCost,max:eligible.at(-1).referenceCost,referenceGrams:c.referenceGrams,compoundLabel:c.compoundLabel}:null;
 }
-export function auditRows(snapshot){return Object.values(snapshot.categories).flatMap(c=>c.offers.map(r=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,currentPrice:r.price,currentStatus:r.priceAudit.status,currentChecked:r.priceAudit.checked,baselinePrice:r.trend.prevPrice,baselineDate:r.trend.baselineDate,changePct:r.trend.pct,direction:r.trend.direction,baselineSource:r.trend.baselineSource,currentSource:r.priceAudit.sourceUrl,historyAuditNote:r.trend.auditNote})));}
+export function auditRows(snapshot){return Object.values(snapshot.categories).flatMap(c=>c.offers.map(r=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,packCount:r.packCount??null,dosageForm:r.form??null,currency:snapshot.config.currency,currentPrice:r.price,currentStatus:r.priceAudit.status,currentChecked:r.priceAudit.checked,baselinePrice:r.trend.prevPrice,baselineDate:r.trend.baselineDate,changePct:r.trend.pct,direction:r.trend.direction,baselineSource:r.trend.baselineSource,currentSource:r.priceAudit.sourceUrl,historyAuditNote:r.trend.auditNote})));}
 export function historyRows(snapshot){
- return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
+ return Object.values(snapshot.categories).flatMap(c=>c.offers.flatMap(r=>r.trend.history.map(h=>({category:c.id,offerId:r.id,brand:r.brand,product:r.product,flavour:r.flavour,packGrams:r.grams,packCount:r.packCount??null,dosageForm:r.form??null,currency:snapshot.config.currency,quarter:h.quarter,quarterStart:h.start,quarterEnd:h.end,isCurrent:h.isCurrent,observationDate:h.date,price:h.price,verified:h.verified,changeVsPreviousQuarterPct:h.qoqPct,direction:h.qoqDirection??'unknown',source:h.source,status:h.status,auditNote:h.auditNote}))));
 }
 export function pageMetadata(snapshot,categoryId){
  if(categoryId==='audit')return {

@@ -1951,3 +1951,13 @@ summary:focus-visible {
   }
 }
 
+/* Count-based catalogs retain independent label amounts and horizontal comparisons. */
+#category-switch { max-width: 190px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); color: var(--text-body); font: inherit; }
+.unit-offers-table { min-width: 1480px; }
+.unit-offers-table th, .unit-offers-table td { min-width: 105px; }
+.unit-offers-table th:first-child, .unit-offers-table td:first-child { min-width: 230px; }
+.unit-offers-table td { vertical-align: top; }
+.unit-offers-table .muted { white-space: normal; }
+@media(max-width: 600px) { #category-switch { max-width: 155px; } }
+.unit-offers-table th { white-space: normal; }
+.product-group-card .variant-summary { background: var(--bg-card); color: var(--text-body); }

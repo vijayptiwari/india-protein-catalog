@@ -1,18 +1,19 @@
+import {unitFacets,unitMetrics} from './units.js';
 export const facets = [['brand','Brand'],['product','Product'],['type','Protein source'],['subclass','Protein subclass'],['flavour','Flavour'],['kg','Pack size (kg)'],['stock','Availability']];
 export const metrics = [['price','Pack price (₹)'],['cost','Cost / g protein (₹)'],['protein','Protein (%)'],['scoop','Scoop size (g)'],['energy','Energy (kcal / 100 g)']];
 export const creatineFacets=[['brand','Brand'],['product','Product'],['type','Creatine chemical form'],['subclass','Processing / particle size'],['grade','Ingredient trademark'],['formulation','Formulation'],['flavour','Flavour'],['grams','Pack size (g)'],['packaging','Packaging'],['stock','Availability']];
 export const creatineMetrics=[['price','Pack price (₹)'],['powderCost','Cost / g powder (₹)'],['cost','Cost / g compound (₹)'],['doseCost','Cost / 3 g compound (₹)'],['creatine','Labelled compound (%)'],['scoop','Scoop size (g)'],['energy','Energy (kcal / 100 g)']];
-export function filterOffers(offers,state,category='protein'){return offers.filter(r=>{
+export function filterOffers(offers,state,category='protein',definition=null){const activeFacets=definition?.measurement==='units'?unitFacets(definition):category==='creatine'?creatineFacets:facets,activeMetrics=definition?.measurement==='units'?unitMetrics(definition):category==='creatine'?creatineMetrics:metrics;return offers.filter(r=>{
  if(state.historyQuarter&&!r.trend?.history?.some(h=>!h.isCurrent&&h.quarter===state.historyQuarter&&h.verified))return false;
  if(state.historyCoverage==='any'&&!(r.trend?.completedQuartersTracked>0))return false;
  if(state.historyCoverage==='full'&&!r.trend?.fullHistoryVerified)return false;
  if(state.historyCoverage==='none'&&r.trend?.completedQuartersTracked>0)return false;
  if(state.priceTrend && (r.trend?.status==='verified'?r.trend.direction:'unknown')!==state.priceTrend)return false;
- if(state.q && ![r.brand,r.product,r.flavour,r.type,r.subclass,r.grade,r.formulation].join(' ').toLowerCase().includes(state.q.toLowerCase()))return false;
- for(const [key] of category==='creatine'?creatineFacets:facets)if(state[key]?.length&&!state[key].includes(String(r[key])))return false;
- for(const [key] of category==='creatine'?creatineMetrics:metrics){const min=state[key+'Min'],max=state[key+'Max'];if(min!==undefined&&min!==''&&(r[key]==null||r[key]<Number(min)))return false;if(max!==undefined&&max!==''&&(r[key]==null||r[key]>Number(max)))return false;}
+ if(state.q && ![r.brand,r.product,r.flavour,r.type,r.subclass,r.grade,r.formulation,r.source,r.form].join(' ').toLowerCase().includes(state.q.toLowerCase()))return false;
+ for(const [key] of activeFacets)if(state[key]?.length&&!state[key].includes(String(r[key])))return false;
+ for(const [key] of activeMetrics){const min=state[key+'Min'],max=state[key+'Max'];if(min!==undefined&&min!==''&&(r[key]==null||r[key]<Number(min)))return false;if(max!==undefined&&max!==''&&(r[key]==null||r[key]>Number(max)))return false;}
  if(state.knownCost&&r.cost==null)return false;
- return !state.complete || (category==='creatine'?['creatine','scoop','energy']:['protein','scoop','energy']).every(k=>r[k]!=null);
+ return !state.complete || (definition?.measurement==='units'?['servingUnits',...(definition.mainNutrient==='multi'?['calciumMg','magnesiumMg','zincMg']:[definition.mainNutrient])]:category==='creatine'?['creatine','scoop','energy']:['protein','scoop','energy']).every(k=>r[k]!=null);
  });}
 export function sortOffers(offers,key){return [...offers].sort((a,b)=>{if(key==='brand')return a.brand.localeCompare(b.brand)||a.product.localeCompare(b.product)||a.flavour.localeCompare(b.flavour)||a.kg-b.kg;if(a[key]==null)return b[key]==null?0:1;if(b[key]==null)return -1;return (a[key]-b[key])*(key==='protein'||key==='creatine'?-1:1);});}
 export function csv(offers,category='protein'){
@@ -54,7 +55,7 @@ export function groupOffersByProduct(offers, category='protein'){
   const result = [];
   for(const g of groups.values()){
     const vars = g.variations;
-    vars.sort((a,b) => (a.kg || a.grams) - (b.kg || b.grams) || a.flavour.localeCompare(b.flavour));
+    vars.sort((a,b) => (a.packCount ?? a.kg ?? a.grams) - (b.packCount ?? b.kg ?? b.grams) || a.flavour.localeCompare(b.flavour));
     const prices = vars.map(v => v.price);
     const costs = vars.filter(v => v.cost != null).map(v => v.cost);
     const weights = [...new Set(vars.map(v => category === 'creatine' ? v.grams + ' g' : v.kg + ' kg'))];

@@ -96,7 +96,7 @@ test('CSV exports normalized costs, source evidence and nulls, and escapes sprea
 test('production dataset validates without hardcoded counts, supports arbitrary future packs and has evidence-backed trends',async()=>{
  const b=await loadBundle(),s=createSnapshot(b);assert.deepEqual(s.quality.errors,[]);assert.equal(s.stats.offers,Object.values(b.categories).reduce((n,c)=>n+c.offers.length,0));
  for(const c of Object.values(s.categories))for(const r of c.offers){
-  if(r.cost!=null)assert.ok(Math.abs(r.cost-r.price/(r.grams*r[c.concentrationField]/100))<1e-9);
+  if(r.isUnitOffer){assert.equal(r.unitCost,r.price/r.packCount);assert.equal(r.rankingEligible,false);} else if(r.cost!=null)assert.ok(Math.abs(r.cost-r.price/(r.grams*r[c.concentrationField]/100))<1e-9);
   if(r.trend.status==='verified'){assert.ok(r.trend.baselineDate>=c.previousQuarter.start&&r.trend.baselineDate<=c.previousQuarter.end);assert.equal(r.trend.pct,Math.round((r.price-r.trend.prevPrice)/r.trend.prevPrice*10000)/100);assert.ok(b.observations.some(o=>o.category===c.id&&o.offerId===r.id&&o.price===r.trend.prevPrice&&o.evidenceUrl===r.trend.baselineSource&&o.qualityStatus!=='excluded'));}
  }
 });

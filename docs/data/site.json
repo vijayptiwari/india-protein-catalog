@@ -9,18 +9,268 @@
   "refreshIntervalMs": 60000,
   "maxPriceAgeDays": 100,
   "historyQuarters": 12,
-  "pageSizes": {"grouped": 15, "flat": 40},
+  "pageSizes": {
+    "grouped": 15,
+    "flat": 40
+  },
   "observationsFile": "price-observations.json",
   "brandsFile": "brands.json",
   "categories": [
-    {"id": "protein", "label": "Protein", "file": "catalog.json", "page": "protein.html", "concentrationField": "protein", "compoundLabel": "protein", "referenceGrams": 24},
-    {"id": "creatine", "label": "Creatine", "file": "creatine.json", "page": "creatine.html", "concentrationField": "creatine", "compoundLabel": "labelled creatine compound", "referenceGrams": 3}
+    {
+      "id": "protein",
+      "label": "Protein",
+      "file": "catalog.json",
+      "page": "protein.html",
+      "concentrationField": "protein",
+      "compoundLabel": "protein",
+      "referenceGrams": 24
+    },
+    {
+      "id": "creatine",
+      "label": "Creatine",
+      "file": "creatine.json",
+      "page": "creatine.html",
+      "concentrationField": "creatine",
+      "compoundLabel": "labelled creatine compound",
+      "referenceGrams": 3
+    },
+    {
+      "id": "ashwagandha",
+      "label": "Ashwagandha",
+      "file": "ashwagandha.json",
+      "page": "ashwagandha.html",
+      "measurement": "units",
+      "mainNutrient": "ashwagandhaMg",
+      "referenceQuantity": 100,
+      "referenceUnit": "mg",
+      "compoundLabel": "declared ashwagandha material",
+      "nutrientFields": [
+        {
+          "key": "ashwagandhaMg",
+          "label": "Ashwagandha material",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "withanolidesPct",
+          "label": "Extract standardization",
+          "unit": "%",
+          "table": true
+        },
+        {
+          "key": "standardizedExtractMg",
+          "label": "Standardized extract component",
+          "unit": "mg",
+          "table": false
+        },
+        {
+          "key": "withanolidesMg",
+          "label": "Withanolides (calculated)",
+          "unit": "mg",
+          "table": false
+        }
+      ],
+      "comparisonNote": "Root powder, extracts and blends are distinct profiles. Compare material costs within the same formulation; a standardized extract mass is required to calculate withanolides."
+    },
+    {
+      "id": "fish-oil",
+      "label": "Fish Oil",
+      "file": "fish-oil.json",
+      "page": "fish-oil.html",
+      "measurement": "units",
+      "mainNutrient": "epaDhaMg",
+      "referenceQuantity": 1000,
+      "referenceUnit": "mg",
+      "compoundLabel": "EPA+DHA",
+      "nutrientFields": [
+        {
+          "key": "epaDhaMg",
+          "label": "EPA + DHA",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "epaMg",
+          "label": "EPA",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "dhaMg",
+          "label": "DHA",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "fishOilMg",
+          "label": "Total fish oil",
+          "unit": "mg",
+          "table": false
+        }
+      ],
+      "comparisonNote": "EPA+DHA and total fish-oil mass are recorded separately. Compare the chemical form and actual label serving alongside cost."
+    },
+    {
+      "id": "vitamin-d",
+      "label": "Vitamin D",
+      "file": "vitamin-d.json",
+      "page": "vitamin-d.html",
+      "measurement": "units",
+      "mainNutrient": "vitaminDIu",
+      "referenceQuantity": 1000,
+      "referenceUnit": "IU",
+      "compoundLabel": "Vitamin D",
+      "nutrientFields": [
+        {
+          "key": "vitaminDIu",
+          "label": "Vitamin D",
+          "unit": "IU",
+          "table": true
+        },
+        {
+          "key": "vitaminDMcg",
+          "label": "Vitamin D",
+          "unit": "µg",
+          "table": true
+        },
+        {
+          "key": "vitaminK2Mcg",
+          "label": "Vitamin K2",
+          "unit": "µg",
+          "table": true
+        }
+      ],
+      "comparisonNote": "Vitamin D amounts use IU with micrograms shown alongside (1 µg = 40 IU). Strength comparisons do not specify intake frequency."
+    },
+    {
+      "id": "magnesium",
+      "label": "Magnesium",
+      "file": "magnesium.json",
+      "page": "magnesium.html",
+      "measurement": "units",
+      "mainNutrient": "magnesiumMg",
+      "referenceQuantity": 100,
+      "referenceUnit": "mg",
+      "compoundLabel": "elemental magnesium",
+      "nutrientFields": [
+        {
+          "key": "magnesiumMg",
+          "label": "Elemental magnesium",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "magnesiumCompoundMg",
+          "label": "Magnesium compound (not elemental)",
+          "unit": "mg",
+          "table": false
+        }
+      ],
+      "comparisonNote": "Cost comparisons use explicitly labelled elemental magnesium. Glycinate, citrate and other compound masses are stored separately and are not substituted for elemental content."
+    },
+    {
+      "id": "zmc",
+      "label": "ZMC",
+      "file": "zmc.json",
+      "page": "zmc.html",
+      "measurement": "units",
+      "mainNutrient": "multi",
+      "referenceQuantity": 1,
+      "referenceUnit": "label serving",
+      "compoundLabel": "labelled mineral combination",
+      "nutrientFields": [
+        {
+          "key": "calciumMg",
+          "label": "Elemental calcium",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "magnesiumMg",
+          "label": "Elemental magnesium",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "zincMg",
+          "label": "Elemental zinc",
+          "unit": "mg",
+          "table": true
+        },
+        {
+          "key": "vitaminDIu",
+          "label": "Vitamin D",
+          "unit": "IU",
+          "table": false
+        },
+        {
+          "key": "vitaminK2Mcg",
+          "label": "Vitamin K2",
+          "unit": "µg",
+          "table": false
+        },
+        {
+          "key": "calciumCompoundMg",
+          "label": "Calcium compound (not elemental)",
+          "unit": "mg",
+          "table": false
+        },
+        {
+          "key": "magnesiumCompoundMg",
+          "label": "Magnesium compound (not elemental)",
+          "unit": "mg",
+          "table": false
+        },
+        {
+          "key": "zincCompoundMg",
+          "label": "Zinc compound (not elemental)",
+          "unit": "mg",
+          "table": false
+        }
+      ],
+      "comparisonNote": "ZMC means zinc + magnesium + calcium. Compare cost per label serving and each declared elemental mineral separately; the three mineral masses are not added into a single strength score."
+    }
   ],
   "quickPicks": [
-    {"label": "Plant protein", "category": "protein", "typeIncludes": ["plant", "pea", "soy", "rice"]},
-    {"label": "Unflavoured whey", "category": "protein", "typeIncludes": ["whey"], "unflavoured": true},
-    {"label": "Flavoured whey", "category": "protein", "typeIncludes": ["whey"], "unflavoured": false},
-    {"label": "Creatine monohydrate", "category": "creatine", "typeIncludes": ["monohydrate"]}
+    {
+      "label": "Plant protein",
+      "category": "protein",
+      "typeIncludes": [
+        "plant",
+        "pea",
+        "soy",
+        "rice"
+      ]
+    },
+    {
+      "label": "Unflavoured whey",
+      "category": "protein",
+      "typeIncludes": [
+        "whey"
+      ],
+      "unflavoured": true
+    },
+    {
+      "label": "Flavoured whey",
+      "category": "protein",
+      "typeIncludes": [
+        "whey"
+      ],
+      "unflavoured": false
+    },
+    {
+      "label": "Creatine monohydrate",
+      "category": "creatine",
+      "typeIncludes": [
+        "monohydrate"
+      ]
+    }
   ],
-  "archives": [{"file": "India_Creatine_Catalog.xlsx", "label": "Archived creatine workbook", "dataAsOf": "2026-10-25"}]
+  "archives": [
+    {
+      "file": "India_Creatine_Catalog.xlsx",
+      "label": "Archived creatine workbook",
+      "dataAsOf": "2026-10-25"
+    }
+  ]
 }
