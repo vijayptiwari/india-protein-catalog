@@ -18,10 +18,13 @@ class VisibleText(HTMLParser):
 def get(url):
  with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (Supplement Research)','Accept':'application/json,text/html;q=0.9'}),timeout=25) as response:return response.read().decode('utf-8')
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--as-of',required=True);parser.add_argument('--refresh',action='store_true');args=parser.parse_args();datetime.date.fromisoformat(args.as_of)
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--as-of',required=True);parser.add_argument('--refresh',action='store_true');parser.add_argument('--categories',nargs='+',help='Refresh only these category IDs; the default is every category in the source manifest.');args=parser.parse_args();datetime.date.fromisoformat(args.as_of)
  manifest=json.loads((ROOT/'docs/data/additional-sources.json').read_text(encoding='utf-8'));cache=ROOT/'outputs'/('supplements_'+args.as_of.replace('-',''));cache.mkdir(exist_ok=True,parents=True)
- categories={c:[] for c in ['ashwagandha','fish-oil','vitamin-d','magnesium','zmc']};observations=[];excluded=[]
+ available=list(dict.fromkeys(e['category'] for e in manifest['products']));selected=args.categories or available
+ if any(c not in available for c in selected):parser.error('Unknown category: '+', '.join(c for c in selected if c not in available))
+ categories={c:[] for c in selected};observations=[];excluded=[]
  for entry in manifest['products']:
+  if entry['category'] not in categories:continue
   brand=entry['brand'];base=entry['base'];handle=entry['handle'];url=base+'/products/'+handle
   if entry.get('kind')=='html':
    raw_path=cache/(entry['cacheKey']+'.txt');raw=get(url) if args.refresh or not raw_path.exists() else raw_path.read_text(encoding='utf-8');raw_path.write_text(raw,encoding='utf-8')
@@ -45,9 +48,9 @@ def main():
    quantity=entry.get('packCount');count=re.search(r'(\d+)\s*(?:tablets?|tabs?|capsules?|softgels?|gummies|oral strips?|\bN\b)',title,re.I)
    if count_title:quantity=int(count_title[1])
    elif count:quantity=int(count[1])
-   elif title.isdigit():quantity=int(title)
+   elif title.isdigit() and entry.get('numericVariantIsCount',True):quantity=int(title)
    if not quantity:excluded.append(dict(url=url,variant=variant['id'],reason='Pack count not verified.'));continue
-   row={k:v for k,v in entry.items() if k not in ['category','base','handle','variantTitles','cacheKey','kind','id']}
+   row={k:v for k,v in entry.items() if k not in ['category','base','handle','variantTitles','cacheKey','kind','id','numericVariantIsCount']}
    row.update(id=entry.get('id') or f"{entry['category']}-{variant['id']}",product=entry['product'],packCount=quantity,price=float(variant['price']),currency='INR',stock='In stock' if variant.get('available') is True else 'Sold out' if variant.get('available') is False else 'Listed; confirm stock',url=url if entry.get('kind')=='html' else url+'?variant='+str(variant['id']),nutritionUrl=entry.get('nutritionUrl',url),flavour=entry.get('flavour','Unflavoured'),packaging=entry.get('packaging','Single retail pack'),labelChecked=entry.get('labelChecked',manifest['labelChecked']))
    categories[entry['category']].append(row);observations.append(dict(category=entry['category'],offerId=row['id'],date=args.as_of,price=row['price'],currency='INR',sourceUrl=row['url'],evidenceUrl=evidence,kind='official-live',matchBasis='Official primary product page and explicitly selected pack' if entry.get('kind')=='html' else 'Official Shopify exact variant ID; single-pack count verified',variantId=None if entry.get('kind')=='html' else str(variant['id'])))
  for category,offers in categories.items():

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewed": "2026-10-29",
+  "reviewed": "2026-10-31",
   "scope": "Curated educational guides and selected references; not a systematic or exhaustive review. Biological mechanisms do not by themselves prove clinical benefit. Nutrient requirements, deficiency treatment and routine supplement use are different questions. Research does not endorse catalog brands. Individual and pediatric care require appropriate professional guidance; international findings may not generalize to every Indian product or population.",
   "articles": [
     {
@@ -224,6 +224,84 @@
         "mg-overview",
         "zn-overview"
       ]
+    },
+    {
+      "id": "glutathione-guide",
+      "category": "glutathione",
+      "title": "Glutathione: antioxidant biology versus supplement promises",
+      "summary": "Your cells make glutathione. An important biological role does not prove that buying an oral supplement prevents disease or changes skin tone.",
+      "evidence": "Oral trials show mixed biomarker results: a six-month study reported higher body stores, while a four-week study found no improvement in measured oxidative-stress markers. Small skin studies report some changes in melanin indices; a 2026 trial also had mixed outcomes. These results do not establish broad health benefits.",
+      "limitations": "Studies differ in formulation, duration and outcome. A biomarker or cosmetic measurement is not a demonstrated reduction in illness. Lasting benefits and long-term safety remain uncertain; reduced, S-acetyl, liposomal and blended products should not be assumed equivalent.",
+      "catalogReading": "Compare the declared glutathione amount per verified label serving, ingredient form, pack servings and cost within the same formulation. Total blend weight, vitamin C, NAC and cysteine are not glutathione mass. A liposomal or reduced claim alone does not prove better clinical results.",
+      "safety": "The cited small adult trials cannot establish safety for indefinite use, pregnancy, breastfeeding or children. Review medicines, medical conditions and co-ingredients with a qualified clinician. Oral findings cannot be transferred to injections; this catalog covers oral products and does not recommend intravenous use.",
+      "sourceIds": [
+        "gsh-metabolism",
+        "gsh-stores",
+        "gsh-oxidative",
+        "gsh-skin",
+        "gsh-skin-2026"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Glutathione is a small peptide made from glutamate, cysteine and glycine. Digestion, uptake and processing influence what an oral formulation delivers; the label amount is not a measured amount reaching a tissue.",
+        "Cells synthesize and recycle their own glutathione. Together with enzymes, it participates in antioxidant reactions and redox regulation.",
+        "Supplement studies measure changes in blood or other samples, but greater measured glutathione does not automatically mean better health, less ageing or lighter skin."
+      ],
+      "bodySources": [
+        "gsh-metabolism",
+        "gsh-stores",
+        "gsh-oxidative"
+      ],
+      "treatment": "The selected oral trials do not establish a cure for liver disease, cancer or a pigmentation disorder, or a general detox treatment. A new or changing skin patch needs assessment rather than assuming a supplement will correct it.",
+      "whoMayBenefit": "Adults considering a specific cosmetic goal can discuss the limited findings and alternatives with a dermatologist. These sources do not identify a healthy group that should routinely take glutathione; disease-specific use requires separate clinical evidence.",
+      "routineUse": "There is no established universal need for an oral glutathione supplement. The body makes it, and adequate nutrition supports its metabolism. Changing a laboratory marker is not a reason by itself to continue indefinitely.",
+      "sectionSources": [
+        "gsh-metabolism",
+        "gsh-stores",
+        "gsh-oxidative",
+        "gsh-skin",
+        "gsh-skin-2026"
+      ]
+    },
+    {
+      "id": "melatonin-guide",
+      "category": "melatonin",
+      "title": "Melatonin: body-clock timing before stronger sleep products",
+      "summary": "Melatonin is a hormone involved in the sleep-wake cycle. The reason, timing and release profile matter more than choosing the largest milligram number.",
+      "evidence": "Evidence is more relevant to circadian problems such as jet lag and some delayed sleep-wake phase cases than to all poor sleep. In a four-week trial, clinically assessed delayed-phase patients improved with melatonin plus behavioural scheduling. AASM suggests against using melatonin for chronic adult insomnia; CBT-I is an initial treatment to discuss.",
+      "limitations": "Short trials and specific sleep disorders do not establish benefit for every sleep complaint. Long-term safety remains uncertain. A gummy, strip, immediate-release tablet and prolonged-release product cannot be assumed to give the same exposure or outcome.",
+      "catalogReading": "Read melatonin milligrams per verified label serving, units per serving and release description. Keep other sedating ingredients separate. Cost per common milligram amount is a price calculation, not an intake recommendation, and more melatonin is not automatically better.",
+      "safety": "Possible effects include daytime drowsiness, headache and dizziness. Do not drive or use machinery when drowsy. Review medicines, especially blood thinners, and epilepsy with a clinician. Pregnancy and breastfeeding safety data are limited. Children need pediatric guidance; keep every form, including gummies, out of reach.",
+      "sourceIds": [
+        "melatonin-overview",
+        "melatonin-circadian",
+        "melatonin-insomnia",
+        "melatonin-children",
+        "melatonin-metabolism",
+        "melatonin-physiology"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Darkness normally promotes melatonin release from the brain's pineal gland, providing a biological night-time signal; evening light can suppress this signal.",
+        "Swallowed melatonin is absorbed and undergoes substantial first-pass processing in the liver. Different release systems can change its exposure pattern; milligram content alone does not describe that pattern.",
+        "Melatonin acts at receptors involved in sleep and circadian regulation. The effect depends on the sleep problem and timing; taking a product does not diagnose a low melatonin level."
+      ],
+      "bodySources": [
+        "melatonin-overview",
+        "melatonin-metabolism",
+        "melatonin-physiology"
+      ],
+      "treatment": "Melatonin can form part of professionally planned care for selected circadian disorders. It is not a cure for chronic insomnia, stress or sleep apnoea. Persistent poor sleep or excessive daytime sleepiness warrants assessment of its cause.",
+      "whoMayBenefit": "Some people with jet lag or a clinically assessed circadian delay may benefit from an appropriate plan. Children with sleep disorders require pediatric assessment, not selection from adult retail strengths. A short night of sleep alone does not establish a need.",
+      "routineUse": "No one should assume they need nightly melatonin indefinitely. Review the indication, sleep schedule and continuing benefit with a clinician. Behavioural treatment and light/sleep timing can be central, and melatonin is not an automatic addition to a sleep stack.",
+      "sectionSources": [
+        "melatonin-overview",
+        "melatonin-circadian",
+        "melatonin-insomnia",
+        "melatonin-children"
+      ]
     }
   ],
   "sources": [
@@ -356,6 +434,116 @@
       "limitations": "Basic physiology does not establish the effectiveness of a supplement or commercial product.",
       "year": null,
       "checked": "2026-10-29"
+    },
+    {
+      "id": "gsh-metabolism",
+      "title": "Wu et al.: Glutathione metabolism and nutritional context",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14988435/",
+      "kind": "Physiology review",
+      "summary": "Explains cellular synthesis from glutamate, cysteine and glycine, redox functions and the importance of adequate protein nutrition.",
+      "limitations": "Biological roles and disease associations do not establish that oral supplementation improves clinical outcomes.",
+      "year": 2004,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "gsh-stores",
+      "title": "Richie et al.: Oral glutathione and body stores",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24791752/",
+      "kind": "Randomized trial",
+      "summary": "A six-month placebo-controlled study in 54 healthy nonsmokers reported higher glutathione concentrations in several sampled body compartments.",
+      "limitations": "Biomarker changes do not establish disease prevention, a detox treatment or benefit for every formulation.",
+      "year": 2015,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "gsh-oxidative",
+      "title": "Allen and Bradley: Oral glutathione and oxidative-stress markers",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21875351/",
+      "kind": "Randomized trial",
+      "summary": "Forty healthy adults entered a four-week placebo-controlled study; glutathione status and measured oxidative-stress markers did not significantly improve.",
+      "limitations": "Short follow-up and healthy volunteers limit generalization; this trial and longer studies address different exposure periods.",
+      "year": 2011,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "gsh-skin",
+      "title": "Arjinpathana and Asawanonda: Oral glutathione and skin melanin indices",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20524875/",
+      "kind": "Randomized trial",
+      "summary": "A four-week trial in 60 healthy medical students found statistically greater melanin-index reductions than placebo at two of six measured sites.",
+      "limitations": "A small cosmetic study does not establish lasting skin-lightening, treatment of a pigmentation disorder or long-term safety. Published in 2012; online in 2010.",
+      "year": 2012,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "gsh-skin-2026",
+      "title": "Kusumawardani et al.: S-acetyl versus reduced glutathione for skin measures",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/jocd.71223",
+      "kind": "Randomized trial",
+      "summary": "A 12-week study randomized 90 women to S-acetyl glutathione, reduced glutathione or placebo. Some melanin-index analyses favored treatment, while measured pigmentation scores and blood glutathione did not differ significantly between groups.",
+      "limitations": "Baseline melanin indices differed; the small, selected population, short follow-up and mixed outcomes limit claims of general or lasting superiority.",
+      "year": 2026,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-overview",
+      "title": "NCCIH: Melatonin, usefulness and safety",
+      "url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know",
+      "kind": "Expert overview",
+      "summary": "Distinguishes circadian uses such as jet lag from chronic insomnia, and reviews adverse effects, medicine interactions and limited long-term safety data.",
+      "limitations": "This US reference does not establish Indian regulatory status, prove a catalog product matches its label or support unsupervised pediatric use.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-circadian",
+      "title": "Sletten et al.: Melatonin with behavioural scheduling for delayed sleep phase",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29912983/",
+      "kind": "Randomized trial",
+      "summary": "A four-week trial randomized 116 clinically assessed delayed-sleep-phase patients. Melatonin combined with behavioural sleep scheduling improved sleep initiation compared with placebo and scheduling.",
+      "limitations": "Selected circadian-delay patients and a combined intervention; no evidence here for every sleep complaint, catalog strength or long-term treatment.",
+      "year": 2018,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-insomnia",
+      "title": "AASM: Pharmacologic treatment guideline for chronic insomnia in adults",
+      "url": "https://aasm.org/wp-content/uploads/2017/07/PharmacologicTreatmentofInsomnia.pdf",
+      "kind": "Clinical guideline",
+      "summary": "The guideline suggests against melatonin for adult sleep-onset or sleep-maintenance insomnia, reflecting weak and limited evidence for that indication.",
+      "limitations": "A weak recommendation addressing chronic insomnia; it is not a recommendation against all circadian-disorder uses.",
+      "year": 2017,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-children",
+      "title": "AASM: Melatonin use in children and adolescents",
+      "url": "https://www.aasm.org/wp-content/uploads/2022/09/melatonin-children-adolescents-health-advisory.pdf",
+      "kind": "Health advisory",
+      "summary": "Recommends pediatric professional advice, attention to sleep habits, and keeping melatonin out of children's reach. Notes that supplement content can differ from labels.",
+      "limitations": "Label-variation evidence cited in the advisory is not independent testing of Indian catalog products.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-metabolism",
+      "title": "Lane and Moss: First-pass hepatic metabolism of melatonin",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/4055987/",
+      "kind": "Pharmacokinetic study",
+      "summary": "Analysis of human oral and intravenous data identified substantial liver extraction and reduced systemic availability after swallowing melatonin.",
+      "limitations": "An older pharmacokinetic analysis explains exposure; it does not compare modern release systems or prove clinical superiority.",
+      "year": 1985,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "melatonin-physiology",
+      "title": "NIDDK LiverTox: Melatonin physiology",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK548519/",
+      "kind": "Expert overview",
+      "summary": "Describes pineal production, night-time secretion and action at melatonin receptors involved in sleep-wake regulation.",
+      "limitations": "Physiological signalling does not by itself establish that a supplement is necessary or effective for an individual.",
+      "year": 2020,
+      "checked": "2026-10-31"
     }
   ]
 }

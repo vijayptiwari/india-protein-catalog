@@ -1,7 +1,7 @@
 // Count-based supplement inputs. Amounts always refer to the stated label serving.
 const numeric=n=>typeof n==='number'&&Number.isFinite(n);
 const positive=n=>numeric(n)&&n>0;
-export const nutrientUnits={ashwagandhaMg:'mg',standardizedExtractMg:'mg',withanolidesPct:'%',withanolidesMg:'mg',fishOilMg:'mg',epaMg:'mg',dhaMg:'mg',epaDhaMg:'mg',vitaminDIu:'IU',vitaminDMcg:'µg',vitaminK2Mcg:'µg',magnesiumMg:'mg',calciumMg:'mg',zincMg:'mg',magnesiumCompoundMg:'mg',calciumCompoundMg:'mg',zincCompoundMg:'mg',energyPerServing:'kcal'};
+export const nutrientUnits={ashwagandhaMg:'mg',standardizedExtractMg:'mg',withanolidesPct:'%',withanolidesMg:'mg',fishOilMg:'mg',epaMg:'mg',dhaMg:'mg',epaDhaMg:'mg',vitaminDIu:'IU',vitaminDMcg:'µg',vitaminK2Mcg:'µg',magnesiumMg:'mg',calciumMg:'mg',zincMg:'mg',magnesiumCompoundMg:'mg',calciumCompoundMg:'mg',zincCompoundMg:'mg',glutathioneMg:'mg',melatoninMg:'mg',energyPerServing:'kcal'};
 export function normalizeUnitInputs(raw,definition){
  const r={...raw,isUnitOffer:true,grams:null,kg:null,scoop:null,energy:null,proteinPerScoop:null,powderCost:null,score:0,rankingEligible:false},issues=[];
  const issue=(field,message,severity='error')=>issues.push({severity,field,message});

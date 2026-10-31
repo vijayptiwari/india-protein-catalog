@@ -1,5 +1,5 @@
 {
-  "reviewed": "2026-10-29",
+  "reviewed": "2026-10-31",
   "goals": [
     {
       "id": "strength",
@@ -20,6 +20,10 @@
     {
       "id": "bone",
       "label": "Bone & mineral health"
+    },
+    {
+      "id": "skin-claims",
+      "label": "Review skin & antioxidant claims"
     }
   ],
   "presets": [
@@ -50,6 +54,13 @@
       "label": "Bone-health review",
       "goals": [
         "bone"
+      ]
+    },
+    {
+      "id": "skin-review",
+      "label": "Skin & antioxidant claims review",
+      "goals": [
+        "skin-claims"
       ]
     }
   ],
@@ -143,6 +154,35 @@
         "ca-overview",
         "mg-overview",
         "zn-overview"
+      ]
+    },
+    {
+      "category": "glutathione",
+      "goals": [
+        "skin-claims"
+      ],
+      "review": true,
+      "status": "Limited evidence: review the claim first",
+      "reason": "Small oral trials report mixed biomarker and cosmetic findings. They do not establish a general detox, disease-prevention or lasting skin-lightening benefit. Discuss a specific concern with a dermatologist; no product is added automatically.",
+      "sources": [
+        "gsh-stores",
+        "gsh-oxidative",
+        "gsh-skin",
+        "gsh-skin-2026"
+      ]
+    },
+    {
+      "category": "melatonin",
+      "goals": [
+        "stress"
+      ],
+      "review": true,
+      "status": "Review the sleep problem and timing first",
+      "reason": "Melatonin is relevant to some circadian problems, not every poor night or chronic insomnia. Timing, release form, medicines and the cause of sleep difficulty need review. It is not automatically combined with other sleep supplements.",
+      "sources": [
+        "melatonin-overview",
+        "melatonin-circadian",
+        "melatonin-insomnia"
       ]
     }
   ]

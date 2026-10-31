@@ -242,6 +242,38 @@
         }
       ],
       "comparisonNote": "ZMC means zinc + magnesium + calcium. Compare cost per label serving and each declared elemental mineral separately; the three mineral masses are not added into a single strength score."
+    },
+    {
+      "id": "glutathione",
+      "label": "Glutathione",
+      "file": "glutathione.json",
+      "page": "glutathione.html",
+      "measurement": "units",
+      "mainNutrient": "glutathioneMg",
+      "referenceQuantity": 100,
+      "referenceUnit": "mg",
+      "compoundLabel": "labelled glutathione",
+      "nutrientFields": [
+        {"key": "glutathioneMg", "label": "Glutathione", "unit": "mg", "table": true}
+      ],
+      "comparisonNote": "Compare oral glutathione amounts only when the exact label serving is verified. Reduced, liposomal and combination formulations are recorded separately; ingredient cost does not establish absorption or clinical benefit. Total blend mass and precursors are not counted as glutathione.",
+      "searchAliases": ["l glutathione", "gsh", "reduced glutathione"]
+    },
+    {
+      "id": "melatonin",
+      "label": "Melatonin",
+      "file": "melatonin.json",
+      "page": "melatonin.html",
+      "measurement": "units",
+      "mainNutrient": "melatoninMg",
+      "referenceQuantity": 1,
+      "referenceUnit": "mg",
+      "compoundLabel": "labelled melatonin",
+      "nutrientFields": [
+        {"key": "melatoninMg", "label": "Melatonin", "unit": "mg", "table": true}
+      ],
+      "comparisonNote": "The 1 mg quantity is a cost comparison unit, not an intake recommendation. Check exact strength, release formulation and other ingredients. Higher strength or lower ingredient cost does not establish better sleep or suitability.",
+      "searchAliases": ["sleep hormone", "sleep aid"]
     }
   ],
   "quickPicks": [

@@ -356,7 +356,8 @@ small {
 }
 #category-nav {
   display:flex;
-  justify-content:center;
+  justify-content:flex-start;
+  justify-content:safe center;
   align-items:stretch;
   gap:10px;
   background:var(--card);
@@ -719,6 +720,14 @@ small {
 .tone-zmc {
   background:#fcece4;
   color:#b07455
+}
+.tone-glutathione {
+  background:#e3f3ed;
+  color:#297b65
+}
+.tone-melatonin {
+  background:#eaeaf9;
+  color:#65569e
 }
 .question-grid {
   display:grid;

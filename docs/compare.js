@@ -40,7 +40,7 @@ export function buildComparison(snapshot,picks){
   if(category.id==='protein')rows.push(row('protein-scoop','Protein per manufacturer scoop',r=>quantity(r.proteinPerScoop,'g')));
   if(category.id==='creatine')rows.push(row('grade','Ingredient trademark',r=>r.grade||'Unknown'),row('formulation','Formulation',r=>r.formulation||'Unknown'));
  }
- return {category,offers,rows,note:category.measurement==='units'?'Nutrient amounts refer to each product’s stated label serving. Serving sizes and chemical forms can differ; a lower quantity cost does not establish better absorption or health benefit. ZMC minerals are shown separately.':'Costs use labelled compound amounts. Manufacturer scoops are not the comparison portions; different sources or chemical forms are not assumed equivalent. No intake schedule is prescribed.'};
+ return {category,offers,rows,note:category.measurement==='units'?`Nutrient amounts refer to each product’s stated label serving. Serving sizes and chemical forms can differ; a lower quantity cost does not establish better absorption or health benefit. ${category.comparisonNote||''}`.trim():'Costs use labelled compound amounts. Manufacturer scoops are not the comparison portions; different sources or chemical forms are not assumed equivalent. No intake schedule is prescribed.'};
 }
 
 let currentSnapshot=null,picks=[],feedback='',bound=false,restored=false;
