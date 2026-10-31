@@ -1,5 +1,5 @@
 // Pure calculations shared by browser pages, validation, exports and the site build.
-import {normalizeUnitInputs} from './units.js';
+import {normalizeUnitInputs,nutrientUnits} from './units.js';
 export const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export const positive=n=>finite(n)&&n>0;
 export const isoDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
@@ -113,6 +113,7 @@ export function createSnapshot(bundle){
   if(!(definition.measurement==='units'||['protein','creatine'].includes(definition.concentrationField))||!definition.id?.match(/^[a-z][a-z0-9-]*$/)||!definition.label?.trim()||!definition.compoundLabel?.trim())throw Error('Category needs valid labels, ID and a measurement definition.');
   const input=categories[definition.id];if(!input||!Array.isArray(input.offers)||!isoDate(input.checked))throw Error(`Category ${definition.id} needs offers and an ISO checked date.`);
   if(definition.measurement==='units'?!positive(definition.referenceQuantity)||!definition.referenceUnit||!Array.isArray(definition.nutrientFields):!positive(definition.referenceGrams))throw Error(`Invalid reference quantity for ${definition.id}.`);
+  if(definition.measurement==='units'&&(definition.mainNutrient!=='multi'&&!Object.hasOwn(nutrientUnits,definition.mainNutrient)||definition.nutrientFields.some(f=>!Object.hasOwn(nutrientUnits,f.key)||f.unit!==nutrientUnits[f.key]||!f.label?.trim()||f.costQuantity!=null&&!positive(f.costQuantity))))throw Error(`Invalid nutrient keys, units or cost comparison quantities for ${definition.id}.`);
   const ids=new Set(),variants=new Set();
   const offers=input.offers.map(raw=>{
    const r=normalizeOffer(raw,definition,input.checked,byOffer.get(JSON.stringify([definition.id,String(raw.id)]))||[],config);

@@ -19,6 +19,7 @@ export function recommend(snapshot,input){
  if(restricted)warnings.push('Personalized product suggestions are paused. If you are under 18, pregnant or breastfeeding, take medicines, have a health condition, or are unsure, review supplements with a qualified clinician. You can still read the educational category notes.');
  if(existing.has('zmc')&&(existing.has('magnesium')||existing.has('vitamin-d')))warnings.push('Your existing ZMC may overlap with separate magnesium or vitamin D. Check the exact labels before combining.');
  if(items.some(i=>i.category==='zmc')&&items.some(i=>['magnesium','vitamin-d'].includes(i.category)))warnings.push('Bone-health categories are alternatives to review, not instructions to take all three together. ZMC can already contain magnesium and vitamin D.');
+ if((existing.has('vitamin-b')&&(existing.has('biotin')||existing.has('folic-acid')))||(items.some(i=>i.category==='vitamin-b')&&items.some(i=>['biotin','folic-acid'].includes(i.category))))warnings.push('Review the exact B-vitamin profile before combining products. A B-complex may already contain biotin or folic acid; an individual B12 product has a different profile. These review items are not instructions to take every category.');
  return {items,warnings,budget,restricted};
 }
 

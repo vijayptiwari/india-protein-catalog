@@ -1,4 +1,5 @@
 import {escapeHtml as esc,formatDate,https} from './model.js';
+import {nutrientCostFields,nutrientCostKey} from './units.js';
 const key=pick=>JSON.stringify([pick.category,String(pick.id)]);
 const lookup=(snapshot,pick)=>Object.hasOwn(snapshot.categories||{},pick.category)?snapshot.categories[pick.category]?.offers?.find(offer=>String(offer.id)===String(pick.id)):null;
 const unitNames={Tablet:['tablet','tablets'],Capsule:['capsule','capsules'],Softgel:['softgel','softgels'],Gummy:['gummy','gummies'],'Oral strip':['oral strip','oral strips']};
@@ -33,6 +34,7 @@ export function buildComparison(snapshot,picks){
   rows.push(row('form','Dosage form',r=>r.form||'Unknown'),row('serving','Label serving',serving),row('servings','Label servings per pack',r=>quantity(r.packServings)),row('unit-cost','Cost per single unit',r=>money(r.unitCost)),row('serving-cost','Cost per label serving',r=>money(r.servingCost)));
   if(category.mainNutrient!=='multi')rows.push(row('reference-cost',`Cost per ${category.referenceQuantity} ${category.referenceUnit} ${category.compoundLabel}`,r=>money(r.referenceCost)));
   for(const field of category.nutrientFields||[])rows.push(row(field.key,`${field.label} (${field.unit==='%'?'% of standardized extract':field.unit+' per label serving'})`,r=>quantity(r[field.key],field.unit)));
+  for(const field of nutrientCostFields(category))rows.push(row(nutrientCostKey(field),`Cost per ${field.costQuantity} ${field.unit} ${field.label}`,r=>money(r[nutrientCostKey(field)])));
   if(!(category.nutrientFields||[]).some(f=>f.key==='energyPerServing'))rows.push(row('energy','Energy per label serving',r=>quantity(r.energyPerServing,'kcal')));
   rows.push(row('label-date','Label last checked',r=>formatDate(r.labelChecked)));
  }else{

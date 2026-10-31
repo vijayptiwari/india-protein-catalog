@@ -24,6 +24,10 @@
     {
       "id": "skin-claims",
       "label": "Review skin & antioxidant claims"
+    },
+    {
+      "id": "micronutrients",
+      "label": "Review vitamin intake & deficiency concerns"
     }
   ],
   "presets": [
@@ -61,6 +65,13 @@
       "label": "Skin & antioxidant claims review",
       "goals": [
         "skin-claims"
+      ]
+    },
+    {
+      "id": "vitamin-review",
+      "label": "Vitamin needs review",
+      "goals": [
+        "micronutrients"
       ]
     }
   ],
@@ -183,6 +194,62 @@
         "melatonin-overview",
         "melatonin-circadian",
         "melatonin-insomnia"
+      ]
+    },
+    {
+      "category": "biotin",
+      "goals": [
+        "skin-claims",
+        "micronutrients"
+      ],
+      "review": true,
+      "status": "Check the need and laboratory-test implications",
+      "reason": "Evidence for routine hair or nail benefits without biotin deficiency is limited. Biotin can distort some laboratory tests. Review the cause of symptoms and disclose all biotin products to the testing team; no pack is added automatically.",
+      "sources": [
+        "biotin-overview",
+        "biotin-lab"
+      ]
+    },
+    {
+      "category": "vitamin-c",
+      "goals": [
+        "micronutrients"
+      ],
+      "review": true,
+      "status": "Review dietary supply before adding strength",
+      "reason": "Vitamin C can address inadequate intake, but routine high-strength use is not a general cold-prevention plan. Review food sources, clinical context and overlapping ingredients before choosing a product.",
+      "sources": [
+        "c-overview",
+        "c-food"
+      ]
+    },
+    {
+      "category": "vitamin-b",
+      "goals": [
+        "micronutrients"
+      ],
+      "review": true,
+      "status": "Identify the individual vitamin requirement",
+      "reason": "B vitamins are distinct nutrients; a B-complex is not a diagnosis or an automatic energy treatment. People avoiding animal foods need a reliable B12 source. Review individual needs, possible absorption issues and total B6 or niacin before adding products.",
+      "sources": [
+        "b-family",
+        "b12-overview",
+        "b6-overview",
+        "b3-overview"
+      ]
+    },
+    {
+      "category": "folic-acid",
+      "goals": [
+        "micronutrients"
+      ],
+      "review": true,
+      "status": "Review folate form and the reason for use",
+      "reason": "Folic acid has a specific prevention role for women who could become pregnant; it is not interchangeable with every folate form or DFE label. Discuss an appropriate plan and B12 context with a clinician. The tool does not prescribe a pregnancy product or strength.",
+      "sources": [
+        "folate-overview",
+        "folate-prevention",
+        "b-family"
       ]
     }
   ]

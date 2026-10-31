@@ -1,4 +1,4 @@
-import {unitFacets,unitMetrics} from './units.js';
+import {unitFacets,unitMetrics,completeUnitLabel} from './units.js';
 export const facets = [['brand','Brand'],['product','Product'],['type','Protein source'],['subclass','Protein subclass'],['flavour','Flavour'],['kg','Pack size (kg)'],['stock','Availability']];
 export const metrics = [['price','Pack price (₹)'],['cost','Cost / g protein (₹)'],['protein','Protein (%)'],['scoop','Scoop size (g)'],['energy','Energy (kcal / 100 g)']];
 export const creatineFacets=[['brand','Brand'],['product','Product'],['type','Creatine chemical form'],['subclass','Processing / particle size'],['grade','Ingredient trademark'],['formulation','Formulation'],['flavour','Flavour'],['grams','Pack size (g)'],['packaging','Packaging'],['stock','Availability']];
@@ -13,7 +13,7 @@ export function filterOffers(offers,state,category='protein',definition=null){co
  for(const [key] of activeFacets)if(state[key]?.length&&!state[key].includes(String(r[key])))return false;
  for(const [key] of activeMetrics){const min=state[key+'Min'],max=state[key+'Max'];if(min!==undefined&&min!==''&&(r[key]==null||r[key]<Number(min)))return false;if(max!==undefined&&max!==''&&(r[key]==null||r[key]>Number(max)))return false;}
  if(state.knownCost&&r.cost==null)return false;
- return !state.complete || (definition?.measurement==='units'?['servingUnits',...(definition.mainNutrient==='multi'?['calciumMg','magnesiumMg','zincMg']:[definition.mainNutrient])]:category==='creatine'?['creatine','scoop','energy']:['protein','scoop','energy']).every(k=>r[k]!=null);
+ return !state.complete || (definition?.measurement==='units'?completeUnitLabel(r,definition):(category==='creatine'?['creatine','scoop','energy']:['protein','scoop','energy']).every(k=>r[k]!=null));
  });}
 export function sortOffers(offers,key){return [...offers].sort((a,b)=>{if(key==='brand')return a.brand.localeCompare(b.brand)||a.product.localeCompare(b.product)||a.flavour.localeCompare(b.flavour)||a.kg-b.kg;if(a[key]==null)return b[key]==null?0:1;if(b[key]==null)return -1;return (a[key]-b[key])*(key==='protein'||key==='creatine'?-1:1);});}
 export function csv(offers,category='protein'){

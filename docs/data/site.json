@@ -254,10 +254,19 @@
       "referenceUnit": "mg",
       "compoundLabel": "labelled glutathione",
       "nutrientFields": [
-        {"key": "glutathioneMg", "label": "Glutathione", "unit": "mg", "table": true}
+        {
+          "key": "glutathioneMg",
+          "label": "Glutathione",
+          "unit": "mg",
+          "table": true
+        }
       ],
       "comparisonNote": "Compare oral glutathione amounts only when the exact label serving is verified. Reduced, liposomal and combination formulations are recorded separately; ingredient cost does not establish absorption or clinical benefit. Total blend mass and precursors are not counted as glutathione.",
-      "searchAliases": ["l glutathione", "gsh", "reduced glutathione"]
+      "searchAliases": [
+        "l glutathione",
+        "gsh",
+        "reduced glutathione"
+      ]
     },
     {
       "id": "melatonin",
@@ -270,10 +279,253 @@
       "referenceUnit": "mg",
       "compoundLabel": "labelled melatonin",
       "nutrientFields": [
-        {"key": "melatoninMg", "label": "Melatonin", "unit": "mg", "table": true}
+        {
+          "key": "melatoninMg",
+          "label": "Melatonin",
+          "unit": "mg",
+          "table": true
+        }
       ],
       "comparisonNote": "The 1 mg quantity is a cost comparison unit, not an intake recommendation. Check exact strength, release formulation and other ingredients. Higher strength or lower ingredient cost does not establish better sleep or suitability.",
-      "searchAliases": ["sleep hormone", "sleep aid"]
+      "searchAliases": [
+        "sleep hormone",
+        "sleep aid"
+      ]
+    },
+    {
+      "id": "biotin",
+      "label": "Biotin",
+      "mainNutrient": "biotinMcg",
+      "referenceQuantity": 1000,
+      "referenceUnit": "µg",
+      "compoundLabel": "labelled biotin",
+      "nutrientFields": [
+        {
+          "key": "biotinMcg",
+          "label": "Biotin (B7)",
+          "unit": "µg",
+          "table": true
+        }
+      ],
+      "comparisonNote": "Biotin is recorded in micrograms, not milligrams. Compare only verified label amounts and servings; a higher strength does not establish a hair or nail benefit. Check other ingredients and tell your laboratory about biotin use.",
+      "searchAliases": [
+        "vitamin b7",
+        "vitamin h"
+      ],
+      "file": "biotin.json",
+      "page": "biotin.html",
+      "measurement": "units"
+    },
+    {
+      "id": "vitamin-c",
+      "label": "Vitamin C",
+      "mainNutrient": "vitaminCMg",
+      "referenceQuantity": 100,
+      "referenceUnit": "mg",
+      "compoundLabel": "labelled vitamin C",
+      "nutrientFields": [
+        {
+          "key": "vitaminCMg",
+          "label": "Vitamin C",
+          "unit": "mg",
+          "table": true
+        }
+      ],
+      "comparisonNote": "Vitamin C amount is distinct from the mass of amla, citrus, mineral ascorbate or a multi-ingredient blend. Costs use the declared vitamin C per verified label serving; chemical forms and other ingredients remain separate profiles.",
+      "searchAliases": [
+        "ascorbic acid",
+        "ascorbate"
+      ],
+      "file": "vitamin-c.json",
+      "page": "vitamin-c.html",
+      "measurement": "units"
+    },
+    {
+      "id": "vitamin-b",
+      "label": "Vitamin B",
+      "mainNutrient": "multi",
+      "referenceQuantity": 1,
+      "referenceUnit": "label serving",
+      "compoundLabel": "labelled B-vitamin profile",
+      "nutrientFields": [
+        {
+          "key": "vitaminB1Mg",
+          "label": "B1 (thiamin)",
+          "unit": "mg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b1",
+            "thiamin",
+            "thiamine"
+          ]
+        },
+        {
+          "key": "vitaminB2Mg",
+          "label": "B2 (riboflavin)",
+          "unit": "mg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b2",
+            "riboflavin"
+          ]
+        },
+        {
+          "key": "vitaminB3Mg",
+          "label": "B3 (declared niacin)",
+          "unit": "mg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b3",
+            "niacin",
+            "nicotinamide",
+            "niacinamide"
+          ]
+        },
+        {
+          "key": "vitaminB5Mg",
+          "label": "B5 (pantothenic acid)",
+          "unit": "mg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b5",
+            "pantothenic"
+          ]
+        },
+        {
+          "key": "vitaminB6Mg",
+          "label": "B6",
+          "unit": "mg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b6",
+            "pyridoxine"
+          ]
+        },
+        {
+          "key": "biotinMcg",
+          "label": "B7 (biotin)",
+          "unit": "µg",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "b7",
+            "biotin"
+          ]
+        },
+        {
+          "key": "folicAcidMcg",
+          "label": "B9 (folic acid)",
+          "unit": "µg",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "b9",
+            "folic acid"
+          ]
+        },
+        {
+          "key": "folateMcgDfe",
+          "label": "Folate (dietary equivalents)",
+          "unit": "µg DFE",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "folate",
+            "dfe"
+          ]
+        },
+        {
+          "key": "methylfolateMcg",
+          "label": "B9 (methylfolate)",
+          "unit": "µg",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "methylfolate",
+            "5 mthf",
+            "5mthf",
+            "l methylfolate"
+          ]
+        },
+        {
+          "key": "vitaminB12Mcg",
+          "label": "B12",
+          "unit": "µg",
+          "table": true,
+          "costQuantity": 1,
+          "searchAliases": [
+            "b12",
+            "vitaminb12",
+            "cobalamin"
+          ]
+        }
+      ],
+      "comparisonNote": "B-complex and individual B vitamins are different profiles. Compare cost per label serving and each vitamin separately, in its own units. Vitamin masses are never added into a B-strength score; a one-vitamin product is not a complete B-complex. Folic acid, methylfolate and dietary folate equivalents remain separate.",
+      "searchAliases": [
+        "vitaminb",
+        "b vitamins"
+      ],
+      "file": "vitamin-b.json",
+      "page": "vitamin-b.html",
+      "measurement": "units"
+    },
+    {
+      "id": "folic-acid",
+      "label": "Folic Acid & Folate",
+      "mainNutrient": "folicAcidMcg",
+      "referenceQuantity": 100,
+      "referenceUnit": "µg",
+      "compoundLabel": "labelled folic acid",
+      "nutrientFields": [
+        {
+          "key": "folicAcidMcg",
+          "label": "Folic acid",
+          "unit": "µg",
+          "table": true,
+          "searchAliases": [
+            "b9",
+            "folic acid"
+          ]
+        },
+        {
+          "key": "methylfolateMcg",
+          "label": "Methylfolate",
+          "unit": "µg",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "methylfolate",
+            "5 mthf",
+            "5mthf",
+            "l methylfolate"
+          ]
+        },
+        {
+          "key": "folateMcgDfe",
+          "label": "Folate (dietary equivalents)",
+          "unit": "µg DFE",
+          "table": true,
+          "costQuantity": 100,
+          "searchAliases": [
+            "folate",
+            "dfe"
+          ]
+        }
+      ],
+      "comparisonNote": "Folic acid mass, methylfolate mass and dietary folate equivalents (DFE) are recorded separately. No serving, chemical-form or DFE conversion is assumed. The primary reference cost uses only explicitly labelled folic acid; methylfolate and DFE costs, when verified, are separate calculations. Combination products can also contain iron or other ingredients.",
+      "searchAliases": [
+        "folate",
+        "vitamin b9"
+      ],
+      "file": "folic-acid.json",
+      "page": "folic-acid.html",
+      "measurement": "units",
+      "productSearchLabel": "Folate"
     }
   ],
   "quickPicks": [

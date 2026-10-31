@@ -729,6 +729,22 @@ small {
   background:#eaeaf9;
   color:#65569e
 }
+.tone-biotin {
+  background:#f8e9f0;
+  color:#a15379
+}
+.tone-vitamin-c {
+  background:#fff0de;
+  color:#b97723
+}
+.tone-vitamin-b {
+  background:#e8eefb;
+  color:#526eaa
+}
+.tone-folic-acid {
+  background:#e9f1df;
+  color:#698644
+}
 .question-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);

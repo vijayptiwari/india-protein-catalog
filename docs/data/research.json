@@ -302,6 +302,145 @@
         "melatonin-insomnia",
         "melatonin-children"
       ]
+    },
+    {
+      "id": "biotin-guide",
+      "category": "biotin",
+      "title": "Biotin: hair claims, dietary needs and laboratory tests",
+      "summary": "Biotin is vitamin B7. Correcting a deficiency is different from assuming that more biotin will improve healthy hair or nails.",
+      "evidence": "Established biotin deficiency can respond to appropriate treatment. Evidence for routine hair, skin and nail benefits in people without deficiency is limited, relying largely on small studies and case reports.",
+      "limitations": "Hair or nail symptoms alone do not establish biotin deficiency. A larger labelled amount does not demonstrate better cosmetic results in an adequately nourished person.",
+      "catalogReading": "Check biotin micrograms per verified label serving, units per serving and other ingredients. Milligrams and micrograms are different units: 1 mg equals 1,000 micrograms. Compare equal labelled amounts without turning strength into a hair-growth score.",
+      "safety": "Tell the clinician and laboratory about every biotin-containing product before blood testing, including hair gummies and multivitamins. Some assays can give misleading thyroid results or falsely low troponin results. Ask the testing team for assay-specific instructions; there is no universal stopping interval for every test.",
+      "sourceIds": [
+        "biotin-overview",
+        "biotin-lab",
+        "b-family",
+        "biotin-metabolic"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Digestion releases food-bound biotin; the enzyme biotinidase helps make free biotin available for intestinal absorption.",
+        "Cells use biotin with enzymes involved in processing fats, carbohydrates and amino acids.",
+        "Supporting normal metabolism does not mean that an additional high-strength supplement improves hair when biotin supply is already adequate."
+      ],
+      "bodySources": [
+        "biotin-overview"
+      ],
+      "treatment": "Confirmed deficiency and rare inherited biotinidase disorders require an appropriate clinical plan. A retail hair product is not a diagnosis or a general treatment for hair loss.",
+      "whoMayBenefit": "People with an established deficiency or a specific metabolic disorder may need supervised supplementation. A risk factor or cosmetic concern should prompt assessment rather than automatically selecting the strongest pack.",
+      "routineUse": "Many foods supply biotin. A high-strength beauty supplement is not a universal requirement. Reassess the reason for taking it and include biotin from combination products when discussing laboratory tests.",
+      "sectionSources": [
+        "biotin-overview",
+        "biotin-lab",
+        "biotin-metabolic"
+      ]
+    },
+    {
+      "id": "vitamin-c-guide",
+      "category": "vitamin-c",
+      "title": "Vitamin C: deficiency, absorption and everyday claims",
+      "summary": "Vitamin C supports normal body functions, but the largest tablet or an immunity claim does not establish the greatest benefit.",
+      "evidence": "Vitamin C is needed for collagen formation and helps absorb non-heme iron. Routine supplementation generally does not prevent common colds in the wider population; regular use may modestly shorten their duration.",
+      "limitations": "Absorption becomes less efficient at larger oral intakes. Biological antioxidant or immune roles do not establish that every supplement prevents illness. Price and labelled milligrams do not measure clinical benefit.",
+      "catalogReading": "Use the declared vitamin C amount per verified serving, not the whole weight of an ascorbate salt, fruit extract or blend. Read added zinc, sweeteners and other ingredients separately. An effervescent or liposomal label alone does not establish superiority.",
+      "safety": "Large supplemental amounts can cause diarrhoea, nausea and abdominal discomfort. People with kidney disease, hyperoxaluria or iron-overload conditions should discuss use with a clinician. Review medicines and overlapping products; population upper limits are safety boundaries rather than intake goals.",
+      "sourceIds": [
+        "c-overview",
+        "c-food",
+        "c-cold-review"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Vitamin C is absorbed through the intestine; the fraction absorbed falls as oral intake becomes larger.",
+        "Tissues use it in enzyme reactions, including collagen formation, and antioxidant functions.",
+        "Kidneys excrete absorbed vitamin C that is not retained, so a higher label amount is not the amount delivered to a target tissue."
+      ],
+      "bodySources": [
+        "c-overview"
+      ],
+      "treatment": "Scurvy is severe vitamin C deficiency and needs treatment and attention to its dietary cause. Correcting deficiency does not make vitamin C a cure for every infection or a replacement for assessment of persistent symptoms.",
+      "whoMayBenefit": "People whose diets cannot supply adequate vitamin C, including those with markedly restricted food intake, may need nutrition support. A clinician can assess suspected deficiency and a suitable approach.",
+      "routineUse": "Everyone needs dietary vitamin C; everyone does not need a daily supplement. Fruit and vegetables can supply it. If a supplement addresses a dietary gap, review the gap rather than escalating strength indefinitely.",
+      "sectionSources": [
+        "c-overview",
+        "c-food",
+        "c-cold-review"
+      ]
+    },
+    {
+      "id": "vitamin-b-guide",
+      "category": "vitamin-b",
+      "title": "B vitamins: individual nutrients, individual requirements",
+      "summary": "Vitamin B is a family of eight nutrients. A B-complex product is a formulation, not one active ingredient with a meaningful combined strength.",
+      "evidence": "B vitamins have distinct roles in metabolism, blood-cell production and nervous-system function. Replacing a deficient vitamin can be useful; vague tiredness alone does not identify which nutrient, if any, is lacking.",
+      "limitations": "B1, B2, B3, B5, B6, B7, B9 and B12 are not interchangeable. Benefits from treating one deficiency cannot be transferred to every B-complex formulation, energy claim or premium chemical form.",
+      "catalogReading": "Compare each vitamin amount and chemical form on the same label-serving basis. B7 is biotin and B9 is folate; their dedicated guides add context. Keep milligrams, micrograms and folate DFE distinct. The catalog uses serving cost rather than adding B-vitamin masses into a potency score.",
+      "safety": "Excess supplemental B6 can damage sensory nerves. Nicotinic acid can cause flushing and, at high exposure, other serious effects; nicotinamide has a different risk profile. Check all overlapping products and medicines. Water-soluble does not mean unlimited amounts are harmless.",
+      "sourceIds": [
+        "b-family",
+        "b12-overview",
+        "b6-overview",
+        "b3-overview"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Different B vitamins enter distinct metabolic pathways; there is no single absorption or processing route for a B-complex blend.",
+        "For food-bound B12, digestive processing releases the vitamin before it binds intrinsic factor for absorption in the small intestine. Absorption problems can therefore matter even when intake appears adequate.",
+        "Cells use different B-derived coenzymes in energy metabolism and other functions. A physiological role does not establish that extra vitamins improve performance in someone with adequate status."
+      ],
+      "bodySources": [
+        "b-family",
+        "b12-overview",
+        "b3-overview"
+      ],
+      "treatment": "B12 deficiency, other B-vitamin deficiencies and anaemia need cause-specific care. Numbness, persistent fatigue or suspected malabsorption should not be managed solely by choosing an energy supplement.",
+      "whoMayBenefit": "People eating little or no animal food need a reliable B12 source, such as appropriately fortified foods or supplementation. Older adults and people with certain gastrointestinal conditions or medicines may also need assessment. These are reasons to review needs, not automatic diagnoses.",
+      "routineUse": "Choose a plan around the specific dietary or clinical need. A B-complex is not automatically better than a targeted nutrient. Review continuing use, overlapping B6 or niacin, and any other products containing biotin or folate.",
+      "sectionSources": [
+        "b-family",
+        "b12-overview",
+        "b6-overview",
+        "b3-overview"
+      ]
+    },
+    {
+      "id": "folic-acid-guide",
+      "category": "folic-acid",
+      "title": "Folic acid and folate: forms, labels and pregnancy planning",
+      "summary": "Folate is vitamin B9. Folic acid, methylfolate and dietary folate equivalents describe different forms or measurement bases.",
+      "evidence": "Folate supports DNA synthesis and cell division. Folic acid before and during early pregnancy helps prevent neural tube defects; CDC identifies folic acid as the form demonstrated to provide this protection.",
+      "limitations": "A methylfolate or active-form claim does not establish the same birth-defect-prevention evidence. A label in micrograms DFE is not the same as micrograms of folic acid. The catalog does not infer a universal conversion across forms.",
+      "catalogReading": "Record folic acid, methylfolate and declared folate DFE separately on the verified label-serving basis. Primary folic-acid costs require an explicit folic acid quantity; methylfolate mass is not relabelled as folic acid. Check prenatal, B-complex and standalone products for overlap.",
+      "safety": "Large amounts of folic acid can correct the anaemia of B12 deficiency while its neurological injury remains unaddressed. Review B12 status when clinically appropriate and discuss medicines, including antifolate or antiseizure treatment, with a clinician. Do not alter prescribed treatment from a catalog comparison.",
+      "sourceIds": [
+        "folate-overview",
+        "folate-prevention",
+        "b-family",
+        "b12-overview"
+      ],
+      "reviewed": "2026-10-31",
+      "author": "Supplement Research editorial synthesis",
+      "bodySteps": [
+        "Food folates, folic acid and supplemental 5-MTHF enter the diet in different chemical forms; their label masses do not directly describe identical availability.",
+        "The body uses folate coenzymes to transfer one-carbon groups needed for DNA synthesis and amino-acid metabolism.",
+        "Adequate folate is especially important during rapid cell division. Folic acid prevention before and in early pregnancy addresses a specific developmental risk, not every possible birth defect."
+      ],
+      "bodySources": [
+        "folate-overview",
+        "folate-prevention"
+      ],
+      "treatment": "Folate-deficiency anaemia needs an assessment of its cause and of possible B12 deficiency. Preventing neural tube defects is different from treating an established defect or curing infertility.",
+      "whoMayBenefit": "Women who could become pregnant should follow a folic-acid prevention plan; waiting until pregnancy is recognised can miss part of the relevant period. Confirm the plan with an appropriate clinician, particularly after a previous affected pregnancy or when medicines alter folate requirements.",
+      "routineUse": "This is an important population-specific prevention recommendation, not a universal reason for everyone to buy a folate product. Pregnancy care may require a broader plan. The stack builder provides education and does not select an adult retail strength as a pregnancy prescription.",
+      "sectionSources": [
+        "folate-overview",
+        "folate-prevention",
+        "b-family"
+      ]
     }
   ],
   "sources": [
@@ -543,6 +682,126 @@
       "summary": "Describes pineal production, night-time secretion and action at melatonin receptors involved in sleep-wake regulation.",
       "limitations": "Physiological signalling does not by itself establish that a supplement is necessary or effective for an individual.",
       "year": 2020,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "biotin-overview",
+      "title": "NIH ODS: Biotin, nutrition and evidence for hair claims",
+      "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains biotin metabolism, rare deficiency and the limited evidence behind hair, skin and nail supplement claims.",
+      "limitations": "Deficiency treatment and case reports do not establish cosmetic benefits for adequately nourished consumers.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "biotin-lab",
+      "title": "FDA: Biotin interference with troponin laboratory tests",
+      "url": "https://www.fda.gov/medical-devices/in-vitro-diagnostics/biotin-interference-troponin-lab-tests-assays-subject-biotin-interference",
+      "kind": "Safety communication",
+      "summary": "Warns that biotin can distort susceptible laboratory assays, including falsely low troponin results used in heart-attack assessment.",
+      "limitations": "Interference depends on the assay and exposure; the page does not provide a universal safe interval before every blood test.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "c-overview",
+      "title": "NIH ODS: Vitamin C, absorption and clinical evidence",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Reviews dose-dependent absorption, physiological roles, cold research, adverse effects and medicine interactions.",
+      "limitations": "A nutrient role is not proof that a particular retail formulation prevents disease or outperforms dietary sources.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "c-food",
+      "title": "NHS: Vitamin C, food sources and supplement cautions",
+      "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/vitamin-c/",
+      "kind": "Expert overview",
+      "summary": "Describes food sources, deficiency and gastrointestinal effects of excessive supplemental vitamin C.",
+      "limitations": "UK population guidance is not an individual prescription or evidence that Indian catalog products match their labels.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "b-family",
+      "title": "NHS: The B-vitamin family and folic acid",
+      "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/vitamin-b/",
+      "kind": "Expert overview",
+      "summary": "Distinguishes individual B vitamins, their dietary roles and the risks of treating the family as one interchangeable nutrient.",
+      "limitations": "General dietary guidance does not diagnose the cause of fatigue or establish a need for a B-complex product.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "b12-overview",
+      "title": "NIH ODS: Vitamin B12 absorption and deficiency risk",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains intrinsic-factor-dependent absorption, deficiency, plant-based dietary risk, gastrointestinal causes and medicine effects.",
+      "limitations": "Risk factors do not diagnose deficiency; oral retail products are not a substitute for assessing absorption disorders or neurological symptoms.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "b6-overview",
+      "title": "NIH ODS: Vitamin B6 and excessive-intake neuropathy",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Reviews vitamin B6 functions, medicines and sensory-nerve injury associated with excessive supplemental exposure.",
+      "limitations": "Upper limits differ between authorities and are not treatment targets. Total intake from overlapping products matters.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "b3-overview",
+      "title": "NIH ODS: Niacin forms and high-intake safety",
+      "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Distinguishes nicotinic acid from nicotinamide and explains flushing, other adverse effects and medically supervised uses.",
+      "limitations": "Different niacin forms have different effects. Supplement pricing does not establish treatment equivalence or justify high-dose use.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "folate-overview",
+      "title": "NIH ODS: Folate forms, dietary folate equivalents and safety",
+      "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "kind": "Expert overview",
+      "summary": "Explains food folate, folic acid and 5-MTHF; dietary folate equivalents reflect a different basis from ingredient mass.",
+      "limitations": "DFE conversion depends on context, and established conversion factors for supplemental 5-MTHF are lacking. Forms are not treated as identical in the catalog.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "folate-prevention",
+      "title": "CDC: Folic acid and prevention of neural tube defects",
+      "url": "https://www.cdc.gov/folic-acid/about/",
+      "kind": "Public health guidance",
+      "summary": "Recommends folic acid for women who could become pregnant and identifies it as the folate form shown to prevent neural tube defects.",
+      "limitations": "This general public-health recommendation is not an individual pregnancy plan or proof that every folate form has the same prevention evidence.",
+      "year": null,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "biotin-metabolic",
+      "title": "GeneReviews: Biotinidase deficiency and targeted care",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK1322/",
+      "kind": "Clinical reference",
+      "summary": "Describes diagnosis and specialist treatment of an inherited biotin-recycling disorder.",
+      "limitations": "Lifelong therapy for a diagnosed genetic disorder does not support routine high-strength biotin for cosmetic concerns.",
+      "year": 2026,
+      "checked": "2026-10-31"
+    },
+    {
+      "id": "c-cold-review",
+      "title": "Hemila and Chalker: Vitamin C for preventing and treating the common cold",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23440782/",
+      "kind": "Systematic review",
+      "summary": "Placebo-controlled trial synthesis found no general-population reduction in cold incidence, with modestly shorter colds during regular supplementation.",
+      "limitations": "Trials differ in population and protocol; these findings do not establish prevention by every formulation or benefit from starting after symptoms begin.",
+      "year": 2013,
       "checked": "2026-10-31"
     }
   ]
